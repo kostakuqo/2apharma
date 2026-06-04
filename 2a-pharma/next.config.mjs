@@ -1,10 +1,12 @@
 /** @type {import('next').NextConfig} */
+const repo = "/2apharma";
+
 const nextConfig = {
   output: "export",
   images: { unoptimized: true },
 
-  basePath: "/2apharma",
-  assetPrefix: "/2apharma/",
+  basePath: repo,
+  assetPrefix: repo + "/",
 };
 
 export default nextConfig;
