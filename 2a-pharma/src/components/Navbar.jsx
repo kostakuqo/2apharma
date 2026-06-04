@@ -1,10 +1,11 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useLang } from "../context/LangContext.jsx";
-import { Home, Info, Package, Handshake, Phone } from "lucide-react";
+import { Home, Info, Package, Handshake, Phone, Search, X } from "lucide-react";
+import { getProducts } from "../lib/getProducts.js";
 import styles from "./Navbar.module.css";
 
 const FlagAL = () => (
@@ -49,6 +50,12 @@ export default function Navbar() {
   const pathname = usePathname();
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [searchOpen, setSearchOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [allProducts, setAllProducts] = useState([]);
+  const [results, setResults] = useState([]);
+  const searchWrapRef = useRef(null);
+  const searchInputRef = useRef(null);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20);
@@ -56,8 +63,50 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  // încarcă produsele o singură dată
+  useEffect(() => {
+    getProducts().then(setAllProducts).catch(console.error);
+  }, []);
+
+  // filtrează live
+  useEffect(() => {
+    const q = searchQuery.trim().toLowerCase();
+    if (!q) { setResults([]); return; }
+    const filtered = allProducts.filter(p =>
+      p.name_al?.toLowerCase().includes(q) ||
+      p.name_en?.toLowerCase().includes(q) ||
+      p.name_it?.toLowerCase().includes(q) ||
+      p.category_en?.toLowerCase().includes(q)
+    ).slice(0, 6);
+    setResults(filtered);
+  }, [searchQuery, allProducts]);
+
+  useEffect(() => {
+    if (searchOpen) setTimeout(() => searchInputRef.current?.focus(), 300);
+    else { setSearchQuery(""); setResults([]); }
+  }, [searchOpen]);
+
+  // închide la click afară
+  useEffect(() => {
+    const handleClick = (e) => {
+      if (searchWrapRef.current && !searchWrapRef.current.contains(e.target)) {
+        setSearchOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClick);
+    return () => document.removeEventListener("mousedown", handleClick);
+  }, []);
+
   const isActive = (href) =>
     href === "/" ? pathname === "/" : pathname.startsWith(href);
+
+  const searchPlaceholder =
+    lang === "al" ? "Kërko produkte..." :
+    lang === "it" ? "Cerca prodotti..." :
+    "Search products...";
+
+  const getName = (p) =>
+    lang === "al" ? p.name_al : lang === "it" ? p.name_it : p.name_en;
 
   return (
     <>
@@ -70,17 +119,67 @@ export default function Navbar() {
 
           <nav className={styles.links}>
             {NAV_ITEMS.map(({ href, label }) => (
-              <Link
-                key={href}
-                href={href}
-                className={isActive(href) ? styles.active : ""}
-              >
+              <Link key={href} href={href} className={isActive(href) ? styles.active : ""}>
                 {tx.nav[label]}
               </Link>
             ))}
           </nav>
 
           <div className={styles.right}>
+            {/* Search desktop */}
+            <div
+              ref={searchWrapRef}
+              className={`${styles.searchWrap} ${searchOpen ? styles.searchOpen : ""}`}
+            >
+              <button
+                type="button"
+                className={styles.searchBtn}
+                onClick={() => setSearchOpen(o => !o)}
+                aria-label="Search"
+              >
+                {searchOpen ? <X size={16} /> : <Search size={16} />}
+              </button>
+              <input
+                ref={searchInputRef}
+                type="text"
+                className={styles.searchInput}
+                placeholder={searchPlaceholder}
+                value={searchQuery}
+                onChange={e => setSearchQuery(e.target.value)}
+                tabIndex={searchOpen ? 0 : -1}
+              />
+              {searchOpen && results.length > 0 && (
+                <div className={styles.dropdown}>
+                  {results.map(p => (
+                    <Link
+                      key={p.id}
+                      href={`/products/${p.id}`}
+                      className={styles.dropdownItem}
+                      onClick={() => setSearchOpen(false)}
+                    >
+                      <div className={styles.dropdownImg}>
+                        {p.image_url
+                          ? <img src={p.image_url} alt="" />
+                          : <span>{p.icon}</span>
+                        }
+                      </div>
+                      <div className={styles.dropdownInfo}>
+                        <div className={styles.dropdownName}>{getName(p)}</div>
+                        <div className={styles.dropdownCat}>{p.category_en}</div>
+                      </div>
+                    </Link>
+                  ))}
+                </div>
+              )}
+              {searchOpen && searchQuery.trim() && results.length === 0 && (
+                <div className={styles.dropdown}>
+                  <div className={styles.dropdownEmpty}>
+                    {lang === "al" ? "Nuk u gjet asgjë." : lang === "it" ? "Nessun risultato." : "No results found."}
+                  </div>
+                </div>
+              )}
+            </div>
+
             <div className={styles.langGroup}>
               {LANGS.map(({ code, label, Flag }) => (
                 <button
@@ -112,6 +211,52 @@ export default function Navbar() {
 
         {menuOpen && (
           <div className={styles.mobileMenu}>
+            {/* Mobile search */}
+            <div className={styles.mobileSearchWrap}>
+              <Search size={15} color="var(--gray-400)" />
+              <input
+                type="text"
+                placeholder={searchPlaceholder}
+                value={searchQuery}
+                onChange={e => setSearchQuery(e.target.value)}
+                className={styles.mobileSearchInput}
+              />
+              {searchQuery && (
+                <button onClick={() => setSearchQuery("")} style={{ background: "none", border: "none", cursor: "pointer", padding: 0 }}>
+                  <X size={14} color="var(--gray-400)" />
+                </button>
+              )}
+            </div>
+            {/* Mobile rezultate */}
+            {results.length > 0 && (
+              <div className={styles.mobileResults}>
+                {results.map(p => (
+                  <Link
+                    key={p.id}
+                    href={`/products/${p.id}`}
+                    className={styles.mobileResultItem}
+                    onClick={() => { setMenuOpen(false); setSearchQuery(""); }}
+                  >
+                    <div className={styles.dropdownImg}>
+                      {p.image_url
+                        ? <img src={p.image_url} alt="" />
+                        : <span>{p.icon}</span>
+                      }
+                    </div>
+                    <div className={styles.dropdownInfo}>
+                      <div className={styles.dropdownName} style={{ color: "var(--navy)" }}>{getName(p)}</div>
+                      <div className={styles.dropdownCat}>{p.category_en}</div>
+                    </div>
+                  </Link>
+                ))}
+              </div>
+            )}
+            {searchQuery.trim() && results.length === 0 && (
+              <div className={styles.mobileEmpty}>
+                {lang === "al" ? "Nuk u gjet asgjë." : lang === "it" ? "Nessun risultato." : "No results found."}
+              </div>
+            )}
+
             {NAV_ITEMS.map(({ href, label }) => (
               <Link key={href} href={href} onClick={() => setMenuOpen(false)}>
                 {tx.nav[label]}

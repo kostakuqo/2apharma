@@ -142,7 +142,6 @@ export default function AdminClient() {
   const router = useRouter();
   const tx = adminTx[lang];
 
-  // ── Products state ──
   const [imageFile, setImageFile] = useState(null);
   const [uploading, setUploading] = useState(false);
   const [user, setUser] = useState(null);
@@ -160,11 +159,9 @@ export default function AdminClient() {
   };
   const [form, setForm] = useState(emptyForm);
 
-  // ── Messages state ──
   const [messages, setMessages] = useState([]);
   const [loadingMessages, setLoadingMessages] = useState(false);
 
-  // ── Partners state ──
   const [partners, setPartners] = useState([]);
   const [loadingPartners, setLoadingPartners] = useState(false);
   const [showPartnerForm, setShowPartnerForm] = useState(false);
@@ -175,7 +172,6 @@ export default function AdminClient() {
   const emptyPartnerForm = { name: "", website: "", logo_url: "" };
   const [partnerForm, setPartnerForm] = useState(emptyPartnerForm);
 
-  // ── Auth ──
   useEffect(() => {
     const unsub = onAuthStateChanged(auth, u => {
       if (u) setUser(u);
@@ -192,7 +188,6 @@ export default function AdminClient() {
     }
   }, [user]);
 
-  // ── Products functions ──
   async function loadProducts() {
     setLoading(true);
     const snap = await getDocs(collection(db, "products"));
@@ -230,7 +225,6 @@ export default function AdminClient() {
     setShowForm(true);
   }
 
-  // ── Messages functions ──
   async function loadMessages() {
     setLoadingMessages(true);
     try {
@@ -238,7 +232,7 @@ export default function AdminClient() {
       const snap = await getDocs(q);
       setMessages(snap.docs.map(d => ({ id: d.id, ...d.data() })));
     } catch (err) {
-      console.error("Error ne ngarkimin e mesazheve:", err);
+      console.error(err);
     } finally {
       setLoadingMessages(false);
     }
@@ -255,7 +249,6 @@ export default function AdminClient() {
     setMessages(prev => prev.filter(m => m.id !== id));
   }
 
-  // ── Partners functions ──
   async function loadPartners() {
     setLoadingPartners(true);
     const snap = await getDocs(collection(db, "partners"));
@@ -293,7 +286,6 @@ export default function AdminClient() {
     setShowPartnerForm(true);
   }
 
-  // ── Helpers ──
   function formatDate(ts) {
     if (!ts) return "—";
     const d = ts.toDate ? ts.toDate() : new Date(ts);
@@ -309,6 +301,15 @@ export default function AdminClient() {
   const getName  = p => lang === "al" ? p.name_al  : lang === "it" ? p.name_it  : p.name_en;
   const getCat   = p => lang === "al" ? p.category_al : lang === "it" ? p.category_it : p.category_en;
   const getStock = s => s === "in" ? tx.inStock : s === "out" ? tx.outStock : tx.lowStock;
+
+  const STATS_DATA = [
+    { num: products.length, lbl: tx.totalProducts, icon: "📦", color: "#0F2A52", bg: "#E8EDF5" },
+    { num: products.filter(p => p.stock === "in").length, lbl: tx.inStock, icon: "✅", color: "#1A8A3C", bg: "#EDFBF3" },
+    { num: products.filter(p => p.stock === "out").length, lbl: tx.outStock, icon: "❌", color: "#C53030", bg: "#FFF0F0" },
+    { num: products.filter(p => p.stock === "low").length, lbl: tx.lowStock, icon: "⚠️", color: "#B7791F", bg: "#FFFBEA" },
+    { num: unreadCount, lbl: tx.unread, icon: "💬", color: unreadCount > 0 ? "#ef4444" : "#6b7280", bg: unreadCount > 0 ? "#FFF0F0" : "#F4F6FA" },
+    { num: partners.length, lbl: tx.totalPartners, icon: "🤝", color: "#0F2A52", bg: "#E8EDF5" },
+  ];
 
   if (loading) return <div className={styles.loading}>{tx.loading}</div>;
 
@@ -338,34 +339,7 @@ export default function AdminClient() {
       </div>
 
       {/* ── Statistika ── */}
-      <div className={styles.stats}>
-        <div className={styles.statCard}>
-          <div className={styles.statNum}>{products.length}</div>
-          <div className={styles.statLbl}>{tx.totalProducts}</div>
-        </div>
-        <div className={styles.statCard}>
-          <div className={styles.statNum}>{products.filter(p => p.stock === "in").length}</div>
-          <div className={styles.statLbl}>{tx.inStock}</div>
-        </div>
-        <div className={styles.statCard}>
-          <div className={styles.statNum}>{products.filter(p => p.stock === "out").length}</div>
-          <div className={styles.statLbl}>{tx.outStock}</div>
-        </div>
-        <div className={styles.statCard}>
-          <div className={styles.statNum}>{products.filter(p => p.stock === "low").length}</div>
-          <div className={styles.statLbl}>{tx.lowStock}</div>
-        </div>
-        <div className={styles.statCard}>
-          <div className={styles.statNum} style={{ color: unreadCount > 0 ? "#ef4444" : "inherit" }}>
-            {unreadCount}
-          </div>
-          <div className={styles.statLbl}>{tx.unread}</div>
-        </div>
-        <div className={styles.statCard}>
-          <div className={styles.statNum}>{partners.length}</div>
-          <div className={styles.statLbl}>{tx.totalPartners}</div>
-        </div>
-      </div>
+     
 
       {/* ── Tabs ── */}
       <div className={styles.tabs}>
@@ -380,9 +354,7 @@ export default function AdminClient() {
           onClick={() => setActiveTab("messages")}
         >
           💬 {tx.messages}
-          {unreadCount > 0 && (
-            <span className={styles.badge_unread}>{unreadCount}</span>
-          )}
+          {unreadCount > 0 && <span className={styles.badge_unread}>{unreadCount}</span>}
         </button>
         <button
           className={`${styles.tab} ${activeTab === "partners" ? styles.tabActive : ""}`}
@@ -397,10 +369,7 @@ export default function AdminClient() {
         <>
           <div className={styles.toolbar}>
             <h2 className={styles.subtitle}>{tx.products}</h2>
-            <button
-              className={styles.addBtn}
-              onClick={() => { setShowForm(true); setEditProduct(null); setForm(emptyForm); }}
-            >
+            <button className={styles.addBtn} onClick={() => { setShowForm(true); setEditProduct(null); setForm(emptyForm); }}>
               {tx.addProduct}
             </button>
           </div>
@@ -409,42 +378,15 @@ export default function AdminClient() {
             <div className={styles.formCard}>
               <h3>{editProduct ? tx.editProduct : tx.newProduct}</h3>
               <div className={styles.formGrid}>
-                <div className={styles.formGroup}>
-                  <label>{tx.nameEN}</label>
-                  <input value={form.name_en} onChange={e => setForm({ ...form, name_en: e.target.value })} />
-                </div>
-                <div className={styles.formGroup}>
-                  <label>{tx.nameAL}</label>
-                  <input value={form.name_al} onChange={e => setForm({ ...form, name_al: e.target.value })} />
-                </div>
-                <div className={styles.formGroup}>
-                  <label>{tx.nameIT}</label>
-                  <input value={form.name_it} onChange={e => setForm({ ...form, name_it: e.target.value })} />
-                </div>
-                <div className={styles.formGroup}>
-                  <label>{tx.catEN}</label>
-                  <input value={form.category_en} onChange={e => setForm({ ...form, category_en: e.target.value })} />
-                </div>
-                <div className={styles.formGroup}>
-                  <label>{tx.catAL}</label>
-                  <input value={form.category_al} onChange={e => setForm({ ...form, category_al: e.target.value })} />
-                </div>
-                <div className={styles.formGroup}>
-                  <label>{tx.catIT}</label>
-                  <input value={form.category_it} onChange={e => setForm({ ...form, category_it: e.target.value })} />
-                </div>
-                <div className={styles.formGroup}>
-                  <label>{tx.descEN}</label>
-                  <textarea value={form.desc_en} onChange={e => setForm({ ...form, desc_en: e.target.value })} />
-                </div>
-                <div className={styles.formGroup}>
-                  <label>{tx.descAL}</label>
-                  <textarea value={form.desc_al} onChange={e => setForm({ ...form, desc_al: e.target.value })} />
-                </div>
-                <div className={styles.formGroup}>
-                  <label>{tx.descIT}</label>
-                  <textarea value={form.desc_it} onChange={e => setForm({ ...form, desc_it: e.target.value })} />
-                </div>
+                <div className={styles.formGroup}><label>{tx.nameEN}</label><input value={form.name_en} onChange={e => setForm({ ...form, name_en: e.target.value })} /></div>
+                <div className={styles.formGroup}><label>{tx.nameAL}</label><input value={form.name_al} onChange={e => setForm({ ...form, name_al: e.target.value })} /></div>
+                <div className={styles.formGroup}><label>{tx.nameIT}</label><input value={form.name_it} onChange={e => setForm({ ...form, name_it: e.target.value })} /></div>
+                <div className={styles.formGroup}><label>{tx.catEN}</label><input value={form.category_en} onChange={e => setForm({ ...form, category_en: e.target.value })} /></div>
+                <div className={styles.formGroup}><label>{tx.catAL}</label><input value={form.category_al} onChange={e => setForm({ ...form, category_al: e.target.value })} /></div>
+                <div className={styles.formGroup}><label>{tx.catIT}</label><input value={form.category_it} onChange={e => setForm({ ...form, category_it: e.target.value })} /></div>
+                <div className={styles.formGroup}><label>{tx.descEN}</label><textarea value={form.desc_en} onChange={e => setForm({ ...form, desc_en: e.target.value })} /></div>
+                <div className={styles.formGroup}><label>{tx.descAL}</label><textarea value={form.desc_al} onChange={e => setForm({ ...form, desc_al: e.target.value })} /></div>
+                <div className={styles.formGroup}><label>{tx.descIT}</label><textarea value={form.desc_it} onChange={e => setForm({ ...form, desc_it: e.target.value })} /></div>
                 <div className={styles.formGroup}>
                   <label>{tx.stock}</label>
                   <select value={form.stock} onChange={e => setForm({ ...form, stock: e.target.value })}>
@@ -453,14 +395,8 @@ export default function AdminClient() {
                     <option value="low">{tx.lowStock}</option>
                   </select>
                 </div>
-                <div className={styles.formGroup}>
-                  <label>{tx.icon}</label>
-                  <input value={form.icon} onChange={e => setForm({ ...form, icon: e.target.value })} />
-                </div>
-                <div className={styles.formGroup}>
-                  <label>{tx.image}</label>
-                  <input type="file" accept="image/*" onChange={e => setImageFile(e.target.files[0])} />
-                </div>
+                <div className={styles.formGroup}><label>{tx.icon}</label><input value={form.icon} onChange={e => setForm({ ...form, icon: e.target.value })} /></div>
+                <div className={styles.formGroup}><label>{tx.image}</label><input type="file" accept="image/*" onChange={e => setImageFile(e.target.files[0])} /></div>
               </div>
               <div className={styles.formActions}>
                 <button className={styles.saveBtn} onClick={handleSave} disabled={uploading}>
@@ -532,9 +468,7 @@ export default function AdminClient() {
                 </span>
               )}
             </h2>
-            <button className={styles.addBtn} onClick={loadMessages}>
-              {tx.refresh}
-            </button>
+            <button className={styles.addBtn} onClick={loadMessages}>{tx.refresh}</button>
           </div>
 
           {loadingMessages ? (
@@ -547,10 +481,7 @@ export default function AdminClient() {
           ) : (
             <div className={styles.messagesList}>
               {messages.map(msg => (
-                <div
-                  key={msg.id}
-                  className={`${styles.messageCard} ${!msg.read ? styles.messageCardUnread : ""}`}
-                >
+                <div key={msg.id} className={`${styles.messageCard} ${!msg.read ? styles.messageCardUnread : ""}`}>
                   <div className={styles.messageHeader}>
                     <div className={styles.messageSender}>
                       <FontAwesomeIcon
@@ -562,12 +493,7 @@ export default function AdminClient() {
                         {!msg.read && <span className={styles.newBadge}>New</span>}
                         <div className={styles.messageMeta}>
                           <a href={`mailto:${msg.email}`} className={styles.messageEmail}>{msg.email}</a>
-                          {msg.phone && (
-                            <>
-                              <span className={styles.metaSep}>•</span>
-                              <a href={`tel:${msg.phone}`} className={styles.messagePhone}>{msg.phone}</a>
-                            </>
-                          )}
+                          {msg.phone && (<><span className={styles.metaSep}>•</span><a href={`tel:${msg.phone}`} className={styles.messagePhone}>{msg.phone}</a></>)}
                           <span className={styles.metaSep}>•</span>
                           <span className={styles.messageDate}>{formatDate(msg.createdAt)}</span>
                         </div>
@@ -575,12 +501,12 @@ export default function AdminClient() {
                     </div>
                     <div className={styles.messageActions}>
                       {!msg.read && (
-                        <button className={styles.markReadBtn} onClick={() => markAsRead(msg.id)} title={tx.markRead}>
+                        <button className={styles.markReadBtn} onClick={() => markAsRead(msg.id)}>
                           <FontAwesomeIcon icon={faEnvelopeOpen} />
                           <span>{tx.markRead}</span>
                         </button>
                       )}
-                      <button className={styles.deleteBtn} onClick={() => deleteMessage(msg.id)} title={tx.delete}>
+                      <button className={styles.deleteBtn} onClick={() => deleteMessage(msg.id)}>
                         <FontAwesomeIcon icon={faTrash} />
                         <span className={styles.btnText}>{tx.delete}</span>
                       </button>
@@ -599,10 +525,7 @@ export default function AdminClient() {
         <>
           <div className={styles.toolbar}>
             <h2 className={styles.subtitle}>{tx.partners}</h2>
-            <button
-              className={styles.addBtn}
-              onClick={() => { setShowPartnerForm(true); setEditPartner(null); setPartnerForm(emptyPartnerForm); }}
-            >
+            <button className={styles.addBtn} onClick={() => { setShowPartnerForm(true); setEditPartner(null); setPartnerForm(emptyPartnerForm); }}>
               {tx.addPartner}
             </button>
           </div>
@@ -613,41 +536,22 @@ export default function AdminClient() {
               <div className={styles.formGrid}>
                 <div className={styles.formGroup}>
                   <label>{tx.partnerName}</label>
-                  <input
-                    value={partnerForm.name}
-                    onChange={e => setPartnerForm({ ...partnerForm, name: e.target.value })}
-                    placeholder="Ex: Siemens Healthineers"
-                  />
+                  <input value={partnerForm.name} onChange={e => setPartnerForm({ ...partnerForm, name: e.target.value })} placeholder="Ex: Siemens Healthineers" />
                 </div>
                 <div className={styles.formGroup}>
                   <label>{tx.partnerWebsite}</label>
-                  <input
-                    value={partnerForm.website}
-                    onChange={e => setPartnerForm({ ...partnerForm, website: e.target.value })}
-                    placeholder="https://..."
-                  />
+                  <input value={partnerForm.website} onChange={e => setPartnerForm({ ...partnerForm, website: e.target.value })} placeholder="https://..." />
                 </div>
                 <div className={styles.formGroup}>
                   <label>{tx.partnerLogo}</label>
-                  <input
-                    type="file"
-                    accept="image/*"
-                    onChange={e => setPartnerImageFile(e.target.files[0])}
-                  />
+                  <input type="file" accept="image/*" onChange={e => setPartnerImageFile(e.target.files[0])} />
                 </div>
               </div>
               <div className={styles.formActions}>
-                <button
-                  className={styles.saveBtn}
-                  onClick={handleSavePartner}
-                  disabled={uploadingPartner}
-                >
+                <button className={styles.saveBtn} onClick={handleSavePartner} disabled={uploadingPartner}>
                   {uploadingPartner ? tx.uploading : `✅ ${editPartner ? tx.save : tx.addPartner}`}
                 </button>
-                <button
-                  className={styles.cancelBtn}
-                  onClick={() => { setShowPartnerForm(false); setEditPartner(null); }}
-                >
+                <button className={styles.cancelBtn} onClick={() => { setShowPartnerForm(false); setEditPartner(null); }}>
                   ✖️ {tx.cancel}
                 </button>
               </div>
@@ -669,11 +573,7 @@ export default function AdminClient() {
                 </thead>
                 <tbody>
                   {partners.length === 0 ? (
-                    <tr>
-                      <td colSpan={4} style={{ textAlign: "center", padding: "40px", color: "#9ca3af" }}>
-                        {tx.noMessages.replace("mesazhe", "partnerë")}
-                      </td>
-                    </tr>
+                    <tr><td colSpan={4} style={{ textAlign: "center", padding: "40px", color: "#9ca3af" }}>{tx.noMessages}</td></tr>
                   ) : partners.map(p => (
                     <tr key={p.id}>
                       <td className={styles.iconCell}>
@@ -691,11 +591,11 @@ export default function AdminClient() {
                       </td>
                       <td>
                         <div className={styles.actions}>
-                          <button className={styles.editBtn} onClick={() => handleEditPartner(p)} title={tx.edit}>
+                          <button className={styles.editBtn} onClick={() => handleEditPartner(p)}>
                             <FontAwesomeIcon icon={faCog} />
                             <span className={styles.btnText}>{tx.edit}</span>
                           </button>
-                          <button className={styles.deleteBtn} onClick={() => handleDeletePartner(p.id)} title={tx.delete}>
+                          <button className={styles.deleteBtn} onClick={() => handleDeletePartner(p.id)}>
                             <FontAwesomeIcon icon={faTrash} />
                             <span className={styles.btnText}>{tx.delete}</span>
                           </button>
@@ -709,6 +609,19 @@ export default function AdminClient() {
           )}
         </>
       )}
+       <div className={styles.stats}>
+        {STATS_DATA.map((s, i) => (
+          <div className={styles.statCard} key={i}>
+            <div className={styles.statIcon} style={{ background: s.bg }}>
+              <span style={{ fontSize: "18px" }}>{s.icon}</span>
+            </div>
+            <div>
+              <div className={styles.statNum} style={{ color: s.color }}>{s.num}</div>
+              <div className={styles.statLbl}>{s.lbl}</div>
+            </div>
+          </div>
+        ))}
+      </div>
 
     </div>
   );

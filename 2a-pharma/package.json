@@ -2,14 +2,15 @@
   "name": "2a-pharma",
   "version": "0.1.0",
   "private": true,
-  "scripts": {
-    "dev": "next dev",
-    "build": "next build && echo '' > out/.nojekyll",
-    "predeploy": "npm run build && copy .nojekyll out\\.nojekyll",
-    "deploy": "gh-pages -d out -b gh-pages --dotfiles",
-    "start": "next start",
-    "lint": "eslint"
-  },
+ "scripts": {
+  "dev": "next dev",
+  "build": "next build",
+  "postbuild": "node -e \"require('fs').writeFileSync('out/.nojekyll', '')\"",
+  "predeploy": "npm run build",
+  "deploy": "gh-pages -d out -b gh-pages --dotfiles",
+  "start": "next start",
+  "lint": "eslint"
+},
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^7.2.0",
     "@fortawesome/free-solid-svg-icons": "^7.2.0",

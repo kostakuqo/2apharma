@@ -15,12 +15,15 @@ const CAT_LABELS = {
 };
 
 const CATEGORIES = ["All", "Diagnostics", "Respiratory", "Consumables", "Mobility"];
+const PAGE_SIZE = 6;
 
 export default function ProductsClient() {
   const { lang, tx } = useLang();
   const [activeCategory, setActiveCategory] = useState("All");
+  const [search, setSearch] = useState("");
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [visible, setVisible] = useState(PAGE_SIZE);
 
   useEffect(() => {
     async function load() {
@@ -31,9 +34,26 @@ export default function ProductsClient() {
     load();
   }, []);
 
-  const filtered = activeCategory === "All"
-    ? products
-    : products.filter(p => p.category_en === activeCategory);
+  // reset visible când se schimbă filtrul sau search-ul
+  useEffect(() => {
+    setVisible(PAGE_SIZE);
+  }, [activeCategory, search]);
+
+  const filtered = products
+    .filter(p => activeCategory === "All" || p.category_en === activeCategory)
+    .filter(p => {
+      if (!search.trim()) return true;
+      const q = search.toLowerCase();
+      return (
+        p.name_al?.toLowerCase().includes(q) ||
+        p.name_en?.toLowerCase().includes(q) ||
+        p.name_it?.toLowerCase().includes(q) ||
+        p.category_en?.toLowerCase().includes(q)
+      );
+    });
+
+  const displayed = filtered.slice(0, visible);
+  const hasMore = visible < filtered.length;
 
   if (loading) return (
     <div style={{ display: "flex", justifyContent: "center", alignItems: "center", minHeight: "60vh", fontSize: "18px" }}>
@@ -49,25 +69,43 @@ export default function ProductsClient() {
         <p className={styles.pageSub}>{tx.products.sub}</p>
       </div>
 
-      <div className={styles.filters}>
-        {CATEGORIES.map(cat => (
-          <button
-            key={cat}
-            className={`${styles.filterBtn} ${activeCategory === cat ? styles.filterActive : ""}`}
-            onClick={() => setActiveCategory(cat)}
-          >
-            {CAT_LABELS[cat]?.[lang] || cat}
-          </button>
-        ))}
+      {/* Search + Dropdown */}
+      <div className={styles.controls}>
+        <input
+          type="text"
+          className={styles.searchInput}
+          placeholder={lang === "al" ? "Kërko produkte..." : lang === "it" ? "Cerca prodotti..." : "Search products..."}
+          value={search}
+          onChange={e => setSearch(e.target.value)}
+        />
+        <select
+          className={styles.dropdown}
+          value={activeCategory}
+          onChange={e => setActiveCategory(e.target.value)}
+        >
+          {CATEGORIES.map(cat => (
+            <option key={cat} value={cat}>
+              {CAT_LABELS[cat]?.[lang] || cat}
+            </option>
+          ))}
+        </select>
       </div>
 
       <div className={styles.grid}>
-        {filtered.map(p => <ProductCard key={p.id} product={p} />)}
+        {displayed.map(p => <ProductCard key={p.id} product={p} />)}
       </div>
 
       {filtered.length === 0 && (
         <div style={{ textAlign: "center", padding: "48px", color: "var(--gray-600)" }}>
-          {lang === "al" ? "Nuk ka produkte në këtë kategori." : lang === "it" ? "Nessun prodotto in questa categoria." : "No products in this category."}
+          {lang === "al" ? "Nuk ka produkte." : lang === "it" ? "Nessun prodotto trovato." : "No products found."}
+        </div>
+      )}
+
+      {hasMore && (
+        <div className={styles.showMoreWrap}>
+          <button className={styles.showMoreBtn} onClick={() => setVisible(v => v + PAGE_SIZE)}>
+            {lang === "al" ? "Shfaq më shumë" : lang === "it" ? "Mostra altri" : "Show more"}
+          </button>
         </div>
       )}
     </div>

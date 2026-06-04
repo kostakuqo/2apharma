@@ -1,8 +1,10 @@
+const isProd = process.env.NODE_ENV === "production";
+
 const nextConfig = {
-  output: "export",
+  ...(isProd && { output: "export" }),
   images: { unoptimized: true },
-  basePath: "/2apharma",
-  assetPrefix: "/2apharma/",
+  basePath: isProd ? "/2apharma" : "",
+  assetPrefix: isProd ? "/2apharma/" : "",
   trailingSlash: true,
 };
 
