@@ -4,10 +4,11 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "next build && echo '' > out/.nojekyll",
+    "predeploy": "npm run build && copy .nojekyll out\\.nojekyll",
+    "deploy": "gh-pages -d out -b gh-pages --dotfiles",
     "start": "next start",
-    "lint": "eslint",
-    "deploy": "gh-pages -d out -b gh-pages --dotfiles"
+    "lint": "eslint"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^7.2.0",

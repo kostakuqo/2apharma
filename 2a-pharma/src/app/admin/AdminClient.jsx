@@ -21,11 +21,13 @@ const adminTx = {
     logout: "Dil (Logout)",
     products: "Produkte",
     messages: "Mesazhe",
+    partners: "Partnerë",
     totalProducts: "Produkte gjithsej",
     inStock: "Në stok",
     outStock: "Pa stok",
     lowStock: "Stok i ulët",
     unread: "Mesazhe të palexuara",
+    totalPartners: "Partnerë gjithsej",
     addProduct: "+ Shto produkt",
     editProduct: "Ndrysho produktin",
     newProduct: "Produkt i ri",
@@ -43,20 +45,30 @@ const adminTx = {
     unreadLabel: "te palexuara",
     confirmDelete: "A je i sigurt që do ta fshish produktin?",
     confirmDeleteMsg: "A je i sigurt që do ta fshish këtë mesazh?",
+    confirmDeletePartner: "A je i sigurt që do ta fshish këtë partner?",
     nameEN: "Emri EN", nameAL: "Emri AL", nameIT: "Emri IT",
     catEN: "Kategoria EN", catAL: "Kategoria AL", catIT: "Kategoria IT",
     descEN: "Përshkrimi EN", descAL: "Përshkrimi AL", descIT: "Përshkrimi IT",
     stock: "Stoku", icon: "Ikona (emoji)", image: "Imagine",
     uploading: "⏳ Duke ngarkuar...",
     photo: "Foto", name: "Emri", category: "Kategoria", actions: "Veprimet",
+    addPartner: "+ Shto partner",
+    newPartner: "Partner i ri",
+    editPartner: "Ndrysho partnerin",
+    partnerName: "Emri i partnerit",
+    partnerLogo: "Logo (ngarko foto)",
+    partnerWebsite: "Faqja web",
   },
   en: {
     title: "Admin Panel — 2A Pharma",
     logout: "Logout",
-    products: "Products", messages: "Messages",
+    products: "Products",
+    messages: "Messages",
+    partners: "Partners",
     totalProducts: "Total products",
     inStock: "In stock", outStock: "Out of stock", lowStock: "Low stock",
     unread: "Unread messages",
+    totalPartners: "Total partners",
     addProduct: "+ Add product", editProduct: "Edit product", newProduct: "New product",
     save: "Save changes", add: "Add product", cancel: "Cancel",
     delete: "Delete", edit: "Edit", refresh: "↻ Refresh",
@@ -65,20 +77,30 @@ const adminTx = {
     incomingMessages: "Incoming messages", unreadLabel: "unread",
     confirmDelete: "Are you sure you want to delete this product?",
     confirmDeleteMsg: "Are you sure you want to delete this message?",
+    confirmDeletePartner: "Are you sure you want to delete this partner?",
     nameEN: "Name EN", nameAL: "Name AL", nameIT: "Name IT",
     catEN: "Category EN", catAL: "Category AL", catIT: "Category IT",
     descEN: "Description EN", descAL: "Description AL", descIT: "Description IT",
     stock: "Stock", icon: "Icon (emoji)", image: "Image",
     uploading: "⏳ Uploading...",
     photo: "Photo", name: "Name", category: "Category", actions: "Actions",
+    addPartner: "+ Add partner",
+    newPartner: "New partner",
+    editPartner: "Edit partner",
+    partnerName: "Partner name",
+    partnerLogo: "Logo (upload photo)",
+    partnerWebsite: "Website",
   },
   it: {
     title: "Pannello Admin — 2A Pharma",
     logout: "Esci",
-    products: "Prodotti", messages: "Messaggi",
+    products: "Prodotti",
+    messages: "Messaggi",
+    partners: "Partner",
     totalProducts: "Prodotti totali",
     inStock: "Disponibile", outStock: "Non disponibile", lowStock: "Scorte basse",
     unread: "Messaggi non letti",
+    totalPartners: "Partner totali",
     addProduct: "+ Aggiungi prodotto", editProduct: "Modifica prodotto", newProduct: "Nuovo prodotto",
     save: "Salva modifiche", add: "Aggiungi prodotto", cancel: "Annulla",
     delete: "Elimina", edit: "Modifica", refresh: "↻ Aggiorna",
@@ -87,12 +109,19 @@ const adminTx = {
     incomingMessages: "Messaggi in arrivo", unreadLabel: "non letti",
     confirmDelete: "Sei sicuro di voler eliminare questo prodotto?",
     confirmDeleteMsg: "Sei sicuro di voler eliminare questo messaggio?",
+    confirmDeletePartner: "Sei sicuro di voler eliminare questo partner?",
     nameEN: "Nome EN", nameAL: "Nome AL", nameIT: "Nome IT",
     catEN: "Categoria EN", catAL: "Categoria AL", catIT: "Categoria IT",
     descEN: "Descrizione EN", descAL: "Descrizione AL", descIT: "Descrizione IT",
     stock: "Scorte", icon: "Icona (emoji)", image: "Immagine",
     uploading: "⏳ Caricamento...",
     photo: "Foto", name: "Nome", category: "Categoria", actions: "Azioni",
+    addPartner: "+ Aggiungi partner",
+    newPartner: "Nuovo partner",
+    editPartner: "Modifica partner",
+    partnerName: "Nome partner",
+    partnerLogo: "Logo (carica foto)",
+    partnerWebsite: "Sito web",
   },
 };
 
@@ -113,6 +142,7 @@ export default function AdminClient() {
   const router = useRouter();
   const tx = adminTx[lang];
 
+  // ── Products state ──
   const [imageFile, setImageFile] = useState(null);
   const [uploading, setUploading] = useState(false);
   const [user, setUser] = useState(null);
@@ -129,13 +159,27 @@ export default function AdminClient() {
     stock: "in", icon: "", image_url: ""
   };
   const [form, setForm] = useState(emptyForm);
+
+  // ── Messages state ──
   const [messages, setMessages] = useState([]);
   const [loadingMessages, setLoadingMessages] = useState(false);
 
+  // ── Partners state ──
+  const [partners, setPartners] = useState([]);
+  const [loadingPartners, setLoadingPartners] = useState(false);
+  const [showPartnerForm, setShowPartnerForm] = useState(false);
+  const [editPartner, setEditPartner] = useState(null);
+  const [partnerImageFile, setPartnerImageFile] = useState(null);
+  const [uploadingPartner, setUploadingPartner] = useState(false);
+
+  const emptyPartnerForm = { name: "", website: "", logo_url: "" };
+  const [partnerForm, setPartnerForm] = useState(emptyPartnerForm);
+
+  // ── Auth ──
   useEffect(() => {
     const unsub = onAuthStateChanged(auth, u => {
       if (u) setUser(u);
-      else router.push("/login"); // ✅ corect pentru Next.js
+      else router.push("/login");
     });
     return () => unsub();
   }, []);
@@ -144,9 +188,11 @@ export default function AdminClient() {
     if (user) {
       loadProducts();
       loadMessages();
+      loadPartners();
     }
   }, [user]);
 
+  // ── Products functions ──
   async function loadProducts() {
     setLoading(true);
     const snap = await getDocs(collection(db, "products"));
@@ -184,6 +230,7 @@ export default function AdminClient() {
     setShowForm(true);
   }
 
+  // ── Messages functions ──
   async function loadMessages() {
     setLoadingMessages(true);
     try {
@@ -208,6 +255,45 @@ export default function AdminClient() {
     setMessages(prev => prev.filter(m => m.id !== id));
   }
 
+  // ── Partners functions ──
+  async function loadPartners() {
+    setLoadingPartners(true);
+    const snap = await getDocs(collection(db, "partners"));
+    setPartners(snap.docs.map(d => ({ id: d.id, ...d.data() })));
+    setLoadingPartners(false);
+  }
+
+  async function handleSavePartner() {
+    setUploadingPartner(true);
+    let logoUrl = partnerForm.logo_url;
+    if (partnerImageFile) logoUrl = await uploadImage(partnerImageFile);
+    const finalData = { ...partnerForm, logo_url: logoUrl };
+    if (editPartner) {
+      await updateDoc(doc(db, "partners", editPartner.id), finalData);
+    } else {
+      await addDoc(collection(db, "partners"), finalData);
+    }
+    setUploadingPartner(false);
+    setShowPartnerForm(false);
+    setEditPartner(null);
+    setPartnerForm(emptyPartnerForm);
+    setPartnerImageFile(null);
+    loadPartners();
+  }
+
+  async function handleDeletePartner(id) {
+    if (!confirm(tx.confirmDeletePartner)) return;
+    await deleteDoc(doc(db, "partners", id));
+    loadPartners();
+  }
+
+  function handleEditPartner(partner) {
+    setEditPartner(partner);
+    setPartnerForm(partner);
+    setShowPartnerForm(true);
+  }
+
+  // ── Helpers ──
   function formatDate(ts) {
     if (!ts) return "—";
     const d = ts.toDate ? ts.toDate() : new Date(ts);
@@ -216,7 +302,7 @@ export default function AdminClient() {
 
   async function handleLogout() {
     await signOut(auth);
-    router.push("/login"); // ✅ corect pentru Next.js
+    router.push("/login");
   }
 
   const unreadCount = messages.filter(m => !m.read).length;
@@ -275,6 +361,10 @@ export default function AdminClient() {
           </div>
           <div className={styles.statLbl}>{tx.unread}</div>
         </div>
+        <div className={styles.statCard}>
+          <div className={styles.statNum}>{partners.length}</div>
+          <div className={styles.statLbl}>{tx.totalPartners}</div>
+        </div>
       </div>
 
       {/* ── Tabs ── */}
@@ -293,6 +383,12 @@ export default function AdminClient() {
           {unreadCount > 0 && (
             <span className={styles.badge_unread}>{unreadCount}</span>
           )}
+        </button>
+        <button
+          className={`${styles.tab} ${activeTab === "partners" ? styles.tabActive : ""}`}
+          onClick={() => setActiveTab("partners")}
+        >
+          🤝 {tx.partners}
         </button>
       </div>
 
@@ -496,6 +592,122 @@ export default function AdminClient() {
             </div>
           )}
         </div>
+      )}
+
+      {/* ════ TAB: PARTENERI ════ */}
+      {activeTab === "partners" && (
+        <>
+          <div className={styles.toolbar}>
+            <h2 className={styles.subtitle}>{tx.partners}</h2>
+            <button
+              className={styles.addBtn}
+              onClick={() => { setShowPartnerForm(true); setEditPartner(null); setPartnerForm(emptyPartnerForm); }}
+            >
+              {tx.addPartner}
+            </button>
+          </div>
+
+          {showPartnerForm && (
+            <div className={styles.formCard}>
+              <h3>{editPartner ? tx.editPartner : tx.newPartner}</h3>
+              <div className={styles.formGrid}>
+                <div className={styles.formGroup}>
+                  <label>{tx.partnerName}</label>
+                  <input
+                    value={partnerForm.name}
+                    onChange={e => setPartnerForm({ ...partnerForm, name: e.target.value })}
+                    placeholder="Ex: Siemens Healthineers"
+                  />
+                </div>
+                <div className={styles.formGroup}>
+                  <label>{tx.partnerWebsite}</label>
+                  <input
+                    value={partnerForm.website}
+                    onChange={e => setPartnerForm({ ...partnerForm, website: e.target.value })}
+                    placeholder="https://..."
+                  />
+                </div>
+                <div className={styles.formGroup}>
+                  <label>{tx.partnerLogo}</label>
+                  <input
+                    type="file"
+                    accept="image/*"
+                    onChange={e => setPartnerImageFile(e.target.files[0])}
+                  />
+                </div>
+              </div>
+              <div className={styles.formActions}>
+                <button
+                  className={styles.saveBtn}
+                  onClick={handleSavePartner}
+                  disabled={uploadingPartner}
+                >
+                  {uploadingPartner ? tx.uploading : `✅ ${editPartner ? tx.save : tx.addPartner}`}
+                </button>
+                <button
+                  className={styles.cancelBtn}
+                  onClick={() => { setShowPartnerForm(false); setEditPartner(null); }}
+                >
+                  ✖️ {tx.cancel}
+                </button>
+              </div>
+            </div>
+          )}
+
+          {loadingPartners ? (
+            <div className={styles.loading}>{tx.loading}</div>
+          ) : (
+            <div className={styles.tableWrap}>
+              <table className={styles.table}>
+                <thead>
+                  <tr>
+                    <th>{tx.photo}</th>
+                    <th>{tx.partnerName}</th>
+                    <th>{tx.partnerWebsite}</th>
+                    <th>{tx.actions}</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {partners.length === 0 ? (
+                    <tr>
+                      <td colSpan={4} style={{ textAlign: "center", padding: "40px", color: "#9ca3af" }}>
+                        {tx.noMessages.replace("mesazhe", "partnerë")}
+                      </td>
+                    </tr>
+                  ) : partners.map(p => (
+                    <tr key={p.id}>
+                      <td className={styles.iconCell}>
+                        {p.logo_url
+                          ? <img src={p.logo_url} alt={p.name} className={styles.productThumb} />
+                          : <span style={{ opacity: 0.3, fontSize: "1.5rem" }}>🏢</span>
+                        }
+                      </td>
+                      <td className={styles.productName}>{p.name}</td>
+                      <td>
+                        {p.website
+                          ? <a href={p.website} target="_blank" rel="noreferrer" style={{ color: "var(--green)" }}>{p.website}</a>
+                          : "—"
+                        }
+                      </td>
+                      <td>
+                        <div className={styles.actions}>
+                          <button className={styles.editBtn} onClick={() => handleEditPartner(p)} title={tx.edit}>
+                            <FontAwesomeIcon icon={faCog} />
+                            <span className={styles.btnText}>{tx.edit}</span>
+                          </button>
+                          <button className={styles.deleteBtn} onClick={() => handleDeletePartner(p.id)} title={tx.delete}>
+                            <FontAwesomeIcon icon={faTrash} />
+                            <span className={styles.btnText}>{tx.delete}</span>
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          )}
+        </>
       )}
 
     </div>
