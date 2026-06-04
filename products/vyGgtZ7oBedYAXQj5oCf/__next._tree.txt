@@ -1,3 +1,3 @@
-:HL["/2apharma/_next/static/chunks/2qbh4j2eikum1.css","style"]
+:HL["/2apharma/_next/static/chunks/1yoz85jpjwsuz.css","style"]
 :HL["/2apharma/_next/static/chunks/0ybdf3kyd6qew.css","style"]
-0:{"tree":{"name":"","param":null,"prefetchHints":16,"slots":{"children":{"name":"products","param":null,"prefetchHints":0,"slots":{"children":{"name":"id","param":{"type":"d","key":"vyGgtZ7oBedYAXQj5oCf","siblings":null},"prefetchHints":0,"slots":{"children":{"name":"__PAGE__","param":null,"prefetchHints":0,"slots":null}}}}}}},"staleTime":300,"buildId":"f70pZYSpDQoFMkRYyGKkf"}
+0:{"tree":{"name":"","param":null,"prefetchHints":16,"slots":{"children":{"name":"products","param":null,"prefetchHints":0,"slots":{"children":{"name":"id","param":{"type":"d","key":"vyGgtZ7oBedYAXQj5oCf","siblings":null},"prefetchHints":0,"slots":{"children":{"name":"__PAGE__","param":null,"prefetchHints":0,"slots":null}}}}}}},"staleTime":300,"buildId":"j08jqUcHCsS0IBtMHy0Y1"}
