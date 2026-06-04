@@ -3,5 +3,5 @@
 3:I[97367,["/2apharma/_next/static/chunks/0qq0cfbkzrg7o.js","/2apharma/_next/static/chunks/14mrh2-p_w84d.js"],"OutletBoundary"]
 4:"$Sreact.suspense"
 :HL["/2apharma/_next/static/chunks/2_4_tax1_0j-p.css","style"]
-0:{"rsc":["$","$1","c",{"children":[["$","$L2",null,{}],[["$","link","0",{"rel":"stylesheet","href":"/2apharma/_next/static/chunks/2_4_tax1_0j-p.css","precedence":"next"}],["$","script","script-0",{"src":"/2apharma/_next/static/chunks/09mzl2z5ebbwg.js","async":true}]],["$","$L3",null,{"children":["$","$4",null,{"name":"Next.MetadataOutlet","children":"$@5"}]}]]}],"isPartial":false,"staleTime":300,"varyParams":null,"buildId":"8f397gbEbLAbWB1rMtAeT"}
+0:{"rsc":["$","$1","c",{"children":[["$","$L2",null,{}],[["$","link","0",{"rel":"stylesheet","href":"/2apharma/_next/static/chunks/2_4_tax1_0j-p.css","precedence":"next"}],["$","script","script-0",{"src":"/2apharma/_next/static/chunks/09mzl2z5ebbwg.js","async":true}]],["$","$L3",null,{"children":["$","$4",null,{"name":"Next.MetadataOutlet","children":"$@5"}]}]]}],"isPartial":false,"staleTime":300,"varyParams":null,"buildId":"NCslbmnr0F0R6dBT9BGEO"}
 5:null
