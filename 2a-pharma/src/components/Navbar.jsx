@@ -10,24 +10,24 @@ import styles from "./Navbar.module.css";
 
 const FlagAL = () => (
   <svg width="20" height="14" viewBox="0 0 20 14" xmlns="http://www.w3.org/2000/svg">
-    <rect width="20" height="14" fill="#E41E20"/>
-    <path d="M10 2 C8.5 2 7 3 7 4.5 C7 5.5 7.5 6 7.5 6 L6 6.5 L7 7 L6.5 8 L8 7.5 L8 9 L9 8.5 L9 10 L10 9.5 L11 10 L11 8.5 L12 9 L12 7.5 L13.5 8 L13 7 L14 6.5 L12.5 6 C12.5 6 13 5.5 13 4.5 C13 3 11.5 2 10 2Z M8.5 4 C8 4 7.5 4.5 8 5 C8 5 7.5 5.5 8.5 5.5Z M11.5 4 C12 4 12.5 4.5 12 5 C12 5 12.5 5.5 11.5 5.5Z" fill="#000"/>
+    <rect width="20" height="14" fill="#E41E20" />
+    <path d="M10 2 C8.5 2 7 3 7 4.5 C7 5.5 7.5 6 7.5 6 L6 6.5 L7 7 L6.5 8 L8 7.5 L8 9 L9 8.5 L9 10 L10 9.5 L11 10 L11 8.5 L12 9 L12 7.5 L13.5 8 L13 7 L14 6.5 L12.5 6 C12.5 6 13 5.5 13 4.5 C13 3 11.5 2 10 2Z M8.5 4 C8 4 7.5 4.5 8 5 C8 5 7.5 5.5 8.5 5.5Z M11.5 4 C12 4 12.5 4.5 12 5 C12 5 12.5 5.5 11.5 5.5Z" fill="#000" />
   </svg>
 );
 const FlagEN = () => (
   <svg width="20" height="14" viewBox="0 0 20 14" xmlns="http://www.w3.org/2000/svg">
-    <rect width="20" height="14" fill="#012169"/>
-    <path d="M0 0L20 14M20 0L0 14" stroke="#fff" strokeWidth="2.8"/>
-    <path d="M0 0L20 14M20 0L0 14" stroke="#C8102E" strokeWidth="1.8"/>
-    <path d="M10 0V14M0 7H20" stroke="#fff" strokeWidth="4.5"/>
-    <path d="M10 0V14M0 7H20" stroke="#C8102E" strokeWidth="2.8"/>
+    <rect width="20" height="14" fill="#012169" />
+    <path d="M0 0L20 14M20 0L0 14" stroke="#fff" strokeWidth="2.8" />
+    <path d="M0 0L20 14M20 0L0 14" stroke="#C8102E" strokeWidth="1.8" />
+    <path d="M10 0V14M0 7H20" stroke="#fff" strokeWidth="4.5" />
+    <path d="M10 0V14M0 7H20" stroke="#C8102E" strokeWidth="2.8" />
   </svg>
 );
 const FlagIT = () => (
   <svg width="20" height="14" viewBox="0 0 20 14" xmlns="http://www.w3.org/2000/svg">
-    <rect width="20" height="14" fill="#CE2B37"/>
-    <rect width="7" height="14" fill="#009246"/>
-    <rect x="7" width="6" height="14" fill="#fff"/>
+    <rect width="20" height="14" fill="#CE2B37" />
+    <rect width="7" height="14" fill="#009246" />
+    <rect x="7" width="6" height="14" fill="#fff" />
   </svg>
 );
 
@@ -38,15 +38,17 @@ const LANGS = [
 ];
 
 const NAV_ITEMS = [
-  { href: "/",         label: "home",     Icon: Home },
-  { href: "/about",    label: "about",    Icon: Info },
+  { href: "/", label: "home", Icon: Home },
+  { href: "/about", label: "about", Icon: Info },
   { href: "/products", label: "products", Icon: Package },
   { href: "/partners", label: "partners", Icon: Handshake },
-  { href: "/contact",  label: "contact",  Icon: Phone },
+  { href: "/contact", label: "contact", Icon: Phone },
 ];
 
 export default function Navbar() {
   const { lang, toggle, tx } = useLang();
+  const [langOpen, setLangOpen] = useState(false);
+  const langRef = useRef(null);
   const pathname = usePathname();
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
@@ -63,12 +65,10 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  // încarcă produsele o singură dată
   useEffect(() => {
     getProducts().then(setAllProducts).catch(console.error);
   }, []);
 
-  // filtrează live
   useEffect(() => {
     const q = searchQuery.trim().toLowerCase();
     if (!q) { setResults([]); return; }
@@ -86,24 +86,25 @@ export default function Navbar() {
     else { setSearchQuery(""); setResults([]); }
   }, [searchOpen]);
 
-  // închide la click afară
+  // Mbyll lang dropdown kur klikohet jashtë
   useEffect(() => {
     const handleClick = (e) => {
-      if (searchWrapRef.current && !searchWrapRef.current.contains(e.target)) {
-        setSearchOpen(false);
+      if (langRef.current && !langRef.current.contains(e.target)) {
+        setLangOpen(false);
       }
     };
     document.addEventListener("mousedown", handleClick);
     return () => document.removeEventListener("mousedown", handleClick);
   }, []);
 
+  // isActive për nav links (pathname)
   const isActive = (href) =>
     href === "/" ? pathname === "/" : pathname.startsWith(href);
 
   const searchPlaceholder =
     lang === "al" ? "Kërko produkte..." :
-    lang === "it" ? "Cerca prodotti..." :
-    "Search products...";
+      lang === "it" ? "Cerca prodotti..." :
+        "Search products...";
 
   const getName = (p) =>
     lang === "al" ? p.name_al : lang === "it" ? p.name_it : p.name_en;
@@ -180,18 +181,64 @@ export default function Navbar() {
               )}
             </div>
 
-            <div className={styles.langGroup}>
-              {LANGS.map(({ code, label, Flag }) => (
-                <button
-                  key={code}
-                  className={`${styles.langBtn} ${lang === code ? styles.langActive : ""}`}
-                  onClick={() => toggle(code)}
-                  title={label}
-                >
-                  <Flag />
-                  <span className={styles.langLabel}>{label}</span>
-                </button>
-              ))}
+            {/* Lang switcher */}
+            <div className={styles.langWrap} ref={langRef}>
+
+              {/* DESKTOP: butona normale */}
+              <div className={styles.langGroup}>
+                {LANGS.map(({ code, label, Flag }) => (
+                  <button
+                    key={code}
+                    className={`${styles.langBtn} ${lang === code ? styles.langActive : ""}`}
+                    onClick={() => toggle(code)}
+                  >
+                    <Flag />
+                    <span className={styles.langLabel}>{label}</span>
+                  </button>
+                ))}
+              </div>
+
+              {/* MOBILE: dropdown trigger */}
+              <button
+                className={styles.langMobileBtn}
+                onClick={() => setLangOpen(v => !v)}
+              >
+                {(() => {
+                  const current = LANGS.find(l => l.code === lang);
+                  return current ? <current.Flag /> : null;
+                })()}
+                <span>{lang.toUpperCase()}</span>
+              </button>
+
+              {/* DROPDOWN (desktop + mobile) */}
+              {langOpen && (
+                <div className={styles.langDropdown}>
+                  {LANGS.map(({ code, label, Flag }) => {
+                    // ← riemërtuar isLangActive për të shmangur konfliktin me isActive(href)
+                    const isLangActive = lang === code;
+
+                    return (
+                      <button
+                        key={code}
+                        className={`${styles.langDropdownItem} ${isLangActive ? styles.langDropdownActive : ""}`}
+                        onClick={() => {
+                          toggle(code);
+                          setLangOpen(false);
+                          setMenuOpen(false);
+                        }}
+                      >
+                        <span className={styles.langFlag}>
+                          <Flag />
+                        </span>
+                        <span className={styles.langText}>{label}</span>
+                        {isLangActive && (
+                          <span className={styles.langCheck}>✓</span>
+                        )}
+                      </button>
+                    );
+                  })}
+                </div>
+              )}
             </div>
 
             <a href="tel:+355684083950" className={styles.phone}>
@@ -227,6 +274,7 @@ export default function Navbar() {
                 </button>
               )}
             </div>
+
             {/* Mobile rezultate */}
             {results.length > 0 && (
               <div className={styles.mobileResults}>
@@ -262,6 +310,7 @@ export default function Navbar() {
                 {tx.nav[label]}
               </Link>
             ))}
+
             <div className={styles.mobileLangGroup}>
               {LANGS.map(({ code, label, Flag }) => (
                 <button
@@ -274,6 +323,7 @@ export default function Navbar() {
                 </button>
               ))}
             </div>
+
             <a href="tel:+355684083950" className={styles.mobilePhone}>
               +355 68 4083 950
             </a>
