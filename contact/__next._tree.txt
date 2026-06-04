@@ -1,3 +1,3 @@
-:HL["/2apharma/_next/static/chunks/28wenbkhkq22q.css","style"]
-:HL["/2apharma/_next/static/chunks/3ec4jwmmfl3_a.css","style"]
-0:{"tree":{"name":"","param":null,"prefetchHints":16,"slots":{"children":{"name":"contact","param":null,"prefetchHints":0,"slots":{"children":{"name":"__PAGE__","param":null,"prefetchHints":0,"slots":null}}}}},"staleTime":300,"buildId":"Fi3dNC3EqvhJL6HDk3Y8F"}
+:HL["/2apharma/_next/static/chunks/1csmfvmw9i4r8.css","style"]
+:HL["/2apharma/_next/static/chunks/3y5vvupdbg11o.css","style"]
+0:{"tree":{"name":"","param":null,"prefetchHints":16,"slots":{"children":{"name":"contact","param":null,"prefetchHints":0,"slots":{"children":{"name":"__PAGE__","param":null,"prefetchHints":0,"slots":null}}}}},"staleTime":300,"buildId":"RvnKL9qbsouXtou4tskMt"}
