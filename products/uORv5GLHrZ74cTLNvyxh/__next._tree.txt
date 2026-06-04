@@ -1,3 +1,3 @@
 :HL["/2apharma/_next/static/chunks/28wenbkhkq22q.css","style"]
 :HL["/2apharma/_next/static/chunks/3qpybi1nynf75.css","style"]
-0:{"tree":{"name":"","param":null,"prefetchHints":16,"slots":{"children":{"name":"products","param":null,"prefetchHints":0,"slots":{"children":{"name":"id","param":{"type":"d","key":"uORv5GLHrZ74cTLNvyxh","siblings":null},"prefetchHints":0,"slots":{"children":{"name":"__PAGE__","param":null,"prefetchHints":0,"slots":null}}}}}}},"staleTime":300,"buildId":"DRtm2dsuCyVNh5nehFo7N"}
+0:{"tree":{"name":"","param":null,"prefetchHints":16,"slots":{"children":{"name":"products","param":null,"prefetchHints":0,"slots":{"children":{"name":"id","param":{"type":"d","key":"uORv5GLHrZ74cTLNvyxh","siblings":null},"prefetchHints":0,"slots":{"children":{"name":"__PAGE__","param":null,"prefetchHints":0,"slots":null}}}}}}},"staleTime":300,"buildId":"hG8Jrp079UB9QXn0-jtC3"}
