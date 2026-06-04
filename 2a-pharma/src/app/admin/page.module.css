@@ -1,0 +1,852 @@
+/* ─────────────────────────────
+   GLOBAL
+───────────────────────────── */
+.page {
+  min-height: 100vh;
+  background: #F4F6FA;
+  padding: 0;
+  font-family: inherit;
+}
+
+/* ─────────────────────────────
+   HEADER
+───────────────────────────── */
+.header {
+  background: #0F2A52;
+  padding: 0 40px;
+  height: 64px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  position: sticky;
+  top: 0;
+  z-index: 100;
+
+  box-shadow: 0 4px 14px rgba(15,42,82,0.18);
+}
+
+.title {
+  font-size: 18px;
+  font-weight: 700;
+  color: #fff;
+}
+
+.headerRight {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.userEmail {
+  font-size: 13px;
+  color: rgba(255,255,255,0.7);
+  background: rgba(255,255,255,0.08);
+  padding: 6px 12px;
+  border-radius: 999px;
+}
+
+.logoutBtn {
+  padding: 8px 14px;
+  border-radius: 10px;
+
+  border: 1px solid rgba(255,255,255,0.25);
+  background: rgba(255,255,255,0.1);
+
+  color: #fff;
+  font-weight: 600;
+  cursor: pointer;
+
+  transition: all 0.2s;
+}
+
+.logoutBtn:hover {
+  background: #E53E3E;
+  border-color: #E53E3E;
+}
+
+/* ─────────────────────────────
+   STATS
+───────────────────────────── */
+.stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 18px;
+
+  margin: 28px 40px;
+}
+
+.statCard {
+  background: #fff;
+  border-radius: 14px;
+
+  padding: 22px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+
+  border: 1px solid #E8EDF5;
+  box-shadow: 0 1px 4px rgba(15,42,82,0.06);
+
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.statCard:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 22px rgba(15,42,82,0.12);
+}
+
+.statNum {
+  font-size: 30px;
+  font-weight: 800;
+  color: #0F2A52;
+}
+
+.statLbl {
+  font-size: 12px;
+  color: #7A8BA8;
+}
+
+/* ─────────────────────────────
+   TOOLBAR
+───────────────────────────── */
+.toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  margin: 0 40px 18px;
+}
+
+.subtitle {
+  font-size: 20px;
+  font-weight: 700;
+  color: #0F2A52;
+}
+
+.addBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+
+  padding: 10px 18px;
+
+  background: #1A8A3C;
+  color: #fff;
+
+  border: none;
+  border-radius: 10px;
+
+  font-weight: 700;
+  cursor: pointer;
+
+  transition: all 0.2s;
+  box-shadow: 0 3px 10px rgba(26,138,60,0.25);
+}
+
+.addBtn:hover {
+  background: #156F30;
+  transform: translateY(-1px);
+}
+
+/* ─────────────────────────────
+   FORM
+───────────────────────────── */
+.formCard {
+  background: #fff;
+  border-radius: 16px;
+
+  margin: 0 40px 24px;
+  padding: 28px;
+
+  border: 1px solid #E8EDF5;
+  box-shadow: 0 4px 14px rgba(15,42,82,0.08);
+}
+
+.formCard h3 {
+  font-size: 17px;
+  font-weight: 700;
+  margin-bottom: 20px;
+  color: #0F2A52;
+}
+
+.formGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+}
+
+.formGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.formGroup label {
+  font-size: 12px;
+  font-weight: 600;
+  color: #3D5A80;
+}
+
+.formGroup input,
+.formGroup select,
+.formGroup textarea {
+  padding: 12px 14px;
+
+  border: 1.5px solid #DDE3EE;
+  border-radius: 10px;
+
+  background: #F8FAFD;
+
+  font-size: 14px;
+
+  outline: none;
+  transition: all 0.2s;
+}
+
+.formGroup input:focus,
+.formGroup select:focus,
+.formGroup textarea:focus {
+  border-color: #1A8A3C;
+  background: #fff;
+  box-shadow: 0 0 0 3px rgba(26,138,60,0.08);
+}
+
+.formActions {
+  display: flex;
+  gap: 12px;
+
+  margin-top: 18px;
+  padding-top: 18px;
+
+  border-top: 1px solid #E8EDF5;
+}
+
+/* ─────────────────────────────
+   BUTTONS
+───────────────────────────── */
+.saveBtn {
+  background: #1A8A3C;
+  color: #fff;
+
+  padding: 10px 18px;
+  border-radius: 10px;
+
+  border: none;
+  font-weight: 700;
+
+  cursor: pointer;
+
+  transition: all 0.2s;
+}
+
+.saveBtn:hover {
+  background: #156F30;
+  transform: translateY(-1px);
+}
+
+.cancelBtn {
+  background: #E54040;
+  color: white;
+
+  border: 1.5px solid #DDE3EE;
+
+  padding: 10px 16px;
+  border-radius: 10px;
+
+  font-weight: 600;
+  cursor: pointer;
+
+  transition: all 0.2s;
+}
+
+.cancelBtn:hover {
+  background: #F4F6FA;
+  border-color: #0F2A52;
+  color: #0F2A52;
+}
+
+/* ─────────────────────────────
+   TABLE
+───────────────────────────── */
+.tableWrap {
+  background: #fff;
+  margin: 0 40px 40px;
+  border-radius: 16px;
+  overflow: hidden;
+  border: 1px solid #E8EDF5;
+  box-shadow: 0 2px 10px rgba(15,42,82,0.06);
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table thead {
+  background: #0F2A52;
+}
+
+.table th {
+  padding: 14px;
+  font-size: 11px;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.75);
+  text-align: left;
+  letter-spacing: 0.05em;
+}
+
+.table td {
+  padding: 12px 14px;
+  border-bottom: none;
+  vertical-align: middle;
+}
+
+.table tbody tr:nth-child(odd) {
+  background-color: #f0faf4;
+}
+
+.table tbody tr:nth-child(even) {
+  background-color: #ffffff;
+}
+
+.table tbody tr {
+  transition: background-color 0.15s ease, transform 0.15s ease;
+}
+
+.table tbody tr:hover {
+  background-color: #c8ecd6 !important;
+  transform: scale(1.002);
+  box-shadow: 0 2px 8px rgba(26,138,60,0.12);
+}
+
+/* ─────────────────────────────
+   PRODUCT THUMBNAIL
+───────────────────────────── */
+.productThumb {
+  width: 56px;
+  height: 56px;
+  object-fit: contain;
+  border-radius: 10px;
+  background: #f0faf4;
+  padding: 4px;
+  border: 1px solid #d4edda;
+}
+
+/* ─────────────────────────────
+   BADGES
+───────────────────────────── */
+.badge {
+  padding: 5px 10px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.badge_in {
+  background: #EDFBF3;
+  color: #1A8A3C;
+}
+
+.badge_low {
+  background: #FFFBEA;
+  color: #B7791F;
+}
+
+.badge_out {
+  background: #FFF0F0;
+  color: #C53030;
+}
+
+/* ─────────────────────────────
+   ACTION BUTTONS
+───────────────────────────── */
+.actions {
+  display: flex;
+  gap: 8px;
+}
+
+.editBtn {
+  background: #EEF3FF;
+  color: #2F4B7C;
+
+  border: 1px solid #C7D6F2;
+  border-radius: 10px;
+
+  padding: 8px 12px;
+  font-size: 12px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition: all 0.2s;
+}
+
+.editBtn:hover {
+  background: #3D5A80;
+  color: #fff;
+}
+
+.deleteBtn {
+  background: #FFF1F1;
+  color: #C53030;
+
+  border: 1px solid #FFD1D1;
+  border-radius: 10px;
+
+  padding: 8px 12px;
+  font-size: 12px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition: all 0.2s;
+}
+
+.deleteBtn:hover {
+  background: #E53E3E;
+  color: #fff;
+}
+
+/* ─────────────────────────────
+   LOADING
+───────────────────────────── */
+.loading {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #7A8BA8;
+}
+/* ═══════════════════════════════════════
+   Adaugă aceste clase la SFÂRȘITUL fișierului
+   AdminPage.module.css existent
+   ═══════════════════════════════════════ */
+
+/* ── Tabs ── */
+.tabs {
+  display: flex;
+  gap: 4px;
+  margin: 1.5rem 0 0;
+  border-bottom: 2px solid #e5e7eb;
+  padding-bottom: 0;
+}
+
+.tab {
+  padding: 10px 20px;
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  color: #6b7280;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -2px;
+  border-radius: 6px 6px 0 0;
+  transition: color 0.2s, border-color 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.tab:hover {
+  color: #111827;
+  background: #f9fafb;
+}
+
+.tabActive {
+  color: #2563eb;
+  border-bottom-color: #2563eb;
+  background: none;
+}
+
+/* Badge număr mesaje necitite pe tab */
+.badge_unread {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: #ef4444;
+  color: #fff;
+  font-size: 11px;
+  font-weight: 700;
+  min-width: 18px;
+  height: 18px;
+  border-radius: 9px;
+  padding: 0 5px;
+  margin-left: 4px;
+  line-height: 1;
+}
+
+/* ── Secțiunea mesaje ── */
+.messagesSection {
+  margin-top: 0;
+}
+
+.emptyMessages {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 60px 20px;
+  color: #9ca3af;
+  font-size: 14px;
+}
+
+.messagesList {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 1rem;
+}
+
+/* ── Card mesaj ── */
+.messageCard {
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-left: 4px solid #e5e7eb;
+  border-radius: 10px;
+  padding: 16px 20px;
+  transition: box-shadow 0.2s;
+}
+
+.messageCard:hover {
+  box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+}
+
+.messageCardUnread {
+  background: #eff6ff;
+  border-left-color: #2563eb;
+}
+
+/* ── Header card mesaj ── */
+.messageHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.messageSender {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.iconRead {
+  font-size: 1.1rem;
+  color: #9ca3af;
+  margin-top: 3px;
+  flex-shrink: 0;
+}
+
+.iconUnread {
+  font-size: 1.1rem;
+  color: #2563eb;
+  margin-top: 3px;
+  flex-shrink: 0;
+}
+
+.messageName {
+  font-size: 15px;
+  color: #111827;
+}
+
+.newBadge {
+  display: inline-block;
+  margin-left: 8px;
+  font-size: 10px;
+  font-weight: 700;
+  background: #2563eb;
+  color: #fff;
+  padding: 2px 6px;
+  border-radius: 4px;
+  vertical-align: middle;
+  letter-spacing: 0.5px;
+}
+
+.messageMeta {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-top: 3px;
+  font-size: 13px;
+}
+
+.messageEmail {
+  color: #2563eb;
+  text-decoration: none;
+}
+
+.messageEmail:hover {
+  text-decoration: underline;
+}
+
+.messagePhone {
+  color: #374151;
+  text-decoration: none;
+}
+
+.messagePhone:hover {
+  text-decoration: underline;
+}
+
+.metaSep {
+  color: #d1d5db;
+}
+
+.messageDate {
+  color: #9ca3af;
+}
+
+/* ── Acțiuni mesaj ── */
+.messageActions {
+  display: flex;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.markReadBtn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  font-size: 13px;
+  border: 1px solid #2563eb;
+  color: #2563eb;
+  background: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+
+.markReadBtn:hover {
+  background: #2563eb;
+  color: #fff;
+}
+
+/* ── Corpul mesajului ── */
+.messageBody {
+  margin: 12px 0 0;
+  font-size: 14px;
+  color: #374151;
+  line-height: 1.6;
+  white-space: pre-wrap;
+  padding-left: 32px; /* aliniat cu iconița */
+}
+/* ══ LANG SWITCHER ══ */
+.langSwitcher {
+  display: flex;
+  gap: 4px;
+}
+
+.langBtn {
+  padding: 5px 10px;
+  border-radius: var(--r-md);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  background: transparent;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-family: var(--font-sans);
+}
+
+.langBtn:hover {
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.langActive {
+  background: #28C75A;
+  border-color: #28C75A;
+  color: #fff;
+}
+
+/* ─────────────────────────────
+   TABLET
+───────────────────────────── */
+@media (max-width: 1024px) {
+
+  .stats {
+    grid-template-columns: repeat(2, 1fr);
+    margin: 20px;
+  }
+
+  .toolbar {
+    margin: 0 20px 18px;
+  }
+
+  .formCard {
+    margin: 0 20px 24px;
+  }
+
+  .tableWrap {
+    margin: 0 20px 30px;
+    overflow-x: auto;
+  }
+
+  .formGrid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+/* ─────────────────────────────
+   MOBILE
+───────────────────────────── */
+@media (max-width: 768px) {
+
+  .header {
+    padding: 12px 16px;
+    height: auto;
+    flex-direction: column;
+    gap: 12px;
+    align-items: flex-start;
+  }
+
+  .headerRight {
+    width: 100%;
+    justify-content: space-between;
+    flex-wrap: wrap;
+  }
+
+  .title {
+    font-size: 16px;
+  }
+
+  .stats {
+    grid-template-columns: 1fr;
+    margin: 16px;
+  }
+
+  .toolbar {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+    margin: 0 16px 16px;
+  }
+
+  .subtitle {
+    font-size: 18px;
+  }
+
+  .addBtn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .formCard {
+    margin: 0 16px 20px;
+    padding: 18px;
+  }
+
+  .formGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .formActions {
+    flex-direction: column;
+  }
+
+  .saveBtn,
+  .cancelBtn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .tableWrap {
+    margin: 0 16px 20px;
+    overflow-x: hidden;
+  }
+
+  .table {
+    width: 100%;
+    min-width: unset;
+  }
+
+  /* Ascunde Kategoria si Stoku pe mobile */
+  .table th:nth-child(3),
+  .table th:nth-child(4) {
+    display: none;
+  }
+
+  .table td:nth-child(3),
+  .table td:nth-child(4) {
+    display: none;
+  }
+
+  .table th,
+  .table td {
+    padding: 10px 8px;
+    font-size: 12px;
+  }
+
+  .iconCell {
+    width: 50px;
+    text-align: center;
+  }
+
+  .productThumb {
+    width: 42px;
+    height: 42px;
+  }
+
+  .productName {
+    font-size: 14px;
+    font-weight: 600;
+  }
+
+  .actions {
+    flex-direction: row;
+    gap: 6px;
+    justify-content: flex-end;
+  }
+
+  .editBtn,
+  .deleteBtn {
+    padding: 8px 10px;
+    font-size: 0;
+    min-width: 40px;
+    justify-content: center;
+  }
+
+  .editBtn svg,
+  .deleteBtn svg {
+    font-size: 14px;
+  }
+
+  .userEmail {
+    max-width: 180px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+}
+
+/* ─────────────────────────────
+   VERY SMALL PHONES
+───────────────────────────── */
+@media (max-width: 480px) {
+
+  .title {
+    font-size: 15px;
+  }
+
+  .statNum {
+    font-size: 24px;
+  }
+
+  .formCard {
+    padding: 14px;
+  }
+
+  .table th,
+  .table td {
+    padding: 10px;
+    font-size: 12px;
+  }
+}

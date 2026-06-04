@@ -1,0 +1,397 @@
+.nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: linear-gradient(135deg, #0F2A52 0%, #1A3F7A 50%, #1A8A3C 100%);
+  box-shadow: 0 2px 10px rgba(15, 23, 42, 0.06);
+  transition: box-shadow var(--t-fast);
+}
+
+.nav.scrolled {
+  box-shadow: 0 2px 20px rgba(15, 42, 82, 0.12);
+}
+
+.inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 80px;
+  padding: 0 var(--section-px);
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  flex-shrink: 0;
+}
+
+.logoMark {
+  width: 42px;
+  height: 42px;
+  background: var(--navy);
+  border-radius: var(--r-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-weight: 700;
+  font-size: 14px;
+}
+
+.logoText {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--gray-100);
+  white-space: nowrap;
+}
+
+/* ── Links ── */
+.links {
+  display: flex;
+  gap: 48px;
+  flex: 1;
+  justify-content: center;
+}
+
+.links a {
+  font-size: 18px;
+  font-weight: 500;
+  color: var(--gray-100);
+  text-decoration: none;
+  padding: 6px 0;
+  border-bottom: 2px solid transparent;
+  transition: color var(--t-fast), border-color var(--t-fast);
+  white-space: nowrap;
+}
+
+.links a:hover {
+  color: var(--green);
+}
+
+.links a.active {
+  color: var(--green);
+  border-bottom-color: var(--green);
+  font-weight: 600;
+}
+
+/* ── Right ── */
+.right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-shrink: 0;
+}
+
+/* ── Lang Group ── */
+.langGroup {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+}
+
+.langBtn {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 5px 9px;
+  border-radius: var(--r-sm);
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  transition: all var(--t-fast);
+  font-family: var(--font-sans);
+}
+
+.langBtn svg {
+  border-radius: 2px;
+  display: block;
+  flex-shrink: 0;
+}
+
+.langBtn:hover {
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.langActive {
+  background: rgba(26, 138, 60, 0.35) !important;
+  border: 2px solid #1A8A3C !important;
+  border-radius: var(--r-sm);
+}
+
+.langActive .langLabel {
+  color: #fff;
+}
+
+.langLabel {
+  font-size: 11px;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.75);
+  letter-spacing: 0.05em;
+}
+
+/* ── Phone ── */
+.phone {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--gray-100);
+  padding: 9px 14px;
+  border: 1.5px solid var(--gray-100);
+  border-radius: var(--r-md);
+  text-decoration: none;
+  white-space: nowrap;
+  transition: all var(--t-fast);
+}
+
+.phone:hover {
+  background: var(--green);
+  color: #fff;
+}
+
+/* ── Hamburger ── */
+.hamburger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+}
+
+.hamburger span {
+  display: block;
+  width: 24px;
+  height: 2.5px;
+  background: #fff;
+  border-radius: 2px;
+}
+
+/* ── Mobile dropdown ── */
+.mobileMenu {
+  display: flex;
+  flex-direction: column;
+  padding: 12px var(--section-px) 20px;
+  border-top: 1px solid var(--navy-pale);
+  background: #fff;
+}
+
+.mobileMenu a {
+  padding: 13px 0;
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--navy);
+  text-decoration: none;
+  border-bottom: 1px solid var(--gray-100);
+  transition: color var(--t-fast);
+}
+
+.mobileMenu a:hover {
+  color: var(--green);
+}
+
+/* ── Mobile Lang Group ── */
+.mobileLangGroup {
+  display: flex;
+  gap: 8px;
+  padding: 16px 0 8px;
+  border-bottom: 1px solid var(--gray-100);
+}
+
+.mobileLangBtn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 12px;
+  border-radius: var(--r-sm);
+  border: 1.5px solid rgba(0, 0, 0, 0.1);
+  background: transparent;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--gray-600);
+  font-family: var(--font-sans);
+  transition: all var(--t-fast);
+}
+
+.mobileLangBtn svg {
+  border-radius: 2px;
+}
+
+.mobileLangActive {
+  background: #1A8A3C !important;
+  border-color: #1A8A3C !important;
+  color: #fff !important;
+}
+.bottomNav{
+  display: none;
+
+}
+
+.mobilePhone {
+  margin-top: 16px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 16px;
+  background: var(--green);
+  color: #fff !important;
+  border-radius: var(--r-md);
+  font-weight: 600;
+  font-size: 14px;
+  border-bottom: none !important;
+  text-decoration: none;
+}
+
+/* ── Responsive desktop ── */
+@media (max-width: 1100px) {
+  .links {
+    gap: 18px;
+  }
+
+  .links a {
+    font-size: 14px;
+  }
+
+  .phone {
+    font-size: 12px;
+    padding: 8px 10px;
+  }
+}
+
+@media (max-width: 900px) {
+  .links {
+    gap: 12px;
+  }
+
+  .phone {
+    display: none;
+  }
+}
+
+@media (max-width: 768px) {
+  .inner {
+    height: 68px;
+  }
+
+  .links {
+    display: none;
+  }
+
+  .hamburger {
+    display: flex;
+  }
+}
+
+@media (min-width: 769px) {
+  .mobileMenu {
+    display: none;
+  }
+}
+
+/* ════════════════════════════════
+   BOTTOM NAV — mobile only
+════════════════════════════════ */
+
+
+@media (max-width: 768px) {
+  .bottomNav {
+    position: fixed !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    width: 100vw !important;
+    display: flex !important;
+    z-index: 99999 !important;
+    background: linear-gradient(135deg, #0F2A52 0%, #1A3F7A 50%, #1A8A3C 100%);
+
+  }
+
+  .bottomNavItem {
+    flex: 1 !important;
+  }
+
+  /* .bottomNav {
+    display: flex;
+    position: fixed ;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    background: linear-gradient(135deg, #0F2A52 0%, #1A3F7A 50%, #1A8A3C 100%);
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 -4px 20px rgba(15, 42, 82, 0.15);
+    padding: 4px 0 max(4px, env(safe-area-inset-bottom));
+    justify-content: space-between; 
+    align-items: stretch;
+    width: 100%;
+    box-sizing: border-box;
+  } */
+
+  .bottomNavItem {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2px;
+    flex: 1 1 0;
+    /* ← toți itemii au același flex basis */
+    min-width: 0;
+    /* ← permite shrink */
+    padding: 4px 2px;
+    text-decoration: none;
+    color: rgba(255, 255, 255, 0.5);
+    transition: color 0.2s;
+    overflow: hidden;
+  }
+
+  .bottomNavIcon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 24px;
+    border-radius: 8px;
+    transition: all 0.2s;
+    flex-shrink: 0;
+  }
+
+  .bottomNavLabel {
+    font-size: 9px;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.5);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 100%;
+    text-align: center;
+  }
+
+  .bottomNavActive {
+    color: #fff;
+  }
+
+  .bottomNavActive .bottomNavIcon {
+    background: rgba(26, 138, 60, 0.35);
+    color: #fff;
+  }
+
+  .bottomNavActive .bottomNavLabel {
+    font-weight: 700;
+    color: #fff;
+  }
+
+  .bottomNav {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 99999;
+  }
+
+}

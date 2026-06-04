@@ -1,0 +1,87 @@
+.page { padding: var(--section-py) var(--section-px); min-height: 60vh; }
+
+.pageHeader { margin-bottom: 48px; }
+
+.pageTitle {
+  font-family: var(--font-serif);
+  font-size: 42px;
+  font-weight: 400;
+  color: var(--navy);
+  margin-bottom: 10px;
+}
+
+.pageSub {
+  font-size: 16px;
+  color: var(--gray-600);
+  line-height: 1.75;
+  max-width: 560px;
+}
+
+.statsRow {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 48px;
+  flex-wrap: wrap;
+}
+
+.statCard {
+  background: linear-gradient(135deg, #0F2A52, #1A3F7A);
+  border-radius: var(--r-lg);
+  padding: 28px 32px;
+  flex: 1;
+  min-width: 140px;
+}
+
+.statNum {
+  font-family: var(--font-serif);
+  font-size: 36px;
+  color: #28C75A;
+  margin-bottom: 4px;
+}
+
+.statLbl {
+  font-size: 13px;
+  color: rgba(200, 217, 240, 0.85);
+  font-weight: 500;
+}
+
+.cards {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+}
+
+.card {
+  background: var(--white);
+  border: 1px solid var(--navy-pale);
+  border-radius: var(--r-lg);
+  padding: 32px;
+  transition: all var(--t-fast);
+}
+
+.card:hover {
+  border-color: var(--navy);
+  box-shadow: 0 4px 20px rgba(15, 42, 82, 0.1);
+  transform: translateY(-2px);
+}
+
+.cardIcon { font-size: 36px; margin-bottom: 16px; }
+
+.cardTitle {
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--navy);
+  margin-bottom: 10px;
+}
+
+.cardText {
+  font-size: 14px;
+  color: var(--gray-600);
+  line-height: 1.75;
+}
+
+@media (max-width: 768px) {
+  .cards { grid-template-columns: 1fr; }
+  .statsRow { gap: 10px; }
+  .pageTitle { font-size: 30px; }
+}

@@ -1,0 +1,97 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Serif+Display&display=swap');
+
+:root {
+  --navy:        #0F2A52;
+  --navy-dark:   #081A38;
+  --navy-light:  #1A3F7A;
+  --navy-pale:   #C8D9F0;
+  --navy-soft:   #A0BDE0;
+
+  --green:       #1A8A3C;
+  --green-dark:  #116128;
+  --green-light: #28C75A;
+  --green-pale:  #C2EDD0;
+  --green-soft:  #7DD9A0;
+
+  --white:       #FFFFFF;
+  --gray-50:     #EEF1F6;
+  --gray-100:    #DDE3EC;
+  --gray-200:    #B8C5D8;
+  --gray-400:    #6E87A8;
+  --gray-600:    #3A5272;
+  --gray-800:    #0F2A52;
+
+  --danger-bg:   #FCCFCF;
+  --danger-text: #7A0F0F;
+  --warning-bg:  #FDECC8;
+  --warning-text:#7A4A00;
+
+  --font-sans:   'DM Sans', sans-serif;
+  --font-serif:  'DM Serif Display', serif;
+
+  --section-px:  48px;
+  --section-py:  64px;
+
+  --r-sm:  6px;
+  --r-md:  8px;
+  --r-lg:  12px;
+  --r-xl:  16px;
+
+  --t-fast: 0.15s ease;
+  --t-mid:  0.25s ease;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--font-sans);
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--navy);
+  background: var(--white);
+  -webkit-font-smoothing: antialiased;
+}
+
+a { text-decoration: none; color: inherit; }
+button { font-family: var(--font-sans); cursor: pointer; }
+img { max-width: 100%; display: block; }
+
+.section-label {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--green-soft);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  margin-bottom: 8px;
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 3px 10px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 600;
+}
+.badge-in  { background: var(--green-pale);  color: var(--green-dark); }
+.badge-low { background: var(--warning-bg);  color: var(--warning-text); }
+.badge-out { background: var(--danger-bg);   color: var(--danger-text); }
+
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--gray-50); }
+::-webkit-scrollbar-thumb { background: var(--gray-200); border-radius: 3px; }
+html, body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+@media (max-width: 768px) {
+  :root { --section-px: 20px; --section-py: 48px; }
+}
