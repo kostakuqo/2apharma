@@ -1,7 +1,7 @@
 1:"$Sreact.fragment"
-2:I[28613,["/2apharma/_next/static/chunks/0uxn-mkxpi2au.js","/2apharma/_next/static/chunks/03q9ge0uhr8gh.js","/2apharma/_next/static/chunks/1oem---h37lik.js","/2apharma/_next/static/chunks/10nq9iarr5frw.js","/2apharma/_next/static/chunks/39gx-io-kl1ff.js"],"default"]
-3:I[27381,["/2apharma/_next/static/chunks/0uxn-mkxpi2au.js","/2apharma/_next/static/chunks/03q9ge0uhr8gh.js"],"OutletBoundary"]
+2:I[28613,["/2apharma/_next/static/chunks/1hf7d9c81mebz.js","/2apharma/_next/static/chunks/03q9ge0uhr8gh.js","/2apharma/_next/static/chunks/39gx-io-kl1ff.js","/2apharma/_next/static/chunks/10nq9iarr5frw.js","/2apharma/_next/static/chunks/1cpwog8bgfw57.js"],"default"]
+3:I[27381,["/2apharma/_next/static/chunks/1hf7d9c81mebz.js","/2apharma/_next/static/chunks/03q9ge0uhr8gh.js","/2apharma/_next/static/chunks/39gx-io-kl1ff.js","/2apharma/_next/static/chunks/10nq9iarr5frw.js"],"OutletBoundary"]
 4:"$Sreact.suspense"
 :HL["/2apharma/_next/static/chunks/0ybdf3kyd6qew.css","style"]
-0:{"rsc":["$","$1","c",{"children":[["$","$L2",null,{"id":"dgxnLJB3OSHOPvCqUVFX"}],[["$","link","0",{"rel":"stylesheet","href":"/2apharma/_next/static/chunks/0ybdf3kyd6qew.css","precedence":"next"}],["$","script","script-0",{"src":"/2apharma/_next/static/chunks/1oem---h37lik.js","async":true}],["$","script","script-1",{"src":"/2apharma/_next/static/chunks/10nq9iarr5frw.js","async":true}],["$","script","script-2",{"src":"/2apharma/_next/static/chunks/39gx-io-kl1ff.js","async":true}]],["$","$L3",null,{"children":["$","$4",null,{"name":"Next.MetadataOutlet","children":"$@5"}]}]]}],"isPartial":false,"staleTime":300,"varyParams":null,"buildId":"Vg7mGNE8CxKyqv5R9HByX"}
+0:{"rsc":["$","$1","c",{"children":[["$","$L2",null,{"id":"dgxnLJB3OSHOPvCqUVFX"}],[["$","link","0",{"rel":"stylesheet","href":"/2apharma/_next/static/chunks/0ybdf3kyd6qew.css","precedence":"next"}],["$","script","script-0",{"src":"/2apharma/_next/static/chunks/1cpwog8bgfw57.js","async":true}]],["$","$L3",null,{"children":["$","$4",null,{"name":"Next.MetadataOutlet","children":"$@5"}]}]]}],"isPartial":false,"staleTime":300,"varyParams":null,"buildId":"f70pZYSpDQoFMkRYyGKkf"}
 5:null

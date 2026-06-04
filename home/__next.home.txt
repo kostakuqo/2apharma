@@ -1,5 +1,5 @@
 1:"$Sreact.fragment"
-2:I[92788,["/2apharma/_next/static/chunks/0uxn-mkxpi2au.js","/2apharma/_next/static/chunks/03q9ge0uhr8gh.js"],"default"]
-3:I[7688,["/2apharma/_next/static/chunks/0uxn-mkxpi2au.js","/2apharma/_next/static/chunks/03q9ge0uhr8gh.js"],"default"]
+2:I[92788,["/2apharma/_next/static/chunks/1hf7d9c81mebz.js","/2apharma/_next/static/chunks/03q9ge0uhr8gh.js","/2apharma/_next/static/chunks/39gx-io-kl1ff.js","/2apharma/_next/static/chunks/10nq9iarr5frw.js"],"default"]
+3:I[7688,["/2apharma/_next/static/chunks/1hf7d9c81mebz.js","/2apharma/_next/static/chunks/03q9ge0uhr8gh.js","/2apharma/_next/static/chunks/39gx-io-kl1ff.js","/2apharma/_next/static/chunks/10nq9iarr5frw.js"],"default"]
 4:[]
-0:{"rsc":["$","$1","c",{"children":[null,["$","$L2",null,{"parallelRouterKey":"children","template":["$","$L3",null,{}]}]]}],"isPartial":false,"staleTime":300,"varyParams":"$W4","buildId":"Vg7mGNE8CxKyqv5R9HByX"}
+0:{"rsc":["$","$1","c",{"children":[null,["$","$L2",null,{"parallelRouterKey":"children","template":["$","$L3",null,{}]}]]}],"isPartial":false,"staleTime":300,"varyParams":"$W4","buildId":"f70pZYSpDQoFMkRYyGKkf"}
