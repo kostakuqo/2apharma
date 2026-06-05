@@ -70,10 +70,14 @@
   color: #fff;
   border: none;
   border-radius: var(--r-md);
-  font-size: 15px;
+  font-size: 14px;
   font-weight: 600;
   cursor: pointer;
   transition: background 0.2s;
+}
+.linkBtn{
+  font-size: 12px;
+  font-weight: 600;
 }
 
 .btn:hover { background: var(--green-dark); }
