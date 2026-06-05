@@ -1,7 +1,7 @@
 1:"$Sreact.fragment"
-2:I[88195,["/2apharma/_next/static/chunks/3h1fx1x1yu_ov.js","/2apharma/_next/static/chunks/03q9ge0uhr8gh.js","/2apharma/_next/static/chunks/39gx-io-kl1ff.js","/2apharma/_next/static/chunks/10nq9iarr5frw.js","/2apharma/_next/static/chunks/15227nyxl6rpt.js"],"default"]
-3:I[27381,["/2apharma/_next/static/chunks/3h1fx1x1yu_ov.js","/2apharma/_next/static/chunks/03q9ge0uhr8gh.js","/2apharma/_next/static/chunks/39gx-io-kl1ff.js","/2apharma/_next/static/chunks/10nq9iarr5frw.js"],"OutletBoundary"]
+2:I[91348,["/2apharma/_next/static/chunks/2ltyiyq6-26bs.js","/2apharma/_next/static/chunks/14mrh2-p_w84d.js","/2apharma/_next/static/chunks/2wxya4wgpma70.js","/2apharma/_next/static/chunks/0vxu5y4mp81cn.js","/2apharma/_next/static/chunks/07vq2g_zys4gd.js"],"default"]
+3:I[97367,["/2apharma/_next/static/chunks/2ltyiyq6-26bs.js","/2apharma/_next/static/chunks/14mrh2-p_w84d.js","/2apharma/_next/static/chunks/2wxya4wgpma70.js","/2apharma/_next/static/chunks/0vxu5y4mp81cn.js"],"OutletBoundary"]
 4:"$Sreact.suspense"
-:HL["/2apharma/_next/static/chunks/1bza33kuci2ze.css","style"]
-0:{"rsc":["$","$1","c",{"children":[["$","$L2",null,{}],[["$","link","0",{"rel":"stylesheet","href":"/2apharma/_next/static/chunks/1bza33kuci2ze.css","precedence":"next"}],["$","script","script-0",{"src":"/2apharma/_next/static/chunks/15227nyxl6rpt.js","async":true}]],["$","$L3",null,{"children":["$","$4",null,{"name":"Next.MetadataOutlet","children":"$@5"}]}]]}],"isPartial":false,"staleTime":300,"varyParams":null,"buildId":"j08jqUcHCsS0IBtMHy0Y1"}
+:HL["/2apharma/_next/static/chunks/2_4_tax1_0j-p.css","style"]
+0:{"rsc":["$","$1","c",{"children":[["$","$L2",null,{}],[["$","link","0",{"rel":"stylesheet","href":"/2apharma/_next/static/chunks/2_4_tax1_0j-p.css","precedence":"next"}],["$","script","script-0",{"src":"/2apharma/_next/static/chunks/07vq2g_zys4gd.js","async":true}]],["$","$L3",null,{"children":["$","$4",null,{"name":"Next.MetadataOutlet","children":"$@5"}]}]]}],"isPartial":false,"staleTime":300,"varyParams":null,"buildId":"PC4qU32q-kkXnGRNjFCss"}
 5:null
