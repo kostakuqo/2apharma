@@ -160,45 +160,71 @@
 }
 .relatedGrid { 
   display: grid; 
-  grid-template-columns: repeat(3, 1fr); 
+  grid-template-columns: repeat(6, 1fr);
   gap: 16px; 
   justify-items: center;
 }
 
 .relatedCard {
-  background: var(--white); 
+  background: var(--white);
   border: 1px solid var(--navy-pale);
-  border-radius: var(--r-lg); 
-  overflow: hidden; 
+  border-radius: 16px;
+  overflow: hidden;
   text-decoration: none;
-  transition: all var(--t-fast);
-  width: 100%;
+  display: flex;
+  flex-direction: column;
+  transition: all 0.25s ease;
 }
 
 .relatedCard:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 28px rgba(15, 42, 82, 0.12);
   border-color: var(--green);
-  box-shadow: 0 4px 16px rgba(26,138,60,0.15);
-  transform: translateY(-2px);
 }
 
 .relatedImg {
-  height: 100px;
   width: 100%;
+  height: 180px;
+
   display: flex;
   align-items: center;
   justify-content: center;
+
+  background: linear-gradient(135deg, #f6f9ff, #eef3fa);
+  position: relative;
   overflow: hidden;
-  background: #f8fafd;
-  border-bottom: 1px solid var(--gray-100);
 }
 
 .relatedImg img {
-  width: 80px;
-  height: 80px;
-  object-fit: contain;
-  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain; /* 🔥 mai safe pentru medicamente */
+  padding: 16px;
+  transition: transform 0.4s ease;
 }
 
+.relatedCard:hover .relatedImg img {
+  transform: scale(1.06);
+}
+
+
+
+
+
+
+
+/* icon fallback mai elegant */
+.relatedImg span {
+  font-size: 48px;
+  opacity: 0.8;
+}
+.relatedImg::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(0,0,0,0.08), transparent);
+  pointer-events: none;
+}
 .relatedName { font-size: 13px; font-weight: 600; color: var(--navy); }
 
 .relatedBadge {
