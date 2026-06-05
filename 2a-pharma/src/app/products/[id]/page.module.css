@@ -1,5 +1,4 @@
 .page { padding: var(--section-py) var(--section-px); min-height: 60vh; }
-
 .breadcrumb {
   display: flex; align-items: center; gap: 8px;
   font-size: 13px; color: var(--gray-400); margin-bottom: 32px;
@@ -18,7 +17,6 @@
 }
 
 .imageWrap { position: relative; }
-
 .imageBox {
   height: 340px;
   border-radius: var(--r-xl);
@@ -86,7 +84,6 @@
 }
 .warrantyLabel { color: var(--gray-600); }
 .warrantyVal   { color: var(--navy); font-weight: 600; }
-
 .cta { display: flex; gap: 10px; flex-wrap: wrap; padding-top: 8px; }
 
 .ctaBtnPrimary {
@@ -262,4 +259,44 @@
 }
 @media (max-width: 480px) {
   .relatedGrid { grid-template-columns: 1fr; }
+}
+.successBox {
+  background: var(--green-pale);
+  color: var(--green-dark);
+  border: 1px solid var(--green-soft);
+  border-radius: var(--r-md);
+  padding: 16px;
+  font-size: 14px;
+  line-height: 1.6;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.resetDesc {
+  font-size: 14px;
+  color: var(--gray-600);
+  line-height: 1.6;
+  margin-bottom: 8px;
+}
+
+.linkBtn {
+  background: none;
+  border: none;
+  color: var(--green);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 8px 0;
+  font-family: var(--font-sans);
+  text-align: center;
+  width: 100%;
+  margin-top: 8px;
+  transition: color var(--t-fast);
+}
+
+.linkBtn:hover {
+  color: var(--green-dark);
+  text-decoration: underline;
 }

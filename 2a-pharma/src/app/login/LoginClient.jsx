@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { signInWithEmailAndPassword } from "firebase/auth";
+import { signInWithEmailAndPassword, sendPasswordResetEmail } from "firebase/auth";
 import { auth } from "../../lib/firebase.js";
 import styles from "./page.module.css";
 
@@ -12,6 +12,13 @@ export default function LoginClient() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+
+  // Reset parolă
+  const [resetMode, setResetMode] = useState(false);
+  const [resetEmail, setResetEmail] = useState("");
+  const [resetSent, setResetSent] = useState(false);
+  const [resetError, setResetError] = useState("");
+  const [resetLoading, setResetLoading] = useState(false);
 
   async function handleLogin(e) {
     e.preventDefault();
@@ -27,6 +34,76 @@ export default function LoginClient() {
     }
   }
 
+  async function handleReset(e) {
+    e.preventDefault();
+    setResetLoading(true);
+    setResetError("");
+    try {
+      await sendPasswordResetEmail(auth, resetEmail);
+      setResetSent(true);
+    } catch (err) {
+      setResetError("Email-i nuk u gjet. Kontrollo adresën.");
+    } finally {
+      setResetLoading(false);
+    }
+  }
+
+  // ── View: Reset parolă ──
+  if (resetMode) {
+    return (
+      <div className={styles.page}>
+        <div className={styles.card}>
+          <div className={styles.logo}>2A Pharma</div>
+          <h1 className={styles.title}>Rivendos Fjalëkalimin</h1>
+
+          {resetSent ? (
+            <div className={styles.successBox}>
+              ✅ Email-i u dërgua! Kontrollo kutinë postare dhe ndiq udhëzimet.
+              <button
+                className={styles.linkBtn}
+                onClick={() => { setResetMode(false); setResetSent(false); setResetEmail(""); }}
+              >
+                ← Kthehu te login
+              </button>
+            </div>
+          ) : (
+            <>
+              <p className={styles.resetDesc}>
+                Shkruaj email-in e llogarisë tënde dhe do të të dërgojmë një link për të rivendosur fjalëkalimin.
+              </p>
+
+              {resetError && <div className={styles.error}>{resetError}</div>}
+
+              <form onSubmit={handleReset} className={styles.form}>
+                <div className={styles.field}>
+                  <label>Email</label>
+                  <input
+                    type="email"
+                    value={resetEmail}
+                    onChange={e => setResetEmail(e.target.value)}
+                    placeholder="admin@2apharma.al"
+                    required
+                  />
+                </div>
+                <button type="submit" className={styles.btn} disabled={resetLoading}>
+                  {resetLoading ? "Duke dërguar..." : "Dërgo Link-un"}
+                </button>
+              </form>
+
+              <button
+                className={styles.linkBtn}
+                onClick={() => { setResetMode(false); setResetError(""); }}
+              >
+                ← Kthehu te login
+              </button>
+            </>
+          )}
+        </div>
+      </div>
+    );
+  }
+
+  // ── View: Login normal ──
   return (
     <div className={styles.page}>
       <div className={styles.card}>
@@ -60,6 +137,13 @@ export default function LoginClient() {
             {loading ? "Duke u procesuar..." : "Logohu"}
           </button>
         </form>
+
+        <button
+          className={styles.linkBtn}
+          onClick={() => { setResetMode(true); setResetEmail(email); }}
+        >
+          Keni harruar fjalëkalimin?
+        </button>
       </div>
     </div>
   );
