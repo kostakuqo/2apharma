@@ -86,7 +86,6 @@ export default function Navbar() {
     else { setSearchQuery(""); setResults([]); }
   }, [searchOpen]);
 
-  // Mbyll lang dropdown kur klikohet jashtë
   useEffect(() => {
     const handleClick = (e) => {
       if (langRef.current && !langRef.current.contains(e.target)) {
@@ -97,7 +96,6 @@ export default function Navbar() {
     return () => document.removeEventListener("mousedown", handleClick);
   }, []);
 
-  // isActive për nav links (pathname)
   const isActive = (href) =>
     href === "/" ? pathname === "/" : pathname.startsWith(href);
 
@@ -127,7 +125,8 @@ export default function Navbar() {
           </nav>
 
           <div className={styles.right}>
-            {/* Search desktop */}
+
+            {/* ── Search (desktop only) ── */}
             <div
               ref={searchWrapRef}
               className={`${styles.searchWrap} ${searchOpen ? styles.searchOpen : ""}`}
@@ -181,10 +180,8 @@ export default function Navbar() {
               )}
             </div>
 
-            {/* Lang switcher */}
+            {/* ── Lang switcher ── */}
             <div className={styles.langWrap} ref={langRef}>
-
-              {/* DESKTOP: butona normale */}
               <div className={styles.langGroup}>
                 {LANGS.map(({ code, label, Flag }) => (
                   <button
@@ -198,7 +195,6 @@ export default function Navbar() {
                 ))}
               </div>
 
-              {/* MOBILE: dropdown trigger */}
               <button
                 className={styles.langMobileBtn}
                 onClick={() => setLangOpen(v => !v)}
@@ -210,13 +206,10 @@ export default function Navbar() {
                 <span>{lang.toUpperCase()}</span>
               </button>
 
-              {/* DROPDOWN (desktop + mobile) */}
               {langOpen && (
                 <div className={styles.langDropdown}>
                   {LANGS.map(({ code, label, Flag }) => {
-                    // ← riemërtuar isLangActive për të shmangur konfliktin me isActive(href)
                     const isLangActive = lang === code;
-
                     return (
                       <button
                         key={code}
@@ -227,13 +220,9 @@ export default function Navbar() {
                           setMenuOpen(false);
                         }}
                       >
-                        <span className={styles.langFlag}>
-                          <Flag />
-                        </span>
+                        <span className={styles.langFlag}><Flag /></span>
                         <span className={styles.langText}>{label}</span>
-                        {isLangActive && (
-                          <span className={styles.langCheck}>✓</span>
-                        )}
+                        {isLangActive && <span className={styles.langCheck}>✓</span>}
                       </button>
                     );
                   })}
@@ -256,9 +245,10 @@ export default function Navbar() {
           </div>
         </div>
 
+        {/* ── Mobile Menu ── */}
         {menuOpen && (
           <div className={styles.mobileMenu}>
-            {/* Mobile search */}
+            {/* Search în meniu */}
             <div className={styles.mobileSearchWrap}>
               <Search size={15} color="var(--gray-400)" />
               <input
@@ -267,15 +257,18 @@ export default function Navbar() {
                 value={searchQuery}
                 onChange={e => setSearchQuery(e.target.value)}
                 className={styles.mobileSearchInput}
+                autoFocus
               />
               {searchQuery && (
-                <button onClick={() => setSearchQuery("")} style={{ background: "none", border: "none", cursor: "pointer", padding: 0 }}>
+                <button
+                  onClick={() => setSearchQuery("")}
+                  style={{ background: "none", border: "none", cursor: "pointer", padding: 0 }}
+                >
                   <X size={14} color="var(--gray-400)" />
                 </button>
               )}
             </div>
 
-            {/* Mobile rezultate */}
             {results.length > 0 && (
               <div className={styles.mobileResults}>
                 {results.map(p => (
@@ -331,6 +324,7 @@ export default function Navbar() {
         )}
       </header>
 
+      {/* ── Bottom Nav ── */}
       <nav className={styles.bottomNav}>
         {NAV_ITEMS.map(({ href, label, Icon }) => (
           <Link
