@@ -18,7 +18,7 @@ import styles from "./page.module.css";
 const adminTx = {
   al: {
     title: "Paneli Admin — 2A Pharma",
-    logout: "Dil (Logout)",
+    logout: "Dil",
     products: "Produkte",
     messages: "Mesazhe",
     partners: "Partnerë",

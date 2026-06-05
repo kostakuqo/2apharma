@@ -399,13 +399,14 @@
 .dropdown {
   position: absolute;
   top: calc(100% + 10px);
-  left: 0;
-  right: 0;
+  left: 50%;
+  transform: translateX(-50%);
   background: #fff;
   border-radius: 12px;
   box-shadow: 0 8px 32px rgba(15, 42, 82, 0.15);
   overflow: hidden;
   z-index: 200;
+  width: 500px;        /* ← lățime fixă mai mare */
 }
 
 .dropdownItem {
@@ -416,6 +417,7 @@
   text-decoration: none;
   transition: background 0.15s ease;
   border-bottom: 1px solid var(--gray-50);
+  max-width: 600px; 
 }
 
 .dropdownItem:last-child {
