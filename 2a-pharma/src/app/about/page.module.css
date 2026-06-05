@@ -52,11 +52,12 @@
 }
 
 .card {
-  background: var(--white);
-  border: 1px solid var(--navy-pale);
+  background: #F0F8FF;
+  border: 1px solid rgba(26, 63, 122, 0.12);
   border-radius: var(--r-lg);
   padding: 32px;
   transition: all var(--t-fast);
+  backdrop-filter: blur(6px);
 }
 
 .card:hover {
@@ -68,7 +69,8 @@
 .cardIcon {
   width: 68px;
   height: 68px;
-
+  background: rgba(40, 199, 90, 0.10);
+  color: #1A8A3C;
   display: flex;
   align-items: center;
   justify-content: center;
