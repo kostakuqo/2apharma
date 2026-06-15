@@ -1,0 +1,8 @@
+User-Agent: *
+Allow: /
+Disallow: /2apharma/admin
+Disallow: /2apharma/admin/
+Disallow: /2apharma/login
+Disallow: /2apharma/login/
+
+Sitemap: https://kostakuqo.github.io/2apharma/sitemap.xml
