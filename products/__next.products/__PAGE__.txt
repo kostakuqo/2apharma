@@ -3,5 +3,5 @@
 3:I[97367,["/2apharma/_next/static/chunks/2gvximjgrnj_d.js","/2apharma/_next/static/chunks/14mrh2-p_w84d.js","/2apharma/_next/static/chunks/22z0xyi2itzb9.js","/2apharma/_next/static/chunks/0_x5w4-36ahkz.js"],"OutletBoundary"]
 4:"$Sreact.suspense"
 :HL["/2apharma/_next/static/chunks/1mgmia2igbf0n.css","style"]
-0:{"rsc":["$","$1","c",{"children":[["$","$L2",null,{}],[["$","link","0",{"rel":"stylesheet","href":"/2apharma/_next/static/chunks/1mgmia2igbf0n.css","precedence":"next"}],["$","script","script-0",{"src":"/2apharma/_next/static/chunks/0zja7h4-k78qo.js","async":true}]],["$","$L3",null,{"children":["$","$4",null,{"name":"Next.MetadataOutlet","children":"$@5"}]}]]}],"isPartial":false,"staleTime":300,"varyParams":null,"buildId":"pmny3Tvs0qCjzEv9HWd2S"}
+0:{"rsc":["$","$1","c",{"children":[["$","$L2",null,{}],[["$","link","0",{"rel":"stylesheet","href":"/2apharma/_next/static/chunks/1mgmia2igbf0n.css","precedence":"next"}],["$","script","script-0",{"src":"/2apharma/_next/static/chunks/0zja7h4-k78qo.js","async":true}]],["$","$L3",null,{"children":["$","$4",null,{"name":"Next.MetadataOutlet","children":"$@5"}]}]]}],"isPartial":false,"staleTime":300,"varyParams":null,"buildId":"RXJzRk-XxthZ1birgDM7J"}
 5:null
