@@ -1,7 +1,6 @@
 1:"$Sreact.fragment"
-2:I[4062,["/2apharma/_next/static/chunks/1hb4g00bohrtp.js","/2apharma/_next/static/chunks/14mrh2-p_w84d.js","/2apharma/_next/static/chunks/0vxu5y4mp81cn.js","/2apharma/_next/static/chunks/3pr5cz5o7gc20.js","/2apharma/_next/static/chunks/3aou2sn3n557s.js","/2apharma/_next/static/chunks/41vn4zfxiwnlw.js"],"default"]
-3:I[97367,["/2apharma/_next/static/chunks/1hb4g00bohrtp.js","/2apharma/_next/static/chunks/14mrh2-p_w84d.js","/2apharma/_next/static/chunks/0vxu5y4mp81cn.js","/2apharma/_next/static/chunks/3pr5cz5o7gc20.js"],"OutletBoundary"]
+2:I[68081,["/2apharma/_next/static/chunks/2gvximjgrnj_d.js","/2apharma/_next/static/chunks/14mrh2-p_w84d.js","/2apharma/_next/static/chunks/22z0xyi2itzb9.js","/2apharma/_next/static/chunks/0_x5w4-36ahkz.js","/2apharma/_next/static/chunks/1we583ayt9i9e.js"],"default"]
+3:I[97367,["/2apharma/_next/static/chunks/2gvximjgrnj_d.js","/2apharma/_next/static/chunks/14mrh2-p_w84d.js","/2apharma/_next/static/chunks/22z0xyi2itzb9.js","/2apharma/_next/static/chunks/0_x5w4-36ahkz.js"],"OutletBoundary"]
 4:"$Sreact.suspense"
-:HL["/2apharma/_next/static/chunks/2o6zk93bxmx2k.css","style"]
-0:{"rsc":["$","$1","c",{"children":[["$","$L2",null,{}],[["$","link","0",{"rel":"stylesheet","href":"/2apharma/_next/static/chunks/2o6zk93bxmx2k.css","precedence":"next"}],["$","script","script-0",{"src":"/2apharma/_next/static/chunks/3aou2sn3n557s.js","async":true}],["$","script","script-1",{"src":"/2apharma/_next/static/chunks/41vn4zfxiwnlw.js","async":true}]],["$","$L3",null,{"children":["$","$4",null,{"name":"Next.MetadataOutlet","children":"$@5"}]}]]}],"isPartial":false,"staleTime":300,"varyParams":null,"buildId":"-vzUUIQepv02gf6wjSCKW"}
+0:{"rsc":["$","$1","c",{"children":[["$","$L2",null,{}],[["$","script","script-0",{"src":"/2apharma/_next/static/chunks/1we583ayt9i9e.js","async":true}]],["$","$L3",null,{"children":["$","$4",null,{"name":"Next.MetadataOutlet","children":"$@5"}]}]]}],"isPartial":false,"staleTime":300,"varyParams":null,"buildId":"6qKiQ2_kWhapA2H7ag-Qf"}
 5:null
