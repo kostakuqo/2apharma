@@ -2,4 +2,4 @@
 2:I[39756,["/2apharma/_next/static/chunks/1hb4g00bohrtp.js","/2apharma/_next/static/chunks/14mrh2-p_w84d.js","/2apharma/_next/static/chunks/0vxu5y4mp81cn.js","/2apharma/_next/static/chunks/3pr5cz5o7gc20.js"],"default"]
 3:I[37457,["/2apharma/_next/static/chunks/1hb4g00bohrtp.js","/2apharma/_next/static/chunks/14mrh2-p_w84d.js","/2apharma/_next/static/chunks/0vxu5y4mp81cn.js","/2apharma/_next/static/chunks/3pr5cz5o7gc20.js"],"default"]
 4:[]
-0:{"rsc":["$","$1","c",{"children":[null,["$","$L2",null,{"parallelRouterKey":"children","template":["$","$L3",null,{}]}]]}],"isPartial":false,"staleTime":300,"varyParams":"$W4","buildId":"K3uxhazbaSOa270iHlUN5"}
+0:{"rsc":["$","$1","c",{"children":[null,["$","$L2",null,{"parallelRouterKey":"children","template":["$","$L3",null,{}]}]]}],"isPartial":false,"staleTime":300,"varyParams":"$W4","buildId":"-vzUUIQepv02gf6wjSCKW"}
