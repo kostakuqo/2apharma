@@ -1,7 +1,6 @@
 import "./globals.css";
 import { LangProvider } from "../context/LangContext.jsx";
-import Navbar from "../components/Navbar.jsx";
-import Footer from "../components/Footer.jsx";
+import LayoutShell from "../components/LayoutShell.jsx";
 
 export const metadata = {
   title: "2A Pharma",
@@ -13,13 +12,9 @@ export default function RootLayout({ children }) {
     <html lang="al" suppressHydrationWarning>
       <body suppressHydrationWarning>
         <LangProvider>
-          <Navbar />
-
-          <main style={{ flex: 1 }}>
+          <LayoutShell>
             {children}
-          </main>
-
-          <Footer />
+          </LayoutShell>
         </LangProvider>
       </body>
     </html>
