@@ -1,18 +1,20 @@
-.page { padding: var(--section-py) var(--section-px); min-height: 60vh; }
+.page {  padding: var(--section-py) var(--section-px); min-height: 60vh; }
 .breadcrumb {
   display: flex; align-items: center; gap: 8px;
-  font-size: 13px; color: var(--gray-400); margin-bottom: 32px;
+  font-size: 16px; color: var(--gray-400); margin-bottom: 32px;
 }
-.breadcrumb a { color: var(--gray-600); text-decoration: none; transition: color var(--t-fast); }
+.breadcrumb a { color: var(--gray-800); text-decoration: none; transition: color var(--t-fast); }
 .breadcrumb a:hover { color: var(--green); }
-.breadcrumb span { color: var(--gray-200); }
-.breadActive { color: var(--navy); font-weight: 600; }
+.breadcrumb span { color: var(--gray-600); }
+.breadActive { color: var(--navy); font-weight: 800; }
 
 .mainGrid {
   display: grid;
+  background-color: aliceblue;
   grid-template-columns: 420px 1fr;
   gap: 48px;
   margin-bottom: 48px;
+  padding: 16px;
   align-items: start;
 }
 

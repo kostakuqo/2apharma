@@ -374,13 +374,14 @@
 ───────────────────────────── */
 .actions {
   display: flex;
-  gap: 8px;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
 }
 
 .editBtn {
   background: #EEF3FF;
   color: #2F4B7C;
-
   border: 1px solid #C7D6F2;
   border-radius: 10px;
 
@@ -413,6 +414,14 @@
 
   transition: all 0.2s;
 }
+.editBtn,
+.deleteBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
 
 .deleteBtn:hover {
   background: #E53E3E;

@@ -9,7 +9,7 @@ export default function Map() {
   };
 
   return (
-    <div style={{ width: "100%", marginBottom: "48px", marginTop: "40px", position: "relative" }}>
+    <div style={{ width: "100%", marginBottom: "4px", marginTop: "4px", position: "relative" }}>
       <div style={{ height: "400px" }}>
         <iframe
           width="100%"

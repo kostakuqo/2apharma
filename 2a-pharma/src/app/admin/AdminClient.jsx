@@ -8,70 +8,41 @@ import {
   collection, getDocs, addDoc, deleteDoc,
   doc, updateDoc, orderBy, query
 } from "firebase/firestore";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faTrash, faCog, faEnvelope, faEnvelopeOpen
-} from "@fortawesome/free-solid-svg-icons";
 import { useLang } from "../../context/LangContext.jsx";
 import styles from "./page.module.css";
 
+const IconTrash = () => <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6M14 11v6"/><path d="M9 6V4h6v2"/></svg>;
+const IconCog = () => <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>;
+const IconEnvelope = () => <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>;
+const IconEnvelopeOpen = () => <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M22 13V6a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 2 6v12a2 2 0 0 0 2 2h7"/><path d="M22 13l-10-6L2 13"/><path d="M16 19h6m-3-3v6"/></svg>;
+
 const adminTx = {
   al: {
-    title: "Paneli Admin — 2A Pharma",
-    logout: "Dil",
-    products: "Produkte",
-    messages: "Mesazhe",
-    partners: "Partnerë",
-    totalProducts: "Produkte gjithsej",
-    inStock: "Në stok",
-    outStock: "Pa stok",
-    lowStock: "Stok i ulët",
-    unread: "Mesazhe të palexuara",
-    totalPartners: "Partnerë gjithsej",
-    addProduct: "+ Shto produkt",
-    editProduct: "Ndrysho produktin",
-    newProduct: "Produkt i ri",
-    save: "Ruaj ndryshimet",
-    add: "Shto produkt",
-    cancel: "Anulo",
-    delete: "Fshi",
-    edit: "Modifiko",
-    refresh: "↻ Rifresko",
-    loading: "Duke u ngarkuar...",
-    loadingMessages: "Duke u ngarkuar mesazhet...",
-    noMessages: "Nuk ka mesazhe të reja.",
-    markRead: "Sheno si te lexuar",
-    incomingMessages: "Mesazhe te ardhura",
-    unreadLabel: "te palexuara",
+    title: "Paneli Admin — 2A Pharma", logout: "Dil", products: "Produkte", messages: "Mesazhe", partners: "Partnerë",
+    totalProducts: "Produkte gjithsej", inStock: "Në stok", outStock: "Pa stok", lowStock: "Stok i ulët",
+    unread: "Mesazhe të palexuara", totalPartners: "Partnerë gjithsej",
+    addProduct: "+ Shto produkt", editProduct: "Ndrysho produktin", newProduct: "Produkt i ri",
+    save: "Ruaj ndryshimet", add: "Shto produkt", cancel: "Anulo", delete: "Fshi", edit: "Modifiko", refresh: "↻ Rifresko",
+    loading: "Duke u ngarkuar...", loadingMessages: "Duke u ngarkuar mesazhet...",
+    noMessages: "Nuk ka mesazhe të reja.", markRead: "Sheno si te lexuar",
+    incomingMessages: "Mesazhe te ardhura", unreadLabel: "te palexuara",
     confirmDelete: "A je i sigurt që do ta fshish produktin?",
     confirmDeleteMsg: "A je i sigurt që do ta fshish këtë mesazh?",
     confirmDeletePartner: "A je i sigurt që do ta fshish këtë partner?",
     nameEN: "Emri EN", nameAL: "Emri AL", nameIT: "Emri IT",
     catEN: "Kategoria EN", catAL: "Kategoria AL", catIT: "Kategoria IT",
     descEN: "Përshkrimi EN", descAL: "Përshkrimi AL", descIT: "Përshkrimi IT",
-    stock: "Stoku", icon: "Ikona (emoji)", image: "Imagine",
-    uploading: "⏳ Duke ngarkuar...",
+    stock: "Stoku", icon: "Ikona (emoji)", image: "Imagine", uploading: "⏳ Duke ngarkuar...",
     photo: "Foto", name: "Emri", category: "Kategoria", actions: "Veprimet",
-    addPartner: "+ Shto partner",
-    newPartner: "Partner i ri",
-    editPartner: "Ndrysho partnerin",
-    partnerName: "Emri i partnerit",
-    partnerLogo: "Logo (ngarko foto)",
-    partnerWebsite: "Faqja web",
+    addPartner: "+ Shto partner", newPartner: "Partner i ri", editPartner: "Ndrysho partnerin",
+    partnerName: "Emri i partnerit", partnerLogo: "Logo (ngarko foto)", partnerWebsite: "Faqja web",
   },
   en: {
-    title: "Admin Panel — 2A Pharma",
-    logout: "Logout",
-    products: "Products",
-    messages: "Messages",
-    partners: "Partners",
-    totalProducts: "Total products",
-    inStock: "In stock", outStock: "Out of stock", lowStock: "Low stock",
-    unread: "Unread messages",
-    totalPartners: "Total partners",
+    title: "Admin Panel — 2A Pharma", logout: "Logout", products: "Products", messages: "Messages", partners: "Partners",
+    totalProducts: "Total products", inStock: "In stock", outStock: "Out of stock", lowStock: "Low stock",
+    unread: "Unread messages", totalPartners: "Total partners",
     addProduct: "+ Add product", editProduct: "Edit product", newProduct: "New product",
-    save: "Save changes", add: "Add product", cancel: "Cancel",
-    delete: "Delete", edit: "Edit", refresh: "↻ Refresh",
+    save: "Save changes", add: "Add product", cancel: "Cancel", delete: "Delete", edit: "Edit", refresh: "↻ Refresh",
     loading: "Loading...", loadingMessages: "Loading messages...",
     noMessages: "No new messages.", markRead: "Mark as read",
     incomingMessages: "Incoming messages", unreadLabel: "unread",
@@ -81,29 +52,17 @@ const adminTx = {
     nameEN: "Name EN", nameAL: "Name AL", nameIT: "Name IT",
     catEN: "Category EN", catAL: "Category AL", catIT: "Category IT",
     descEN: "Description EN", descAL: "Description AL", descIT: "Description IT",
-    stock: "Stock", icon: "Icon (emoji)", image: "Image",
-    uploading: "⏳ Uploading...",
+    stock: "Stock", icon: "Icon (emoji)", image: "Image", uploading: "⏳ Uploading...",
     photo: "Photo", name: "Name", category: "Category", actions: "Actions",
-    addPartner: "+ Add partner",
-    newPartner: "New partner",
-    editPartner: "Edit partner",
-    partnerName: "Partner name",
-    partnerLogo: "Logo (upload photo)",
-    partnerWebsite: "Website",
+    addPartner: "+ Add partner", newPartner: "New partner", editPartner: "Edit partner",
+    partnerName: "Partner name", partnerLogo: "Logo (upload photo)", partnerWebsite: "Website",
   },
   it: {
-    title: "Pannello Admin — 2A Pharma",
-    logout: "Esci",
-    products: "Prodotti",
-    messages: "Messaggi",
-    partners: "Partner",
-    totalProducts: "Prodotti totali",
-    inStock: "Disponibile", outStock: "Non disponibile", lowStock: "Scorte basse",
-    unread: "Messaggi non letti",
-    totalPartners: "Partner totali",
+    title: "Pannello Admin — 2A Pharma", logout: "Esci", products: "Prodotti", messages: "Messaggi", partners: "Partner",
+    totalProducts: "Prodotti totali", inStock: "Disponibile", outStock: "Non disponibile", lowStock: "Scorte basse",
+    unread: "Messaggi non letti", totalPartners: "Partner totali",
     addProduct: "+ Aggiungi prodotto", editProduct: "Modifica prodotto", newProduct: "Nuovo prodotto",
-    save: "Salva modifiche", add: "Aggiungi prodotto", cancel: "Annulla",
-    delete: "Elimina", edit: "Modifica", refresh: "↻ Aggiorna",
+    save: "Salva modifiche", add: "Aggiungi prodotto", cancel: "Annulla", delete: "Elimina", edit: "Modifica", refresh: "↻ Aggiorna",
     loading: "Caricamento...", loadingMessages: "Caricamento messaggi...",
     noMessages: "Nessun nuovo messaggio.", markRead: "Segna come letto",
     incomingMessages: "Messaggi in arrivo", unreadLabel: "non letti",
@@ -113,15 +72,10 @@ const adminTx = {
     nameEN: "Nome EN", nameAL: "Nome AL", nameIT: "Nome IT",
     catEN: "Categoria EN", catAL: "Categoria AL", catIT: "Categoria IT",
     descEN: "Descrizione EN", descAL: "Descrizione AL", descIT: "Descrizione IT",
-    stock: "Scorte", icon: "Icona (emoji)", image: "Immagine",
-    uploading: "⏳ Caricamento...",
+    stock: "Scorte", icon: "Icona (emoji)", image: "Immagine", uploading: "⏳ Caricamento...",
     photo: "Foto", name: "Nome", category: "Categoria", actions: "Azioni",
-    addPartner: "+ Aggiungi partner",
-    newPartner: "Nuovo partner",
-    editPartner: "Modifica partner",
-    partnerName: "Nome partner",
-    partnerLogo: "Logo (carica foto)",
-    partnerWebsite: "Sito web",
+    addPartner: "+ Aggiungi partner", newPartner: "Nuovo partner", editPartner: "Modifica partner",
+    partnerName: "Nome partner", partnerLogo: "Logo (carica foto)", partnerWebsite: "Sito web",
   },
 };
 
@@ -129,10 +83,7 @@ async function uploadImage(file) {
   const formData = new FormData();
   formData.append("file", file);
   formData.append("upload_preset", "2a-pharma-upload");
-  const res = await fetch(
-    "https://api.cloudinary.com/v1_1/diwmjt7aa/image/upload",
-    { method: "POST", body: formData }
-  );
+  const res = await fetch("https://api.cloudinary.com/v1_1/diwmjt7aa/image/upload", { method: "POST", body: formData });
   const data = await res.json();
   return data.secure_url;
 }
@@ -158,10 +109,8 @@ export default function AdminClient() {
     stock: "in", icon: "", image_url: ""
   };
   const [form, setForm] = useState(emptyForm);
-
   const [messages, setMessages] = useState([]);
   const [loadingMessages, setLoadingMessages] = useState(false);
-
   const [partners, setPartners] = useState([]);
   const [loadingPartners, setLoadingPartners] = useState(false);
   const [showPartnerForm, setShowPartnerForm] = useState(false);
@@ -181,11 +130,7 @@ export default function AdminClient() {
   }, []);
 
   useEffect(() => {
-    if (user) {
-      loadProducts();
-      loadMessages();
-      loadPartners();
-    }
+    if (user) { loadProducts(); loadMessages(); loadPartners(); }
   }, [user]);
 
   async function loadProducts() {
@@ -298,8 +243,8 @@ export default function AdminClient() {
   }
 
   const unreadCount = messages.filter(m => !m.read).length;
-  const getName  = p => lang === "al" ? p.name_al  : lang === "it" ? p.name_it  : p.name_en;
-  const getCat   = p => lang === "al" ? p.category_al : lang === "it" ? p.category_it : p.category_en;
+  const getName = p => lang === "al" ? p.name_al : lang === "it" ? p.name_it : p.name_en;
+  const getCat = p => lang === "al" ? p.category_al : lang === "it" ? p.category_it : p.category_en;
   const getStock = s => s === "in" ? tx.inStock : s === "out" ? tx.outStock : tx.lowStock;
 
   const STATS_DATA = [
@@ -315,56 +260,34 @@ export default function AdminClient() {
 
   return (
     <div className={styles.page}>
-
-      {/* ── Header ── */}
       <div className={styles.header}>
         <h1 className={styles.title}>{tx.title}</h1>
         <div className={styles.headerRight}>
           <div className={styles.langSwitcher}>
             {["al", "en", "it"].map(l => (
-              <button
-                key={l}
-                className={`${styles.langBtn} ${lang === l ? styles.langActive : ""}`}
-                onClick={() => toggle(l)}
-              >
+              <button key={l} className={`${styles.langBtn} ${lang === l ? styles.langActive : ""}`} onClick={() => toggle(l)}>
                 {l.toUpperCase()}
               </button>
             ))}
           </div>
           <span className={styles.userEmail}>{user?.email}</span>
-          <button className={styles.logoutBtn} onClick={handleLogout}>
-            {tx.logout}
-          </button>
+          <button className={styles.logoutBtn} onClick={handleLogout}>{tx.logout}</button>
         </div>
       </div>
 
-      {/* ── Statistika ── */}
-     
-
-      {/* ── Tabs ── */}
       <div className={styles.tabs}>
-        <button
-          className={`${styles.tab} ${activeTab === "products" ? styles.tabActive : ""}`}
-          onClick={() => setActiveTab("products")}
-        >
+        <button className={`${styles.tab} ${activeTab === "products" ? styles.tabActive : ""}`} onClick={() => setActiveTab("products")}>
           📦 {tx.products}
         </button>
-        <button
-          className={`${styles.tab} ${activeTab === "messages" ? styles.tabActive : ""}`}
-          onClick={() => setActiveTab("messages")}
-        >
+        <button className={`${styles.tab} ${activeTab === "messages" ? styles.tabActive : ""}`} onClick={() => setActiveTab("messages")}>
           💬 {tx.messages}
           {unreadCount > 0 && <span className={styles.badge_unread}>{unreadCount}</span>}
         </button>
-        <button
-          className={`${styles.tab} ${activeTab === "partners" ? styles.tabActive : ""}`}
-          onClick={() => setActiveTab("partners")}
-        >
+        <button className={`${styles.tab} ${activeTab === "partners" ? styles.tabActive : ""}`} onClick={() => setActiveTab("partners")}>
           🤝 {tx.partners}
         </button>
       </div>
 
-      {/* ════ TAB: PRODUSE ════ */}
       {activeTab === "products" && (
         <>
           <div className={styles.toolbar}>
@@ -413,11 +336,7 @@ export default function AdminClient() {
             <table className={styles.table}>
               <thead>
                 <tr>
-                  <th>{tx.photo}</th>
-                  <th>{tx.name}</th>
-                  <th>{tx.category}</th>
-                  <th>{tx.stock}</th>
-                  <th>{tx.actions}</th>
+                  <th>{tx.photo}</th><th>{tx.name}</th><th>{tx.category}</th><th>{tx.stock}</th><th>{tx.actions}</th>
                 </tr>
               </thead>
               <tbody>
@@ -431,20 +350,14 @@ export default function AdminClient() {
                     </td>
                     <td className={styles.productName}>{getName(p)}</td>
                     <td className={styles.productCat}>{getCat(p)}</td>
-                    <td>
-                      <span className={`${styles.badge} ${styles[`badge_${p.stock}`]}`}>
-                        {getStock(p.stock)}
-                      </span>
-                    </td>
+                    <td><span className={`${styles.badge} ${styles[`badge_${p.stock}`]}`}>{getStock(p.stock)}</span></td>
                     <td>
                       <div className={styles.actions}>
                         <button className={styles.editBtn} onClick={() => handleEdit(p)} title={tx.edit}>
-                          <FontAwesomeIcon icon={faCog} />
-                          <span className={styles.btnText}>{tx.edit}</span>
+                          <IconCog /><span className={styles.btnText}>{tx.edit}</span>
                         </button>
                         <button className={styles.deleteBtn} onClick={() => handleDelete(p.id)} title={tx.delete}>
-                          <FontAwesomeIcon icon={faTrash} />
-                          <span className={styles.btnText}>{tx.delete}</span>
+                          <IconTrash /><span className={styles.btnText}>{tx.delete}</span>
                         </button>
                       </div>
                     </td>
@@ -456,7 +369,6 @@ export default function AdminClient() {
         </>
       )}
 
-      {/* ════ TAB: MESAJE ════ */}
       {activeTab === "messages" && (
         <div className={styles.messagesSection}>
           <div className={styles.toolbar}>
@@ -475,7 +387,7 @@ export default function AdminClient() {
             <div className={styles.loading}>{tx.loadingMessages}</div>
           ) : messages.length === 0 ? (
             <div className={styles.emptyMessages}>
-              <FontAwesomeIcon icon={faEnvelopeOpen} style={{ fontSize: "2rem", opacity: 0.3 }} />
+              <IconEnvelopeOpen style={{ fontSize: "2rem", opacity: 0.3 }} />
               <p>{tx.noMessages}</p>
             </div>
           ) : (
@@ -484,10 +396,7 @@ export default function AdminClient() {
                 <div key={msg.id} className={`${styles.messageCard} ${!msg.read ? styles.messageCardUnread : ""}`}>
                   <div className={styles.messageHeader}>
                     <div className={styles.messageSender}>
-                      <FontAwesomeIcon
-                        icon={msg.read ? faEnvelopeOpen : faEnvelope}
-                        className={msg.read ? styles.iconRead : styles.iconUnread}
-                      />
+                      {msg.read ? <IconEnvelopeOpen /> : <IconEnvelope />}
                       <div>
                         <strong className={styles.messageName}>{msg.name}</strong>
                         {!msg.read && <span className={styles.newBadge}>New</span>}
@@ -502,13 +411,11 @@ export default function AdminClient() {
                     <div className={styles.messageActions}>
                       {!msg.read && (
                         <button className={styles.markReadBtn} onClick={() => markAsRead(msg.id)}>
-                          <FontAwesomeIcon icon={faEnvelopeOpen} />
-                          <span>{tx.markRead}</span>
+                          <IconEnvelopeOpen /><span>{tx.markRead}</span>
                         </button>
                       )}
                       <button className={styles.deleteBtn} onClick={() => deleteMessage(msg.id)}>
-                        <FontAwesomeIcon icon={faTrash} />
-                        <span className={styles.btnText}>{tx.delete}</span>
+                        <IconTrash /><span className={styles.btnText}>{tx.delete}</span>
                       </button>
                     </div>
                   </div>
@@ -520,7 +427,6 @@ export default function AdminClient() {
         </div>
       )}
 
-      {/* ════ TAB: PARTENERI ════ */}
       {activeTab === "partners" && (
         <>
           <div className={styles.toolbar}>
@@ -565,10 +471,7 @@ export default function AdminClient() {
               <table className={styles.table}>
                 <thead>
                   <tr>
-                    <th>{tx.photo}</th>
-                    <th>{tx.partnerName}</th>
-                    <th>{tx.partnerWebsite}</th>
-                    <th>{tx.actions}</th>
+                    <th>{tx.photo}</th><th>{tx.partnerName}</th><th>{tx.partnerWebsite}</th><th>{tx.actions}</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -592,12 +495,10 @@ export default function AdminClient() {
                       <td>
                         <div className={styles.actions}>
                           <button className={styles.editBtn} onClick={() => handleEditPartner(p)}>
-                            <FontAwesomeIcon icon={faCog} />
-                            <span className={styles.btnText}>{tx.edit}</span>
+                            <IconCog /><span className={styles.btnText}>{tx.edit}</span>
                           </button>
                           <button className={styles.deleteBtn} onClick={() => handleDeletePartner(p.id)}>
-                            <FontAwesomeIcon icon={faTrash} />
-                            <span className={styles.btnText}>{tx.delete}</span>
+                            <IconTrash /><span className={styles.btnText}>{tx.delete}</span>
                           </button>
                         </div>
                       </td>
@@ -609,7 +510,8 @@ export default function AdminClient() {
           )}
         </>
       )}
-       <div className={styles.stats}>
+
+      <div className={styles.stats}>
         {STATS_DATA.map((s, i) => (
           <div className={styles.statCard} key={i}>
             <div className={styles.statIcon} style={{ background: s.bg }}>
@@ -622,7 +524,6 @@ export default function AdminClient() {
           </div>
         ))}
       </div>
-
     </div>
   );
 }

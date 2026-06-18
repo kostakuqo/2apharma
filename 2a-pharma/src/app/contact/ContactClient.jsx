@@ -4,6 +4,7 @@ import { useState } from "react";
 import { MapPin, Phone, Mail, Clock } from "lucide-react";
 import { useLang } from "../../context/LangContext.jsx";
 import { db } from "../../lib/firebase.js";
+import Map from "../../components/Map.jsx";
 import { collection, addDoc, serverTimestamp } from "firebase/firestore";
 import styles from "./page.module.css";
 
@@ -79,7 +80,9 @@ export default function ContactClient() {
   );
 }
   return (
+    
     <div className={styles.page}>
+      
       {/* HEADER */}
       <div className={styles.pageHeader}>
         <div className="section-label">{c.label}</div>
@@ -254,10 +257,16 @@ export default function ContactClient() {
                   : "Mon–Fri: 09:00–18:00"}
               </div>
             </div>
+            
           </div>
+          
 
         </div>
+      
       </div>
+        <section style={{ marginTop: "10px" }}>
+        <Map />
+      </section>
     </div>
   );
 }
