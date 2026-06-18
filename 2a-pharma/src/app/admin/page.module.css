@@ -684,6 +684,19 @@
   border-color: #28C75A;
   color: #fff;
 }
+.visitBtn {
+  padding: 7px 14px;
+  background: #1A8A3C;
+  color: white;
+  border-radius: 8px;
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.visitBtn:hover {
+  background: #157a33;
+}
 
 /* ─────────────────────────────
    TABLET
