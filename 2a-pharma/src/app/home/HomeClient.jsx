@@ -10,7 +10,6 @@ import styles from "./page.module.css";
 import { db } from "../../lib/firebase.js";
 import { collection, getDocs } from "firebase/firestore";
 
-
 const STATS = [
   { num: "500+", label: "Products", labelAl: "Produkte" },
   { num: "50+", label: "Partners", labelAl: "Partnerë" },
@@ -64,6 +63,18 @@ export default function HomeClient() {
 
         {/* ══ HERO ══ */}
         <section className={styles.hero}>
+          <video
+            className={styles.heroBgVideo}
+            autoPlay
+            muted
+            loop
+            playsInline
+            preload="auto"
+          >
+            <source src="/videos/hero-1135993583-640_adpp_is.mp4" type="video/mp4" />
+          </video>
+          <div className={styles.heroOverlay} />
+
           <div className={styles.heroLeft}>
             <div className={styles.heroBadge}>
               <IconShield /> {tx.hero.badge}
@@ -154,7 +165,6 @@ export default function HomeClient() {
       {/* ══ PARTNERS ══ */}
       <section className={styles.partnersSection}>
         <div className={styles.partnersLabel}>{tx.partners.title}</div>
-
         <div className={styles.partnersRow}>
           {partners.map(p => (
             <div key={p.id} className={styles.partner}>
@@ -162,11 +172,7 @@ export default function HomeClient() {
                 <img
                   src={p.logo_url}
                   alt={p.name}
-                  style={{
-                    height: "60px",
-                    width: "auto",
-                    objectFit: "contain",
-                  }}
+                  style={{ height: "60px", width: "auto", objectFit: "contain" }}
                 />
               ) : (
                 p.name
