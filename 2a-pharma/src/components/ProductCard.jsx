@@ -7,9 +7,9 @@ import styles from "./ProductCard.module.css";
 export default function ProductCard({ product }) {
   const { lang, tx } = useLang();
 
-  const name  = lang === "al" ? product.name_al  : lang === "it" ? product.name_it  : product.name_en;
-  const desc  = lang === "al" ? product.desc_al  : lang === "it" ? product.desc_it  : product.desc_en;
-  const cat   = lang === "al" ? product.category_al : lang === "it" ? product.category_it : product.category_en;
+  const name = lang === "al" ? product.name_al : lang === "it" ? product.name_it : product.name_en;
+  const desc = lang === "al" ? product.desc_al : lang === "it" ? product.desc_it : product.desc_en;
+  const cat  = lang === "al" ? product.category_al : lang === "it" ? product.category_it : product.category_en;
 
   const stockLabel = tx.stock[product.stock];
   const stockClass = styles[`badge_${product.stock}`];
@@ -19,7 +19,11 @@ export default function ProductCard({ product }) {
     <div className={styles.card}>
       <div className={`${styles.img} ${imgClass}`}>
         {product.image_url
-          ? <img src={product.image_url} alt={name} className={styles.image} />
+          ? <img
+              src={product.image_url}
+              alt={name}
+              className={styles.image}
+            />
           : <span className={styles.icon}>{product.icon}</span>
         }
       </div>

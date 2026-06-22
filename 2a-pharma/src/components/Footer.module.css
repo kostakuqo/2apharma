@@ -24,27 +24,53 @@
 .col { display: flex; flex-direction: column; gap: 10px; }
 
 .colTitle {
-  font-size: 11px; font-weight: 700; color: whiteff;
+  font-size: 11px; font-weight: 700; color: white;
   text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 4px;
 }
 
 .col a, .col span {
   font-size: 13px; color: white; text-decoration: none; transition: color var(--t-fast);
 }
-.col a:hover { color: white; }
+.col a:hover { color: #28C75A; }
+
+/* Social */
+.social {
+  display: flex;
+  gap: 12px;
+  padding: 24px var(--section-px);
+  border-bottom: 1px solid rgba(160,189,224,0.15);
+}
+
+.socialBtn {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.08);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  text-decoration: none;
+  transition: background var(--t-fast), transform var(--t-fast);
+}
+.socialBtn:hover {
+  background: rgba(255,255,255,0.18);
+  transform: translateY(-2px);
+}
 
 .bottom {
   display: flex; align-items: center; justify-content: space-between;
   padding: 22px var(--section-px); flex-wrap: wrap; gap: 12px;
 }
 
-.copy { font-size: 12px; color: white;margin-bottom: 12px; }
+.copy { font-size: 12px; color: white; margin-bottom: 12px; }
 
 .links { display: flex; gap: 20px; }
 .links a { font-size: 12px; color: white; text-decoration: none; transition: color var(--t-fast); }
-.links a:hover { color: white; }
+.links a:hover { color: #28C75A; }
 
 @media (max-width: 768px) {
   .top { flex-direction: column; }
   .cols { gap: 28px; }
+  .social { justify-content: center; }
 }

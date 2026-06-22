@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { signInWithEmailAndPassword, sendPasswordResetEmail } from "firebase/auth";
 import { auth } from "../../lib/firebase.js";
+import { getSecret } from "../../lib/totp.js";
 import styles from "./page.module.css";
 
 export default function LoginClient() {
@@ -12,6 +13,13 @@ export default function LoginClient() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+
+  // 2FA state
+  const [step, setStep] = useState("login");
+  const [totpToken, setTotpToken] = useState("");
+  const [totpError, setTotpError] = useState("");
+  const [totpLoading, setTotpLoading] = useState(false);
+  const [userRef, setUserRef] = useState(null);
 
   // Reset parolă
   const [resetMode, setResetMode] = useState(false);
@@ -25,12 +33,42 @@ export default function LoginClient() {
     setLoading(true);
     setError("");
     try {
-      await signInWithEmailAndPassword(auth, email, password);
-      router.push("/admin");
+      const cred = await signInWithEmailAndPassword(auth, email, password);
+      const data = await getSecret(cred.user.uid);
+
+      if (data?.enabled) {
+        setUserRef(cred.user);
+        setStep("2fa");
+      } else {
+        router.push("/admin/setup-2fa");
+      }
     } catch (err) {
       setError("Email ose passwordi gabim!");
     } finally {
       setLoading(false);
+    }
+  }
+
+  async function handleTotp(e) {
+    e.preventDefault();
+    setTotpLoading(true);
+    setTotpError("");
+    try {
+      const res = await fetch("/api/verify-2fa", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ uid: userRef.uid, token: totpToken }),
+      });
+      const data = await res.json();
+      if (!data.ok) {
+        setTotpError("Kodi gabim ose ka skaduar. Provo përsëri.");
+        return;
+      }
+      router.push("/admin");
+    } catch (err) {
+      setTotpError("Gabim. Provo përsëri.");
+    } finally {
+      setTotpLoading(false);
     }
   }
 
@@ -55,14 +93,10 @@ export default function LoginClient() {
         <div className={styles.card}>
           <div className={styles.logo}>2A Pharma</div>
           <h1 className={styles.title}>Rivendos Fjalëkalimin</h1>
-
           {resetSent ? (
             <div className={styles.successBox}>
               ✅ Email-i u dërgua! Kontrollo kutinë postare dhe ndiq udhëzimet.
-              <button
-                className={styles.linkBtn}
-                onClick={() => { setResetMode(false); setResetSent(false); setResetEmail(""); }}
-              >
+              <button className={styles.linkBtn} onClick={() => { setResetMode(false); setResetSent(false); setResetEmail(""); }}>
                 ← Kthehu te login
               </button>
             </div>
@@ -71,33 +105,58 @@ export default function LoginClient() {
               <p className={styles.resetDesc}>
                 Shkruaj email-in e llogarisë tënde dhe do të të dërgojmë një link për të rivendosur fjalëkalimin.
               </p>
-
               {resetError && <div className={styles.error}>{resetError}</div>}
-
               <form onSubmit={handleReset} className={styles.form}>
                 <div className={styles.field}>
                   <label>Email</label>
-                  <input
-                    type="email"
-                    value={resetEmail}
-                    onChange={e => setResetEmail(e.target.value)}
-                    placeholder="admin@2apharma.al"
-                    required
-                  />
+                  <input type="email" value={resetEmail} onChange={e => setResetEmail(e.target.value)} placeholder="admin@2apharma.al" required />
                 </div>
                 <button type="submit" className={styles.btn} disabled={resetLoading}>
                   {resetLoading ? "Duke dërguar..." : "Dërgo Link-un"}
                 </button>
               </form>
-
-              <button
-                className={styles.linkBtn}
-                onClick={() => { setResetMode(false); setResetError(""); }}
-              >
+              <button className={styles.linkBtn} onClick={() => { setResetMode(false); setResetError(""); }}>
                 ← Kthehu te login
               </button>
             </>
           )}
+        </div>
+      </div>
+    );
+  }
+
+  // ── View: 2FA ──
+  if (step === "2fa") {
+    return (
+      <div className={styles.page}>
+        <div className={styles.card}>
+          <div className={styles.logo}>2A Pharma</div>
+          <h1 className={styles.title}>Verifikimi 2FA</h1>
+          <p style={{ fontSize: 14, color: "#666", marginBottom: 20, textAlign: "center" }}>
+            Hap <strong>Google Authenticator</strong> dhe fut kodin 6-shifror.
+          </p>
+          {totpError && <div className={styles.error}>{totpError}</div>}
+          <form onSubmit={handleTotp} className={styles.form}>
+            <div className={styles.field}>
+              <label>Kodi 6-shifror</label>
+              <input
+                type="text"
+                value={totpToken}
+                onChange={e => setTotpToken(e.target.value.replace(/\D/g, ""))}
+                placeholder="000000"
+                maxLength={6}
+                style={{ textAlign: "center", letterSpacing: 8, fontSize: 22 }}
+                required
+                autoFocus
+              />
+            </div>
+            <button type="submit" className={styles.btn} disabled={totpLoading}>
+              {totpLoading ? "Duke verifikuar..." : "Verifiko"}
+            </button>
+          </form>
+          <button className={styles.linkBtn} onClick={() => { setStep("login"); setTotpToken(""); setTotpError(""); }}>
+            ← Kthehu te login
+          </button>
         </div>
       </div>
     );
@@ -109,39 +168,21 @@ export default function LoginClient() {
       <div className={styles.card}>
         <div className={styles.logo}>2A Pharma</div>
         <h1 className={styles.title}>Admin Login</h1>
-
         {error && <div className={styles.error}>{error}</div>}
-
         <form onSubmit={handleLogin} className={styles.form}>
           <div className={styles.field}>
             <label>Email</label>
-            <input
-              type="email"
-              value={email}
-              onChange={e => setEmail(e.target.value)}
-              placeholder="admin@2apharma.al"
-              required
-            />
+            <input type="email" value={email} onChange={e => setEmail(e.target.value)} placeholder="admin@2apharma.al" required />
           </div>
           <div className={styles.field}>
             <label>Password</label>
-            <input
-              type="password"
-              value={password}
-              onChange={e => setPassword(e.target.value)}
-              placeholder="••••••••"
-              required
-            />
+            <input type="password" value={password} onChange={e => setPassword(e.target.value)} placeholder="••••••••" required />
           </div>
           <button type="submit" className={styles.btn} disabled={loading}>
             {loading ? "Duke u procesuar..." : "Logohu"}
           </button>
         </form>
-
-        <button
-          className={styles.linkBtn}
-          onClick={() => { setResetMode(true); setResetEmail(email); }}
-        >
+        <button className={styles.linkBtn} onClick={() => { setResetMode(true); setResetEmail(email); }}>
           Keni harruar fjalëkalimin?
         </button>
       </div>
