@@ -61,15 +61,20 @@ export default function ProductsClient() {
     </div>
   );
 
-  return (
-    <div className={styles.page}>
-      <div className={styles.pageHeader}>
-        <div className="section-label">{tx.products.label}</div>
+ return (
+  <div className={styles.page}>
+
+    {/* ══ HERO HEADER ══ */}
+    <div className={styles.pageHeader}>
+      <div className={styles.pageHeaderInner}>
+        <div className={styles.heroTag}>✦ {tx.products.label}</div>
         <h1 className={styles.pageTitle}>{tx.products.title}</h1>
         <p className={styles.pageSub}>{tx.products.sub}</p>
       </div>
+    </div>
 
-      {/* Search + Dropdown */}
+    {/* ══ CONTROLS — sticky ══ */}
+    <div className={styles.controlsWrap}>
       <div className={styles.controls}>
         <input
           type="text"
@@ -90,24 +95,31 @@ export default function ProductsClient() {
           ))}
         </select>
       </div>
+    </div>
 
-      <div className={styles.grid}>
-        {displayed.map(p => <ProductCard key={p.id} product={p} />)}
-      </div>
-
-      {filtered.length === 0 && (
-        <div style={{ textAlign: "center", padding: "48px", color: "var(--gray-600)" }}>
+    {/* ══ GRID ══ */}
+    <div className={styles.gridWrap}>
+      {filtered.length === 0 ? (
+        <div className={styles.emptyState}>
+          <div className={styles.emptyIcon}>🔍</div>
           {lang === "al" ? "Nuk ka produkte." : lang === "it" ? "Nessun prodotto trovato." : "No products found."}
         </div>
-      )}
-
-      {hasMore && (
-        <div className={styles.showMoreWrap}>
-          <button className={styles.showMoreBtn} onClick={() => setVisible(v => v + PAGE_SIZE)}>
-            {lang === "al" ? "Shfaq më shumë" : lang === "it" ? "Mostra altri" : "Show more"}
-          </button>
+      ) : (
+        <div className={styles.grid}>
+          {displayed.map(p => <ProductCard key={p.id} product={p} />)}
         </div>
       )}
     </div>
-  );
+
+    {/* ══ SHOW MORE ══ */}
+    {hasMore && (
+      <div className={styles.showMoreWrap}>
+        <button className={styles.showMoreBtn} onClick={() => setVisible(v => v + PAGE_SIZE)}>
+          {lang === "al" ? "Shfaq më shumë" : lang === "it" ? "Mostra altri" : "Show more"}
+        </button>
+      </div>
+    )}
+
+  </div>
+);
 }
