@@ -1,5 +1,4 @@
 1:"$Sreact.fragment"
-2:I[39756,["/2apharma/_next/static/chunks/2gvximjgrnj_d.js","/2apharma/_next/static/chunks/14mrh2-p_w84d.js","/2apharma/_next/static/chunks/22z0xyi2itzb9.js","/2apharma/_next/static/chunks/0_x5w4-36ahkz.js"],"default"]
-3:I[37457,["/2apharma/_next/static/chunks/2gvximjgrnj_d.js","/2apharma/_next/static/chunks/14mrh2-p_w84d.js","/2apharma/_next/static/chunks/22z0xyi2itzb9.js","/2apharma/_next/static/chunks/0_x5w4-36ahkz.js"],"default"]
-4:[]
-0:{"rsc":["$","$1","c",{"children":[null,["$","$L2",null,{"parallelRouterKey":"children","template":["$","$L3",null,{}]}]]}],"isPartial":false,"staleTime":300,"varyParams":"$W4","buildId":"MfJD3UQYIM0IqaOGc6pED"}
+2:I[39756,["/2apharma/_next/static/chunks/2-wep25w-76d4.js","/2apharma/_next/static/chunks/14mrh2-p_w84d.js","/2apharma/_next/static/chunks/22z0xyi2itzb9.js","/2apharma/_next/static/chunks/0_x5w4-36ahkz.js"],"default"]
+3:I[37457,["/2apharma/_next/static/chunks/2-wep25w-76d4.js","/2apharma/_next/static/chunks/14mrh2-p_w84d.js","/2apharma/_next/static/chunks/22z0xyi2itzb9.js","/2apharma/_next/static/chunks/0_x5w4-36ahkz.js"],"default"]
+0:{"rsc":["$","$1","c",{"children":[null,["$","html",null,{"lang":"al","children":["$","body",null,{"children":["$","$L2",null,{"parallelRouterKey":"children","template":["$","$L3",null,{}]}]}]}]]}],"isPartial":false,"staleTime":300,"varyParams":null,"buildId":"vHnACQX-SrZAHk6fUrafJ"}
