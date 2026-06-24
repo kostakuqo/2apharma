@@ -216,7 +216,7 @@
 }
 
 .card {
-  background: #fff;
+  background: #174067;
   border: 1.5px solid rgba(26,138,60,0.12);
   border-radius: 22px;
   padding: 36px;
@@ -268,14 +268,14 @@
 .cardTitle {
   font-size: 19px;
   font-weight: 700;
-  color: #0F2A52;
+  color: #ffffff; /* înainte era albastru închis */
   margin-bottom: 12px;
   letter-spacing: -0.2px;
 }
 
 .cardText {
   font-size: 14px;
-  color: #4A6580;
+  color: rgba(255,255,255,0.78); /* mai soft, dar lizibil */
   line-height: 1.8;
 }
 
