@@ -73,9 +73,10 @@ button { font-family: var(--font-sans); cursor: pointer; }
 img { max-width: 100%; display: block; }
 
 .section-label {
-  font-size: 12px;
+  font-size: 16px;
   font-weight: 700;
   color: var(--green-soft);
+  
   text-transform: uppercase;
   letter-spacing: 0.12em;
   margin-bottom: 8px;
