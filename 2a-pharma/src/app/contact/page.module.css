@@ -149,6 +149,7 @@
 
 .textarea { resize: vertical; min-height: 130px; }
 
+
 .submitBtn {
   padding: 14px 28px;
   background: linear-gradient(135deg, #1A8A3C, #22a84a);
@@ -165,6 +166,8 @@
   align-items: center;
   justify-content: center;
   gap: 8px;
+  width: auto;          /* nu mai e lat cât cardul */
+  align-self: flex-start; /* aliniat stânga */
 }
 .submitBtn:hover {
   background: linear-gradient(135deg, #156F30, #1A8A3C);
@@ -174,17 +177,20 @@
 .submitBtn:disabled { opacity: 0.65; cursor: not-allowed; transform: none; }
 
 .successMsg {
-  padding: 13px 18px;
-  background: #EDFBF3;
+  padding: 20px 24px;
+  background: linear-gradient(135deg, #EDFBF3, #D4F5E2);
   color: #1A8A3C;
-  border-radius: 12px;
-  font-size: 13px;
+  border-radius: 16px;
+  font-size: 14px;
   font-weight: 600;
-  border: 1px solid rgba(26,138,60,0.2);
+  border: 1.5px solid rgba(26,138,60,0.25);
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 12px;
+  box-shadow: 0 4px 16px rgba(26,138,60,0.12);
+  animation: fadeInUp 0.3s ease both;
 }
+
 
 .errorMsg {
   padding: 13px 18px;

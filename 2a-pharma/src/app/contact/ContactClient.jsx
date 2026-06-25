@@ -72,8 +72,8 @@ export default function ContactClient() {
           <div className={styles.heroTag}>✦ {c.label}</div>
           <h1 className={styles.pageTitle}>
             {lang === "al" ? <>Na <span>Kontaktoni</span></> :
-             lang === "it" ? <><span>Contattaci</span></> :
-             <>Get in <span>Touch</span></>}
+              lang === "it" ? <><span>Contattaci</span></> :
+                <>Get in <span>Touch</span></>}
           </h1>
           <p className={styles.pageSub}>{c.sub}</p>
         </div>
@@ -133,12 +133,48 @@ export default function ContactClient() {
             {error && <div className={styles.errorMsg}>❌ {c.error}</div>}
 
             <button
-              className={styles.submitBtn}
-              onClick={handleSubmit}
-              disabled={sending}
-            >
-              {sending ? `⏳ ${c.sending}` : `✉️ ${c.send}`}
-            </button>
+  className={styles.submitBtn}
+  onClick={success ? () => { setSuccess(false); setForm({ name: "", email: "", phone: "", message: "" }); } : handleSubmit}
+  disabled={sending}
+>
+  {sending ? c.sending : success ? (
+    <>
+      <svg
+        width="16"
+        height="16"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        style={{ marginRight: "8px", flexShrink: 0 }}
+      >
+        <polyline points="1 4 1 10 7 10" />
+        <path d="M3.51 15a9 9 0 1 0 .49-3.51" />
+      </svg>
+      {lang === "al" ? "Dërgo mesazh tjetër" : lang === "it" ? "Invia un altro messaggio" : "Send another message"}
+    </>
+  ) : (
+    <>
+      <svg
+        width="16"
+        height="16"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        style={{ marginRight: "8px", flexShrink: 0 }}
+      >
+        <line x1="22" y1="2" x2="11" y2="13" />
+        <polygon points="22 2 15 22 11 13 2 9 22 2" />
+      </svg>
+      {c.send}
+    </>
+  )}
+</button>
           </div>
 
           {/* INFO */}
@@ -189,8 +225,8 @@ export default function ContactClient() {
                 </div>
                 <div className={styles.infoText}>
                   {lang === "al" ? "E Hënë–E Premte: 09:00–18:00"
-                   : lang === "it" ? "Lun–Ven: 09:00–18:00"
-                   : "Mon–Fri: 09:00–18:00"}
+                    : lang === "it" ? "Lun–Ven: 09:00–18:00"
+                      : "Mon–Fri: 09:00–18:00"}
                 </div>
               </div>
             </div>
