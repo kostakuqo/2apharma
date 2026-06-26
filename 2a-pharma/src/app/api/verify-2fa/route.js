@@ -5,7 +5,7 @@ import { getAdminDb, getAdminAuth } from "../../../lib/firebaseAdmin.js";
 export async function POST(request) {
   try {
     const adminDb = getAdminDb();
-    const adminAuth = getAdminAuth();
+    const adminAuth = await getAdminAuth(); // ✅ async acum
 
     const { idToken, token } = await request.json();
 

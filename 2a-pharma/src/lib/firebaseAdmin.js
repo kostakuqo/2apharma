@@ -1,6 +1,5 @@
 import { initializeApp, getApps, cert } from "firebase-admin/app";
 import { getFirestore } from "firebase-admin/firestore";
-import { getAuth } from "firebase-admin/auth";
 
 function initAdmin() {
   if (!getApps().length) {
@@ -19,7 +18,9 @@ export function getAdminDb() {
   return getFirestore();
 }
 
-export function getAdminAuth() {
+export async function getAdminAuth() {
   initAdmin();
+  // Import dinamic pentru a evita conflictul ESM/CommonJS cu jose/jwks-rsa
+  const { getAuth } = await import("firebase-admin/auth");
   return getAuth();
 }
