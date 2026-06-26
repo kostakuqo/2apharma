@@ -1,38 +1,21 @@
 import { NextResponse } from "next/server";
 import speakeasy from "speakeasy";
-import { getAdminDb, getAdminAuth } from "../../../lib/firebaseAdmin.js";
+import { getAdminDb } from "../../../lib/firebaseAdmin.js";
 
 export async function POST(request) {
   try {
     const adminDb = getAdminDb();
-    const adminAuth = await getAdminAuth(); // ✅ async acum
+    const { uid, token } = await request.json();
 
-    const { idToken, token } = await request.json();
-
-    // ✅ NU mai acceptăm UID din browser
-    // Verificăm Firebase ID token pe server — nimeni nu poate falsifica asta
-    if (!idToken || !token) {
-      return NextResponse.json({ ok: false, error: "Missing fields" }, { status: 400 });
-    }
-
-    let decodedToken;
-    try {
-      decodedToken = await adminAuth.verifyIdToken(idToken);
-    } catch {
-      return NextResponse.json({ ok: false, error: "Invalid token" }, { status: 401 });
-    }
-
-    const uid = decodedToken.uid;
-
-    // Verificăm că UID-ul aparține adminului real
+    // Verificăm că UID-ul trimis e exact adminul nostru
     const ADMIN_UID = process.env.ADMIN_UID;
     if (!ADMIN_UID) {
-      console.error("ADMIN_UID nu e setat în environment variables!");
+      console.error("ADMIN_UID nu e setat!");
       return NextResponse.json({ ok: false }, { status: 500 });
     }
 
     if (uid !== ADMIN_UID) {
-      console.warn("Tentativă de acces cu UID ne-autorizat:", uid);
+      console.warn("UID ne-autorizat:", uid);
       return NextResponse.json({ ok: false, error: "Unauthorized" }, { status: 403 });
     }
 
@@ -56,12 +39,12 @@ export async function POST(request) {
       return NextResponse.json({ ok: false });
     }
 
-    // ✅ Setăm cookie securizat după succes
+    // Setăm cookie securizat după succes
     const response = NextResponse.json({ ok: true });
     response.cookies.set("admin_session", "true", {
-      httpOnly: true,      // nu e accesibil din JavaScript
-      secure: true,        // doar HTTPS
-      sameSite: "strict",  // protecție CSRF
+      httpOnly: true,
+      secure: true,
+      sameSite: "strict",
       maxAge: 60 * 60 * 8, // 8 ore
       path: "/",
     });

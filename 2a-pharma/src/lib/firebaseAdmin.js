@@ -17,10 +17,3 @@ export function getAdminDb() {
   initAdmin();
   return getFirestore();
 }
-
-export async function getAdminAuth() {
-  initAdmin();
-  // Import dinamic pentru a evita conflictul ESM/CommonJS cu jose/jwks-rsa
-  const { getAuth } = await import("firebase-admin/auth");
-  return getAuth();
-}

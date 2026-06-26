@@ -57,12 +57,11 @@ export default function LoginClient() {
     try {
       // ✅ Trimitem ID token în loc de UID
       // ID token e semnat de Firebase — serverul îl verifică și extrage UID-ul singur
-      const idToken = await userRef.getIdToken();
 
       const res = await fetch("/api/verify-2fa", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ idToken, token: totpToken }),
+        body: JSON.stringify({ uid: userRef.uid, token: totpToken }),
       });
 
       const data = await res.json();
