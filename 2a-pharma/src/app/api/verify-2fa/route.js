@@ -7,19 +7,22 @@ export async function POST(request) {
     const adminDb = getAdminDb();
     const { uid, token } = await request.json();
 
-    // Verificăm că UID-ul trimis e exact adminul nostru
-    const ADMIN_UID = process.env.ADMIN_UID;
-    if (!ADMIN_UID) {
-      console.error("ADMIN_UID nu e setat!");
+    // Verificăm că UID-ul e în lista de admini
+    const ADMIN_UIDS = process.env.ADMIN_UIDS
+      ? process.env.ADMIN_UIDS.split(",").map(u => u.trim())
+      : [];
+
+    if (ADMIN_UIDS.length === 0) {
+      console.error("ADMIN_UIDS nu e setat în environment variables!");
       return NextResponse.json({ ok: false }, { status: 500 });
     }
 
-    if (uid !== ADMIN_UID) {
+    if (!ADMIN_UIDS.includes(uid)) {
       console.warn("UID ne-autorizat:", uid);
       return NextResponse.json({ ok: false, error: "Unauthorized" }, { status: 403 });
     }
 
-    // Luăm secretul 2FA din Firestore
+    // Luăm secretul 2FA din Firestore pentru acest admin
     const snap = await adminDb.doc(`admin_2fa/${uid}`).get();
     if (!snap.exists) {
       return NextResponse.json({ ok: false }, { status: 400 });
