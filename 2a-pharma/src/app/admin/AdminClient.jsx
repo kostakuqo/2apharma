@@ -96,6 +96,10 @@ export default function AdminClient() {
   const [imageFile, setImageFile] = useState(null);
   const [uploading, setUploading] = useState(false);
   const [user, setUser] = useState(null);
+
+  // ✅ NOU: stare pentru verificarea sesiunii 2FA
+  const [sessionChecked, setSessionChecked] = useState(false);
+
   const [activeTab, setActiveTab] = useState("products");
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -121,17 +125,43 @@ export default function AdminClient() {
   const emptyPartnerForm = { name: "", website: "", logo_url: "" };
   const [partnerForm, setPartnerForm] = useState(emptyPartnerForm);
 
+  // ✅ VERIFICARE DUBLĂ: Firebase auth + cookie sesiune 2FA
   useEffect(() => {
-    const unsub = onAuthStateChanged(auth, u => {
-      if (u) setUser(u);
-      else router.push("/login");
+    const unsub = onAuthStateChanged(auth, async (u) => {
+      if (!u) {
+        router.push("/login");
+        return;
+      }
+
+      // Verificăm dacă a trecut prin 2FA (cookie setat de server)
+      try {
+        const res = await fetch("/api/check-session");
+        if (!res.ok) {
+          // Nu are cookie valid → înapoi la login
+          await signOut(auth);
+          router.push("/login");
+          return;
+        }
+      } catch {
+        await signOut(auth);
+        router.push("/login");
+        return;
+      }
+
+      // ✅ Ambele verificări au trecut
+      setUser(u);
+      setSessionChecked(true);
     });
     return () => unsub();
   }, []);
 
   useEffect(() => {
-    if (user) { loadProducts(); loadMessages(); loadPartners(); }
-  }, [user]);
+    if (user && sessionChecked) {
+      loadProducts();
+      loadMessages();
+      loadPartners();
+    }
+  }, [user, sessionChecked]);
 
   async function loadProducts() {
     setLoading(true);
@@ -238,6 +268,8 @@ export default function AdminClient() {
   }
 
   async function handleLogout() {
+    // ✅ Ștergem și cookie-ul de sesiune la logout
+    await fetch("/api/logout", { method: "POST" });
     await signOut(auth);
     router.push("/login");
   }
@@ -256,7 +288,8 @@ export default function AdminClient() {
     { num: partners.length, lbl: tx.totalPartners, icon: "🤝", color: "#0F2A52", bg: "#E8EDF5" },
   ];
 
-  if (loading) return <div className={styles.loading}>{tx.loading}</div>;
+  // ✅ Afișăm loading până când ambele verificări sunt complete
+  if (!sessionChecked || loading) return <div className={styles.loading}>{tx.loading}</div>;
 
   return (
     <div className={styles.page}>
@@ -270,9 +303,7 @@ export default function AdminClient() {
               </button>
             ))}
           </div>
-          <a href="/" target="_blank" className={styles.visitBtn}>
-            🌐 Visit site
-          </a>
+          <a href="/" target="_blank" className={styles.visitBtn}>🌐 Visit site</a>
           <span className={styles.userEmail}>{user?.email}</span>
           <button className={styles.logoutBtn} onClick={handleLogout}>{tx.logout}</button>
         </div>
@@ -338,30 +369,21 @@ export default function AdminClient() {
           <div className={styles.tableWrap}>
             <table className={styles.table}>
               <thead>
-                <tr>
-                  <th>{tx.photo}</th><th>{tx.name}</th><th>{tx.category}</th><th>{tx.stock}</th><th>{tx.actions}</th>
-                </tr>
+                <tr><th>{tx.photo}</th><th>{tx.name}</th><th>{tx.category}</th><th>{tx.stock}</th><th>{tx.actions}</th></tr>
               </thead>
               <tbody>
                 {products.map(p => (
                   <tr key={p.id}>
                     <td className={styles.iconCell}>
-                      {p.image_url
-                        ? <img src={p.image_url} alt={p.name_en} className={styles.productThumb} />
-                        : <span style={{ fontSize: "1.5rem" }}>{p.icon}</span>
-                      }
+                      {p.image_url ? <img src={p.image_url} alt={p.name_en} className={styles.productThumb} /> : <span style={{ fontSize: "1.5rem" }}>{p.icon}</span>}
                     </td>
                     <td className={styles.productName}>{getName(p)}</td>
                     <td className={styles.productCat}>{getCat(p)}</td>
                     <td><span className={`${styles.badge} ${styles[`badge_${p.stock}`]}`}>{getStock(p.stock)}</span></td>
                     <td>
                       <div className={styles.actions}>
-                        <button className={styles.editBtn} onClick={() => handleEdit(p)} title={tx.edit}>
-                          <IconCog /><span className={styles.btnText}>{tx.edit}</span>
-                        </button>
-                        <button className={styles.deleteBtn} onClick={() => handleDelete(p.id)} title={tx.delete}>
-                          <IconTrash /><span className={styles.btnText}>{tx.delete}</span>
-                        </button>
+                        <button className={styles.editBtn} onClick={() => handleEdit(p)} title={tx.edit}><IconCog /><span className={styles.btnText}>{tx.edit}</span></button>
+                        <button className={styles.deleteBtn} onClick={() => handleDelete(p.id)} title={tx.delete}><IconTrash /><span className={styles.btnText}>{tx.delete}</span></button>
                       </div>
                     </td>
                   </tr>
@@ -377,11 +399,7 @@ export default function AdminClient() {
           <div className={styles.toolbar}>
             <h2 className={styles.subtitle}>
               {tx.incomingMessages}
-              {unreadCount > 0 && (
-                <span style={{ marginLeft: "10px", fontSize: "14px", color: "#ef4444", fontWeight: 400 }}>
-                  ({unreadCount} {tx.unreadLabel})
-                </span>
-              )}
+              {unreadCount > 0 && <span style={{ marginLeft: "10px", fontSize: "14px", color: "#ef4444", fontWeight: 400 }}>({unreadCount} {tx.unreadLabel})</span>}
             </h2>
             <button className={styles.addBtn} onClick={loadMessages}>{tx.refresh}</button>
           </div>
@@ -473,9 +491,7 @@ export default function AdminClient() {
             <div className={styles.tableWrap}>
               <table className={styles.table}>
                 <thead>
-                  <tr>
-                    <th>{tx.photo}</th><th>{tx.partnerName}</th><th>{tx.partnerWebsite}</th><th>{tx.actions}</th>
-                  </tr>
+                  <tr><th>{tx.photo}</th><th>{tx.partnerName}</th><th>{tx.partnerWebsite}</th><th>{tx.actions}</th></tr>
                 </thead>
                 <tbody>
                   {partners.length === 0 ? (
@@ -483,26 +499,16 @@ export default function AdminClient() {
                   ) : partners.map(p => (
                     <tr key={p.id}>
                       <td className={styles.iconCell}>
-                        {p.logo_url
-                          ? <img src={p.logo_url} alt={p.name} className={styles.productThumb} />
-                          : <span style={{ opacity: 0.3, fontSize: "1.5rem" }}>🏢</span>
-                        }
+                        {p.logo_url ? <img src={p.logo_url} alt={p.name} className={styles.productThumb} /> : <span style={{ opacity: 0.3, fontSize: "1.5rem" }}>🏢</span>}
                       </td>
                       <td className={styles.productName}>{p.name}</td>
                       <td>
-                        {p.website
-                          ? <a href={p.website} target="_blank" rel="noreferrer" style={{ color: "var(--green)" }}>{p.website}</a>
-                          : "—"
-                        }
+                        {p.website ? <a href={p.website} target="_blank" rel="noreferrer" style={{ color: "var(--green)" }}>{p.website}</a> : "—"}
                       </td>
                       <td>
                         <div className={styles.actions}>
-                          <button className={styles.editBtn} onClick={() => handleEditPartner(p)}>
-                            <IconCog /><span className={styles.btnText}>{tx.edit}</span>
-                          </button>
-                          <button className={styles.deleteBtn} onClick={() => handleDeletePartner(p.id)}>
-                            <IconTrash /><span className={styles.btnText}>{tx.delete}</span>
-                          </button>
+                          <button className={styles.editBtn} onClick={() => handleEditPartner(p)}><IconCog /><span className={styles.btnText}>{tx.edit}</span></button>
+                          <button className={styles.deleteBtn} onClick={() => handleDeletePartner(p.id)}><IconTrash /><span className={styles.btnText}>{tx.delete}</span></button>
                         </div>
                       </td>
                     </tr>
