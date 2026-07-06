@@ -7,7 +7,7 @@ export async function POST(request) {
     const adminDb = getAdminDb();
     const { uid, token } = await request.json();
 
-    // Verificăm că UID-ul e în lista de admini
+  
     const ADMIN_UIDS = process.env.ADMIN_UIDS
       ? process.env.ADMIN_UIDS.split(",").map(u => u.trim())
       : [];
@@ -22,7 +22,7 @@ export async function POST(request) {
       return NextResponse.json({ ok: false, error: "Unauthorized" }, { status: 403 });
     }
 
-    // Luăm secretul 2FA din Firestore pentru acest admin
+    
     const snap = await adminDb.doc(`admin_2fa/${uid}`).get();
     if (!snap.exists) {
       return NextResponse.json({ ok: false }, { status: 400 });
@@ -30,7 +30,7 @@ export async function POST(request) {
 
     const { secret } = snap.data();
 
-    // Verificăm codul TOTP
+    
     const verified = speakeasy.totp.verify({
       secret,
       encoding: "base32",

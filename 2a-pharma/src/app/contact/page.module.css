@@ -3,13 +3,12 @@
   to   { opacity: 1; transform: translateY(0); }
 }
 
-/* ─── PAGE ─── */
 .page {
   min-height: 60vh;
   background: #fff;
 }
 
-/* ─── HERO HEADER ─── */
+
 .pageHeader {
   background: linear-gradient(135deg, #0A1F3D 0%, #0F2A52 60%, #1A3F7A 100%);
   padding: 64px var(--section-px) 72px;
@@ -85,7 +84,7 @@
   max-width: 500px;
 }
 
-/* ─── CONTENT ─── */
+
 .contentWrap {
   padding: 56px var(--section-px);
   background: #F8FAFC;
@@ -99,7 +98,7 @@
   animation: fadeInUp 0.4s ease both;
 }
 
-/* ─── FORM CARD ─── */
+
 .formCard {
   background: #fff;
   border: 1.5px solid #E8EDF5;
@@ -202,7 +201,7 @@
   border: 1px solid rgba(197,48,48,0.15);
 }
 
-/* ─── INFO COL ─── */
+
 .infoCol {
   display: flex;
   flex-direction: column;
@@ -292,7 +291,7 @@
   background: #F8FAFC;
 }
 
-/* ─── RESPONSIVE ─── */
+
 @media (max-width: 900px) {
   .grid { grid-template-columns: 1fr; }
   .pageTitle { font-size: 38px; }

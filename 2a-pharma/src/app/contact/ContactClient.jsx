@@ -65,8 +65,6 @@ export default function ContactClient() {
 
   return (
     <div className={styles.page}>
-
-      {/* ══ HERO HEADER ══ */}
       <div className={styles.pageHeader}>
         <div className={styles.pageHeaderInner}>
           <div className={styles.heroTag}>✦ {c.label}</div>
@@ -78,12 +76,8 @@ export default function ContactClient() {
           <p className={styles.pageSub}>{c.sub}</p>
         </div>
       </div>
-
-      {/* ══ CONTENT ══ */}
       <div className={styles.contentWrap}>
         <div className={styles.grid}>
-
-          {/* FORM */}
           <div className={styles.formCard}>
             <div className={styles.formTitle}>{FORM_TITLES[lang] || FORM_TITLES.en}</div>
 
@@ -176,8 +170,6 @@ export default function ContactClient() {
   )}
 </button>
           </div>
-
-          {/* INFO */}
           <div className={styles.infoCol}>
 
             <div className={styles.infoCard} onClick={openDirections} style={{ cursor: "pointer" }}>
@@ -234,8 +226,6 @@ export default function ContactClient() {
           </div>
         </div>
       </div>
-
-      {/* ══ MAP ══ */}
       <div className={styles.mapWrap}>
         <Map />
       </div>

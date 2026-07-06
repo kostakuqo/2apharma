@@ -332,7 +332,6 @@
   box-shadow: 0 8px 28px rgba(40,199,90,0.35);
 }
 
-/* ─── RESPONSIVE ─── */
 @media (max-width: 900px) {
   .grid { grid-template-columns: repeat(2, 1fr); }
   .pageTitle { font-size: 38px; }

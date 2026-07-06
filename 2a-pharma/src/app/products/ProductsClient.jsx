@@ -63,8 +63,6 @@ export default function ProductsClient() {
 
  return (
   <div className={styles.page}>
-
-    {/* ══ HERO HEADER ══ */}
     <div className={styles.pageHeader}>
       <div className={styles.pageHeaderInner}>
         <div className={styles.heroTag}>✦ {tx.products.label}</div>
@@ -72,8 +70,6 @@ export default function ProductsClient() {
         <p className={styles.pageSub}>{tx.products.sub}</p>
       </div>
     </div>
-
-    {/* ══ CONTROLS — sticky ══ */}
     <div className={styles.controlsWrap}>
       <div className={styles.controls}>
         <input
@@ -96,8 +92,6 @@ export default function ProductsClient() {
         </select>
       </div>
     </div>
-
-    {/* ══ GRID ══ */}
     <div className={styles.gridWrap}>
       {filtered.length === 0 ? (
         <div className={styles.emptyState}>
@@ -110,8 +104,6 @@ export default function ProductsClient() {
         </div>
       )}
     </div>
-
-    {/* ══ SHOW MORE ══ */}
     {hasMore && (
       <div className={styles.showMoreWrap}>
         <button className={styles.showMoreBtn} onClick={() => setVisible(v => v + PAGE_SIZE)}>

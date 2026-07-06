@@ -60,8 +60,6 @@ export default function HomeClient() {
   return (
     <>
       <div className={styles.darkBlock}>
-
-        {/* ══ HERO ══ */}
         <section className={styles.hero}>
           <video
             className={styles.heroBgVideo}
@@ -103,8 +101,6 @@ export default function HomeClient() {
             </div>
           </div>
         </section>
-
-        {/* ══ PRODUCTS ══ */}
         <section className={styles.productsSection}>
           <div className={styles.secHeader}>
             <div className="section-label">{tx.products.label}</div>
@@ -120,8 +116,6 @@ export default function HomeClient() {
             </Link>
           </div>
         </section>
-
-        {/* ══ FEATURES ══ */}
         <section className={styles.featuresSection}>
           <div className={styles.secHeaderCenter}>
             <div className="section-label">{tx.features.label}</div>
@@ -137,8 +131,6 @@ export default function HomeClient() {
             ))}
           </div>
         </section>
-
-        {/* ══ CTA ══ */}
         <section className={styles.ctaSection}>
           <h2 className={styles.ctaTitle}>
             {lang === "al"
@@ -161,8 +153,6 @@ export default function HomeClient() {
         </section>
 
       </div>
-
-      {/* ══ PARTNERS ══ */}
       <section className={styles.partnersSection}>
         <div className={styles.partnersLabel}>{tx.partners.title}</div>
         <div className={styles.partnersRow}>
@@ -181,8 +171,6 @@ export default function HomeClient() {
           ))}
         </div>
       </section>
-
-      {/* ══ MAP ══ */}
       <section style={{ padding: "0 var(--section-px)" }}>
         <Map />
       </section>

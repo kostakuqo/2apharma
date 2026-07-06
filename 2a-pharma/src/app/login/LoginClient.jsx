@@ -43,7 +43,7 @@ export default function LoginClient() {
         router.push("/admin/setup-2fa");
       }
     } catch (err) {
-      setError("Email sau parolă incorectă.");
+      setError("Email ose password i pasaktë.");
     } finally {
       setLoading(false);
     }
@@ -55,9 +55,6 @@ export default function LoginClient() {
     setTotpError("");
 
     try {
-      // ✅ Trimitem ID token în loc de UID
-      // ID token e semnat de Firebase — serverul îl verifică și extrage UID-ul singur
-
       const res = await fetch("/api/verify-2fa", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -70,9 +67,6 @@ export default function LoginClient() {
         setTotpError("Kod i pasaktë ose i skaduar.");
         return;
       }
-
-      // ✅ Cookie-ul e setat automat de server (httpOnly)
-      // Nu mai stocăm nimic în sessionStorage
       router.push("/admin");
     } catch {
       setTotpError("Err ne verifikim. Provoje perseri.");
@@ -104,7 +98,6 @@ export default function LoginClient() {
     </div>
   );
 
-  /* ───────── RESET PASSWORD ───────── */
   if (resetMode) {
     return (
       <div className={styles.page}>
@@ -140,8 +133,6 @@ export default function LoginClient() {
       </div>
     );
   }
-
-  /* ───────── 2FA STEP ───────── */
   if (step === "2fa") {
     return (
       <div className={styles.page}>
@@ -175,8 +166,6 @@ export default function LoginClient() {
       </div>
     );
   }
-
-  /* ───────── LOGIN DEFAULT ───────── */
   return (
     <div className={styles.page}>
       <div className={styles.card}>

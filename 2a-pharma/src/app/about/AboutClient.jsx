@@ -69,7 +69,7 @@ export default function AboutClient() {
         </div>
       </div>
 
-      {/* ══ STATS ══ */}
+     
       <div className={styles.statsRow}>
         {STATS.map((s, i) => (
           <div key={i} className={styles.statCard}>
@@ -81,7 +81,6 @@ export default function AboutClient() {
         ))}
       </div>
 
-      {/* ══ CARDS ══ */}
       <div className={styles.content}>
         <div className={styles.contentHeader}>
           <div className={styles.sectionTag}>✦ {sec.tag}</div>
@@ -100,7 +99,6 @@ export default function AboutClient() {
         </div>
       </div>
 
-      {/* ══ TRUST BANNER ══ */}
       <div className={styles.trustBanner}>
         <h2 className={styles.trustTitle}>{trust.title}</h2>
         <p className={styles.trustSub}>{trust.sub}</p>

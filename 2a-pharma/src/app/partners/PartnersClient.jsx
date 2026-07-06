@@ -60,8 +60,6 @@ export default function PartnersClient() {
 
   return (
     <div className={styles.page}>
-
-      {/* ══ HERO HEADER ══ */}
       <div className={styles.pageHeader}>
         <div className={styles.pageHeaderInner}>
           <div className={styles.heroTag}>✦ {tx.partners?.label || "Partners"}</div>
@@ -79,8 +77,6 @@ export default function PartnersClient() {
           </p>
         </div>
       </div>
-
-      {/* ══ GRID ══ */}
       <div className={styles.gridWrap}>
         <div className={styles.gridHeader}>
           <span className={styles.gridTag}>✦ {gridLabels.tag}</span>
@@ -128,8 +124,6 @@ export default function PartnersClient() {
           </div>
         )}
       </div>
-
-      {/* ══ TRUST BANNER ══ */}
       <div className={styles.trustBanner}>
         <h2 className={styles.trustTitle}>{trust.title}</h2>
         <p className={styles.trustSub}>{trust.sub}</p>

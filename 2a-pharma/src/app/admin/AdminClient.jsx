@@ -92,14 +92,10 @@ export default function AdminClient() {
   const { lang, toggle } = useLang();
   const router = useRouter();
   const tx = adminTx[lang];
-
   const [imageFile, setImageFile] = useState(null);
   const [uploading, setUploading] = useState(false);
   const [user, setUser] = useState(null);
-
-  // ✅ NOU: stare pentru verificarea sesiunii 2FA
   const [sessionChecked, setSessionChecked] = useState(false);
-
   const [activeTab, setActiveTab] = useState("products");
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -121,23 +117,19 @@ export default function AdminClient() {
   const [editPartner, setEditPartner] = useState(null);
   const [partnerImageFile, setPartnerImageFile] = useState(null);
   const [uploadingPartner, setUploadingPartner] = useState(false);
-
   const emptyPartnerForm = { name: "", website: "", logo_url: "" };
   const [partnerForm, setPartnerForm] = useState(emptyPartnerForm);
 
-  // ✅ VERIFICARE DUBLĂ: Firebase auth + cookie sesiune 2FA
+
   useEffect(() => {
     const unsub = onAuthStateChanged(auth, async (u) => {
       if (!u) {
         router.push("/login");
         return;
       }
-
-      // Verificăm dacă a trecut prin 2FA (cookie setat de server)
       try {
         const res = await fetch("/api/check-session");
         if (!res.ok) {
-          // Nu are cookie valid → înapoi la login
           await signOut(auth);
           router.push("/login");
           return;
@@ -147,8 +139,6 @@ export default function AdminClient() {
         router.push("/login");
         return;
       }
-
-      // ✅ Ambele verificări au trecut
       setUser(u);
       setSessionChecked(true);
     });
@@ -268,7 +258,6 @@ export default function AdminClient() {
   }
 
   async function handleLogout() {
-    // ✅ Ștergem și cookie-ul de sesiune la logout
     await fetch("/api/logout", { method: "POST" });
     await signOut(auth);
     router.push("/login");
@@ -287,8 +276,7 @@ export default function AdminClient() {
     { num: unreadCount, lbl: tx.unread, icon: "💬", color: unreadCount > 0 ? "#ef4444" : "#6b7280", bg: unreadCount > 0 ? "#FFF0F0" : "#F4F6FA" },
     { num: partners.length, lbl: tx.totalPartners, icon: "🤝", color: "#0F2A52", bg: "#E8EDF5" },
   ];
-
-  // ✅ Afișăm loading până când ambele verificări sunt complete
+  
   if (!sessionChecked || loading) return <div className={styles.loading}>{tx.loading}</div>;
 
   return (
