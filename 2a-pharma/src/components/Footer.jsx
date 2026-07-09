@@ -1,24 +1,43 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { useLang } from "../context/LangContext.jsx";
+import { getSiteSettings } from "../lib/getSiteSettings.js";
 import styles from "./Footer.module.css";
+
+const DEFAULT_LOGO = { logoType: "text", logoMark: "2A", logoText: "Pharma", logoImageUrl: "" };
 
 export default function Footer() {
   const { lang, tx } = useLang();
+  const [logo, setLogo] = useState(DEFAULT_LOGO);
+
+  useEffect(() => {
+    getSiteSettings().then(setLogo).catch(console.error);
+  }, []);
 
   return (
     <footer className={styles.footer}>
       <div className={styles.top}>
 
         <div className={styles.brand}>
-          <div className={styles.logoMark}>2A</div>
-          <div>
-            <div className={styles.logoText}>
-              <span>2A</span> Pharma
-            </div>
-            <div className={styles.logoSub}>Pajisje Mjekësore</div>
-          </div>
+          {logo.logoType === "image" && logo.logoImageUrl ? (
+            <img
+              src={logo.logoImageUrl}
+              alt="2A Pharma"
+              style={{ height: "44px", width: "auto", objectFit: "contain" }}
+            />
+          ) : (
+            <>
+              <div className={styles.logoMark}>{logo.logoMark || "2A"}</div>
+              <div>
+                <div className={styles.logoText}>
+                  <span>{logo.logoMark || "2A"}</span> {logo.logoText || "Pharma"}
+                </div>
+                <div className={styles.logoSub}>Pajisje Mjekësore</div>
+              </div>
+            </>
+          )}
         </div>
 
         <div className={styles.cols}>

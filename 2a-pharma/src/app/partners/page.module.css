@@ -157,6 +157,7 @@
   position: relative;
   overflow: hidden;
   animation: cardIn 0.45s ease both;
+  box-shadow: 1px 4px 12px rgba(15,42,82,0.98);
 }
 
 .partnerCard::before {
@@ -170,8 +171,19 @@
   opacity: 0;
   transition: opacity 0.28s ease;
 }
+.partnerCard {
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
+  transition: transform .3s ease;
+}
 
 .partnerCard:hover {
+  transform: translateY(-5px);
+}
+
+.partnerCard:hover {
+  cursor: pointer;
   transform: translateY(-8px);
   border-color: rgba(26,138,60,0.25);
   box-shadow: 0 16px 40px rgba(15,42,82,0.12);

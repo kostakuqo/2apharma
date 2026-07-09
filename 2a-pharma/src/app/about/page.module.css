@@ -19,6 +19,7 @@
   padding: 80px var(--section-px) 100px;
   position: relative;
   overflow: hidden;
+  box-shadow: 0 12px 24px -12px rgba(10,20,40,0.35);
 }
 
 .hero::before {
@@ -89,23 +90,30 @@
   max-width: 580px;
 }
 
-/* ─── STATS ─── */
 .statsRow {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 0;
+  gap: 20px;
   background: #fff;
+  padding: 40px var(--section-px);
   border-bottom: 1px solid #E8EDF5;
-  box-shadow: 0 4px 20px rgba(15,42,82,0.08);
 }
 
 .statCard {
   padding: 32px 28px;
   text-align: center;
-  border-right: 1px solid #E8EDF5;
-  transition: background 0.25s ease;
+  background: #fff;
+  border-radius: 16px;
+      box-shadow: 0 8px 32px #081a38d9;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
   animation: countUp 0.5s ease both;
   cursor: default;
+}
+
+.statCard:hover {
+  cursor: pointer;
+  transform: translateY(-3px);
+  
 }
 .statCard:nth-child(1) { animation-delay: 0.05s; }
 .statCard:nth-child(2) { animation-delay: 0.12s; }
@@ -139,6 +147,8 @@
   background: linear-gradient(160deg, #EEF7F0 0%, #E8F4FF 50%, #F0FBF4 100%);
   position: relative;
   overflow: hidden;
+  border-bottom: 1px solid rgba(15,42,82,0.06);
+  box-shadow: 0 12px 24px -12px rgba(15,42,82,0.12);
 }
 
 .content::before {
@@ -239,6 +249,7 @@
 .card::before { display: none; }
 
 .card:hover {
+  cursor: pointer;
   transform: translateY(-6px);
   border-color: rgba(26,138,60,0.3);
   box-shadow: 0 20px 48px rgba(15,42,82,0.10);
@@ -268,23 +279,26 @@
 .cardTitle {
   font-size: 19px;
   font-weight: 700;
-  color: #ffffff; /* înainte era albastru închis */
+  color: #ffffff;
   margin-bottom: 12px;
   letter-spacing: -0.2px;
 }
 
 .cardText {
   font-size: 14px;
-  color: rgba(255,255,255,0.78); /* mai soft, dar lizibil */
+  color: rgba(255,255,255,0.78);
   line-height: 1.8;
 }
 
 .trustBanner {
   background: #E1F0F4;
   padding: 64px var(--section-px);
+  border-radius: 24px;
   text-align: center;
   position: relative;
   overflow: hidden;
+  margin:40px;
+  box-shadow: 0 8px 32px #081a38d9;
 }
 
 .trustBanner::before {

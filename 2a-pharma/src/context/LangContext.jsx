@@ -34,7 +34,7 @@ export const translations = {
         { title: "Garanci & Servis", desc: "Ofrojmë garanci dhe shërbim pas shitjes për të gjitha produktet." },
       ],
     },
-    partners: { label: "Partnerët", title: "ORGANIZATA KRYESORE SHËNDETËSORE NA BESOJNË" },
+    partners: { label: "Partnerët", title: "Partnerët tane kryesore" },
     stock: { in: "Në stok", out: "Pa stok", low: "Stok i ulët" },
     contact: {
       label: "Kontakt", title: "Na Kontaktoni",

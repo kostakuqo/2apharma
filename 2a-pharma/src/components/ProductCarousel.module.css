@@ -1,0 +1,151 @@
+.scene {
+
+  width:100%;
+  height:650px;
+
+  display:flex;
+  justify-content:center;
+  align-items:center;
+
+
+  perspective:1400px;
+
+
+  overflow:hidden;
+
+
+  cursor:grab;
+
+
+  touch-action:none;
+
+  user-select:none;
+
+}
+
+
+.scene:active {
+
+  cursor:grabbing;
+
+}
+
+
+
+.circle {
+
+  width:320px;
+
+  height:450px;
+
+
+  position:relative;
+
+
+  transform-style:preserve-3d;
+
+
+}
+
+
+
+.card {
+
+  position:absolute;
+
+
+  width:320px;
+
+  height:450px;
+
+
+  left:0;
+
+  top:0;
+
+
+  transform-style:preserve-3d;
+
+
+  backface-visibility:hidden;
+
+
+  transition:
+  filter .3s ease,
+  opacity .3s ease;
+
+}
+
+
+
+/* desktop */
+.card:hover {
+
+  filter:none;
+
+}
+
+
+
+
+/* tablet */
+
+@media(max-width:1000px){
+
+
+.scene {
+
+  height:550px;
+
+}
+
+
+.card {
+
+ width:260px;
+
+}
+
+
+.circle {
+
+ width:260px;
+
+ height:360px;
+
+}
+
+
+}
+
+
+
+/* mobile */
+
+@media(max-width:600px){
+
+
+.scene {
+
+ height:430px;
+
+}
+
+
+.card {
+
+ width:220px;
+
+}
+
+
+.circle {
+
+ width:220px;
+
+ height:320px;
+
+}
+
+
+}

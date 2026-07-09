@@ -3,6 +3,7 @@
 import { usePathname } from "next/navigation";
 import Navbar from "./Navbar.jsx";
 import Footer from "./Footer.jsx";
+import WhatsAppButton from "@/components/WhatsAppButton";
 
 export default function LayoutShell({ children }) {
   const pathname = usePathname();
@@ -15,6 +16,7 @@ export default function LayoutShell({ children }) {
         {children}
       </main>
       {!isAdminRoute && <Footer />}
+      {!isAdminRoute && <WhatsAppButton />}
     </>
   );
 }

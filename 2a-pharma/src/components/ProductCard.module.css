@@ -1,6 +1,6 @@
 .card {
   background: var(--white);
-  border: 1px solid #112E59;
+  box-shadow: 0 8px 32px #081a38d9;
   border-radius: var(--r-lg);
   overflow: hidden;
   transition: all var(--t-fast);
@@ -8,8 +8,8 @@
   flex-direction: column;
 }
 .card:hover {
+  cursor: pointer;
   border-color: #112E59;
-  box-shadow: 0 6px 24px rgba(26,138,60,0.15);
   transform: translateY(-3px);
   cursor: pointer;
 }

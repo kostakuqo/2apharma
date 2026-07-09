@@ -26,8 +26,8 @@ const TRUST = {
 };
 
 const GRID_LABELS = {
-  al: { tag: "Partnerët tanë", title: "Organizatat me të cilat punojmë" },
-  en: { tag: "Our partners",   title: "Organizations we work with" },
+  al: { tag: "Partnerët tanë", title: "They trust us" },
+  en: { tag: "Our partners", title: "Organizations we work with" },
   it: { tag: "I nostri partner", title: "Le organizzazioni con cui lavoriamo" },
 };
 
@@ -65,15 +65,15 @@ export default function PartnersClient() {
           <div className={styles.heroTag}>✦ {tx.partners?.label || "Partners"}</div>
           <h1 className={styles.pageTitle}>
             {lang === "al" ? <>Partnerët <span>Tanë</span></> :
-             lang === "it" ? <>I Nostri <span>Partner</span></> :
-             <>Our <span>Partners</span></>}
+              lang === "it" ? <>I Nostri <span>Partner</span></> :
+                <>Our <span>Partners</span></>}
           </h1>
           <p className={styles.pageSub}>
             {lang === "al"
               ? "Bashkëpunojmë me organizatat kryesore shëndetësore në Shqipëri."
               : lang === "it"
-              ? "Collaboriamo con le principali organizzazioni sanitarie in Albania."
-              : "We collaborate with leading healthcare organizations across Albania."}
+                ? "Collaboriamo con le principali organizzazioni sanitarie in Albania."
+                : "We collaborate with leading healthcare organizations across Albania."}
           </p>
         </div>
       </div>
@@ -96,30 +96,90 @@ export default function PartnersClient() {
         ) : (
           <div className={`${styles.grid} ${visible ? styles.visible : ""}`}>
             {partners.map(p => (
-              <div key={p.id} className={styles.partnerCard}>
-                <div className={styles.partnerLogo}>
-                  {p.logo_url ? (
-                    <img
-                      src={p.logo_url}
-                      alt={p.name}
-                      style={{ width: "100%", height: "100%", objectFit: "contain", borderRadius: "50%" }}
-                    />
-                  ) : (
-                    <span>{p.name?.charAt(0)}</span>
-                  )}
+
+              p.website ? (
+
+                <a
+                  key={p.id}
+                  href={p.website}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={styles.partnerCard}
+                >
+
+                  <div className={styles.partnerLogo}>
+
+                    {p.logo_url ? (
+                      <img
+                        src={p.logo_url}
+                        alt={p.name}
+                        style={{
+                          width: "100%",
+                          height: "100%",
+                          objectFit: "contain",
+                          borderRadius: "50%"
+                        }}
+                      />
+                    ) : (
+                      <span>{p.name?.charAt(0)}</span>
+                    )}
+
+                  </div>
+
+
+                  <div className={styles.partnerName}>
+                    {p.name}
+                  </div>
+
+
+                  <div className={styles.partnerLink}>
+                    {p.website
+                      .replace("https://", "")
+                      .replace("http://", "")
+                    } →
+                  </div>
+
+
+                </a>
+
+
+              ) : (
+
+
+                <div
+                  key={p.id}
+                  className={styles.partnerCard}
+                >
+
+                  <div className={styles.partnerLogo}>
+
+                    {p.logo_url ? (
+                      <img
+                        src={p.logo_url}
+                        alt={p.name}
+                        style={{
+                          width: "100%",
+                          height: "100%",
+                          objectFit: "contain",
+                          borderRadius: "50%"
+                        }}
+                      />
+                    ) : (
+                      <span>{p.name?.charAt(0)}</span>
+                    )}
+
+                  </div>
+
+
+                  <div className={styles.partnerName}>
+                    {p.name}
+                  </div>
+
+
                 </div>
-                <div className={styles.partnerName}>{p.name}</div>
-                {p.website && (
-                  <a
-                    href={p.website}
-                    target="_blank"
-                    rel="noreferrer"
-                    className={styles.partnerLink}
-                  >
-                    {p.website.replace("https://", "").replace("http://", "")} →
-                  </a>
-                )}
-              </div>
+
+              )
+
             ))}
           </div>
         )}

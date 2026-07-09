@@ -1,13 +1,14 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { auth, db } from "../../lib/firebase.js";
 import { onAuthStateChanged, signOut } from "firebase/auth";
 import {
   collection, getDocs, addDoc, deleteDoc,
-  doc, updateDoc, orderBy, query
+  doc, updateDoc, orderBy, query, setDoc, getDoc
 } from "firebase/firestore";
+
 import { useLang } from "../../context/LangContext.jsx";
 import styles from "./page.module.css";
 
@@ -36,6 +37,15 @@ const adminTx = {
     photo: "Foto", name: "Emri", category: "Kategoria", actions: "Veprimet",
     addPartner: "+ Shto partner", newPartner: "Partner i ri", editPartner: "Ndrysho partnerin",
     partnerName: "Emri i partnerit", partnerLogo: "Logo (ngarko foto)", partnerWebsite: "Faqja web",
+    settings: "Modifikime", siteLogo: "Logo e faqes", logoTypeLabel: "Lloji i logos",
+    logoTypeText: "Tekst (2A / Pharma)", logoTypeImage: "Imagine (ngarko foto)",
+    logoMarkLabel: "Shkurtim (p.sh. 2A)", logoTextLabel: "Emri (p.sh. Pharma)",
+    logoImageLabel: "Imazhi i logos", currentLogo: "Logo aktuale", saveSettings: "✅ Ruaj logo",
+    toastProductSaved: "Produkti u ruajt me sukses!", toastProductDeleted: "Produkti u fshi.",
+    toastPartnerSaved: "Partneri u ruajt me sukses!", toastPartnerDeleted: "Partneri u fshi.",
+    toastSettingsSaved: "Logo u ruajt me sukses!", toastMessageDeleted: "Mesazhi u fshi.",
+    toastMessageRead: "Mesazhi u shënua si i lexuar.", toastError: "Diçka shkoi keq. Provo përsëri.",
+    savingLabel: "Duke ruajtur...",
   },
   en: {
     title: "Admin Panel — 2A Pharma", logout: "Logout", products: "Products", messages: "Messages", partners: "Partners",
@@ -56,6 +66,15 @@ const adminTx = {
     photo: "Photo", name: "Name", category: "Category", actions: "Actions",
     addPartner: "+ Add partner", newPartner: "New partner", editPartner: "Edit partner",
     partnerName: "Partner name", partnerLogo: "Logo (upload photo)", partnerWebsite: "Website",
+    settings: "Settings", siteLogo: "Site logo", logoTypeLabel: "Logo type",
+    logoTypeText: "Text (2A / Pharma)", logoTypeImage: "Image (upload photo)",
+    logoMarkLabel: "Short mark (e.g. 2A)", logoTextLabel: "Name (e.g. Pharma)",
+    logoImageLabel: "Logo image", currentLogo: "Current logo", saveSettings: "✅ Save logo",
+    toastProductSaved: "Product saved successfully!", toastProductDeleted: "Product deleted.",
+    toastPartnerSaved: "Partner saved successfully!", toastPartnerDeleted: "Partner deleted.",
+    toastSettingsSaved: "Logo saved successfully!", toastMessageDeleted: "Message deleted.",
+    toastMessageRead: "Message marked as read.", toastError: "Something went wrong. Please try again.",
+    savingLabel: "Saving...",
   },
   it: {
     title: "Pannello Admin — 2A Pharma", logout: "Esci", products: "Prodotti", messages: "Messaggi", partners: "Partner",
@@ -76,17 +95,29 @@ const adminTx = {
     photo: "Foto", name: "Nome", category: "Categoria", actions: "Azioni",
     addPartner: "+ Aggiungi partner", newPartner: "Nuovo partner", editPartner: "Modifica partner",
     partnerName: "Nome partner", partnerLogo: "Logo (carica foto)", partnerWebsite: "Sito web",
+    settings: "Impostazioni", siteLogo: "Logo del sito", logoTypeLabel: "Tipo di logo",
+    logoTypeText: "Testo (2A / Pharma)", logoTypeImage: "Immagine (carica foto)",
+    logoMarkLabel: "Sigla (es. 2A)", logoTextLabel: "Nome (es. Pharma)",
+    logoImageLabel: "Immagine logo", currentLogo: "Logo attuale", saveSettings: "✅ Salva logo",
+    toastProductSaved: "Prodotto salvato con successo!", toastProductDeleted: "Prodotto eliminato.",
+    toastPartnerSaved: "Partner salvato con successo!", toastPartnerDeleted: "Partner eliminato.",
+    toastSettingsSaved: "Logo salvato con successo!", toastMessageDeleted: "Messaggio eliminato.",
+    toastMessageRead: "Messaggio segnato come letto.", toastError: "Qualcosa è andato storto. Riprova.",
+    savingLabel: "Salvataggio in corso...",
   },
 };
 
-async function uploadImage(file) {
+async function uploadImage(file, folder = "") {
   const formData = new FormData();
   formData.append("file", file);
   formData.append("upload_preset", "2a-pharma-upload");
+  if (folder) formData.append("folder", folder);
   const res = await fetch("https://api.cloudinary.com/v1_1/diwmjt7aa/image/upload", { method: "POST", body: formData });
   const data = await res.json();
   return data.secure_url;
 }
+
+const DEFAULT_SITE_SETTINGS = { logoType: "text", logoMark: "2A", logoText: "Pharma", logoImageUrl: "" };
 
 export default function AdminClient() {
   const { lang, toggle } = useLang();
@@ -120,6 +151,22 @@ export default function AdminClient() {
   const emptyPartnerForm = { name: "", website: "", logo_url: "" };
   const [partnerForm, setPartnerForm] = useState(emptyPartnerForm);
 
+  // ── Site settings (logo) ──
+  const [siteSettings, setSiteSettings] = useState(DEFAULT_SITE_SETTINGS);
+  const [logoImageFile, setLogoImageFile] = useState(null);
+  const [savingSettings, setSavingSettings] = useState(false);
+
+  // ── Toast notifications ──
+  const [toast, setToast] = useState(null); // { message, type: "success" | "error" }
+  const toastTimerRef = useRef(null);
+  const [busy, setBusy] = useState(false); // true în timpul oricărei salvări/ștergeri
+
+  function showToast(message, type = "success") {
+    if (toastTimerRef.current) clearTimeout(toastTimerRef.current);
+    setToast({ message, type });
+    toastTimerRef.current = setTimeout(() => setToast(null), 3200);
+  }
+
 
   useEffect(() => {
     const unsub = onAuthStateChanged(auth, async (u) => {
@@ -150,6 +197,7 @@ export default function AdminClient() {
       loadProducts();
       loadMessages();
       loadPartners();
+      loadSiteSettings();
     }
   }, [user, sessionChecked]);
 
@@ -162,26 +210,44 @@ export default function AdminClient() {
 
   async function handleSave() {
     setUploading(true);
-    let imageUrl = form.image_url;
-    if (imageFile) imageUrl = await uploadImage(imageFile);
-    const finalData = { ...form, image_url: imageUrl };
-    if (editProduct) {
-      await updateDoc(doc(db, "products", editProduct.id), finalData);
-    } else {
-      await addDoc(collection(db, "products"), finalData);
+    setBusy(true);
+    try {
+      let imageUrl = form.image_url;
+      if (imageFile) imageUrl = await uploadImage(imageFile, "products");
+      const finalData = { ...form, image_url: imageUrl };
+      if (editProduct) {
+        await updateDoc(doc(db, "products", editProduct.id), finalData);
+      } else {
+        await addDoc(collection(db, "products"), finalData);
+      }
+      setShowForm(false);
+      setEditProduct(null);
+      setForm(emptyForm);
+      setImageFile(null);
+      loadProducts();
+      showToast(tx.toastProductSaved, "success");
+    } catch (err) {
+      console.error(err);
+      showToast(tx.toastError, "error");
+    } finally {
+      setUploading(false);
+      setBusy(false);
     }
-    setUploading(false);
-    setShowForm(false);
-    setEditProduct(null);
-    setForm(emptyForm);
-    setImageFile(null);
-    loadProducts();
   }
 
   async function handleDelete(id) {
     if (!confirm(tx.confirmDelete)) return;
-    await deleteDoc(doc(db, "products", id));
-    loadProducts();
+    setBusy(true);
+    try {
+      await deleteDoc(doc(db, "products", id));
+      loadProducts();
+      showToast(tx.toastProductDeleted, "success");
+    } catch (err) {
+      console.error(err);
+      showToast(tx.toastError, "error");
+    } finally {
+      setBusy(false);
+    }
   }
 
   function handleEdit(product) {
@@ -204,14 +270,32 @@ export default function AdminClient() {
   }
 
   async function markAsRead(id) {
-    await updateDoc(doc(db, "messages", id), { read: true });
-    setMessages(prev => prev.map(m => m.id === id ? { ...m, read: true } : m));
+    setBusy(true);
+    try {
+      await updateDoc(doc(db, "messages", id), { read: true });
+      setMessages(prev => prev.map(m => m.id === id ? { ...m, read: true } : m));
+      showToast(tx.toastMessageRead, "success");
+    } catch (err) {
+      console.error(err);
+      showToast(tx.toastError, "error");
+    } finally {
+      setBusy(false);
+    }
   }
 
   async function deleteMessage(id) {
     if (!confirm(tx.confirmDeleteMsg)) return;
-    await deleteDoc(doc(db, "messages", id));
-    setMessages(prev => prev.filter(m => m.id !== id));
+    setBusy(true);
+    try {
+      await deleteDoc(doc(db, "messages", id));
+      setMessages(prev => prev.filter(m => m.id !== id));
+      showToast(tx.toastMessageDeleted, "success");
+    } catch (err) {
+      console.error(err);
+      showToast(tx.toastError, "error");
+    } finally {
+      setBusy(false);
+    }
   }
 
   async function loadPartners() {
@@ -223,32 +307,82 @@ export default function AdminClient() {
 
   async function handleSavePartner() {
     setUploadingPartner(true);
-    let logoUrl = partnerForm.logo_url;
-    if (partnerImageFile) logoUrl = await uploadImage(partnerImageFile);
-    const finalData = { ...partnerForm, logo_url: logoUrl };
-    if (editPartner) {
-      await updateDoc(doc(db, "partners", editPartner.id), finalData);
-    } else {
-      await addDoc(collection(db, "partners"), finalData);
+    setBusy(true);
+    try {
+      let logoUrl = partnerForm.logo_url;
+      if (partnerImageFile) logoUrl = await uploadImage(partnerImageFile, "partners");
+      const finalData = { ...partnerForm, logo_url: logoUrl };
+      if (editPartner) {
+        await updateDoc(doc(db, "partners", editPartner.id), finalData);
+      } else {
+        await addDoc(collection(db, "partners"), finalData);
+      }
+      setShowPartnerForm(false);
+      setEditPartner(null);
+      setPartnerForm(emptyPartnerForm);
+      setPartnerImageFile(null);
+      loadPartners();
+      showToast(tx.toastPartnerSaved, "success");
+    } catch (err) {
+      console.error(err);
+      showToast(tx.toastError, "error");
+    } finally {
+      setUploadingPartner(false);
+      setBusy(false);
     }
-    setUploadingPartner(false);
-    setShowPartnerForm(false);
-    setEditPartner(null);
-    setPartnerForm(emptyPartnerForm);
-    setPartnerImageFile(null);
-    loadPartners();
   }
 
   async function handleDeletePartner(id) {
     if (!confirm(tx.confirmDeletePartner)) return;
-    await deleteDoc(doc(db, "partners", id));
-    loadPartners();
+    setBusy(true);
+    try {
+      await deleteDoc(doc(db, "partners", id));
+      loadPartners();
+      showToast(tx.toastPartnerDeleted, "success");
+    } catch (err) {
+      console.error(err);
+      showToast(tx.toastError, "error");
+    } finally {
+      setBusy(false);
+    }
   }
 
   function handleEditPartner(partner) {
     setEditPartner(partner);
     setPartnerForm(partner);
     setShowPartnerForm(true);
+  }
+
+  // ── Site settings (logo) handlers ──
+  async function loadSiteSettings() {
+    try {
+      const snap = await getDoc(doc(db, "settings", "site"));
+      if (snap.exists()) {
+        setSiteSettings({ ...DEFAULT_SITE_SETTINGS, ...snap.data() });
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
+  async function handleSaveSettings() {
+    setSavingSettings(true);
+    setBusy(true);
+    try {
+      let logoImageUrl = siteSettings.logoImageUrl;
+      if (logoImageFile) logoImageUrl = await uploadImage(logoImageFile, "logo");
+      const finalData = { ...siteSettings, logoImageUrl };
+      await setDoc(doc(db, "settings", "site"), finalData, { merge: true });
+      setSiteSettings(finalData);
+      setLogoImageFile(null);
+      showToast(tx.toastSettingsSaved, "success");
+    } catch (err) {
+      console.error(err);
+      showToast(tx.toastError, "error");
+    } finally {
+      setSavingSettings(false);
+      setBusy(false);
+    }
   }
 
   function formatDate(ts) {
@@ -307,6 +441,9 @@ export default function AdminClient() {
         </button>
         <button className={`${styles.tab} ${activeTab === "partners" ? styles.tabActive : ""}`} onClick={() => setActiveTab("partners")}>
           🤝 {tx.partners}
+        </button>
+        <button className={`${styles.tab} ${activeTab === "settings" ? styles.tabActive : ""}`} onClick={() => setActiveTab("settings")}>
+          ⚙️ {tx.settings}
         </button>
       </div>
 
@@ -508,6 +645,69 @@ export default function AdminClient() {
         </>
       )}
 
+      {activeTab === "settings" && (
+        <>
+          <div className={styles.toolbar}>
+            <h2 className={styles.subtitle}>{tx.settings}</h2>
+          </div>
+
+          <div className={styles.formCard}>
+            <h3>{tx.siteLogo}</h3>
+
+            <div className={styles.formGroup} style={{ marginBottom: "16px" }}>
+              <label>{tx.logoTypeLabel}</label>
+              <select
+                value={siteSettings.logoType}
+                onChange={e => setSiteSettings({ ...siteSettings, logoType: e.target.value })}
+              >
+                <option value="text">{tx.logoTypeText}</option>
+                <option value="image">{tx.logoTypeImage}</option>
+              </select>
+            </div>
+
+            {siteSettings.logoType === "text" ? (
+              <div className={styles.formGrid}>
+                <div className={styles.formGroup}>
+                  <label>{tx.logoMarkLabel}</label>
+                  <input
+                    value={siteSettings.logoMark}
+                    onChange={e => setSiteSettings({ ...siteSettings, logoMark: e.target.value })}
+                  />
+                </div>
+                <div className={styles.formGroup}>
+                  <label>{tx.logoTextLabel}</label>
+                  <input
+                    value={siteSettings.logoText}
+                    onChange={e => setSiteSettings({ ...siteSettings, logoText: e.target.value })}
+                  />
+                </div>
+              </div>
+            ) : (
+              <div className={styles.formGroup}>
+                <label>{tx.logoImageLabel}</label>
+                {siteSettings.logoImageUrl && (
+                  <div style={{ marginBottom: "10px" }}>
+                    <div style={{ fontSize: "12px", color: "#9ca3af", marginBottom: "4px" }}>{tx.currentLogo}:</div>
+                    <img
+                      src={siteSettings.logoImageUrl}
+                      alt="Logo curent"
+                      style={{ height: "50px", display: "block" }}
+                    />
+                  </div>
+                )}
+                <input type="file" accept="image/*" onChange={e => setLogoImageFile(e.target.files[0])} />
+              </div>
+            )}
+
+            <div className={styles.formActions}>
+              <button className={styles.saveBtn} onClick={handleSaveSettings} disabled={savingSettings}>
+                {savingSettings ? tx.uploading : tx.saveSettings}
+              </button>
+            </div>
+          </div>
+        </>
+      )}
+
       <div className={styles.stats}>
         {STATS_DATA.map((s, i) => (
           <div className={styles.statCard} key={i}>
@@ -521,6 +721,137 @@ export default function AdminClient() {
           </div>
         ))}
       </div>
+
+      {busy && (
+        <div
+          style={{
+            position: "fixed",
+            inset: 0,
+            zIndex: 9998,
+            background: "rgba(20, 24, 32, 0.55)",
+            backdropFilter: "blur(2px)",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <div
+            style={{
+              background: "#fff",
+              borderRadius: "18px",
+              padding: "32px 40px",
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              gap: "16px",
+              boxShadow: "0 20px 50px rgba(0,0,0,0.3)",
+              animation: "adminModalIn 0.25s ease-out",
+            }}
+          >
+            <div
+              style={{
+                width: "42px",
+                height: "42px",
+                borderRadius: "50%",
+                border: "4px solid #E8EDF5",
+                borderTopColor: "#0A1F3D",
+                animation: "adminSpin 0.8s linear infinite",
+              }}
+            />
+            <span style={{ fontSize: "14px", fontWeight: 600, color: "#0A1F3D" }}>
+              {tx.savingLabel}
+            </span>
+          </div>
+        </div>
+      )}
+
+      {toast && !busy && (
+        <div
+          style={{
+            position: "fixed",
+            inset: 0,
+            zIndex: 9999,
+            background: "rgba(20, 24, 32, 0.45)",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+          onClick={() => setToast(null)}
+        >
+          <div
+            onClick={(e) => e.stopPropagation()}
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              gap: "14px",
+              padding: "32px 40px",
+              borderRadius: "18px",
+              minWidth: "260px",
+              maxWidth: "380px",
+              textAlign: "center",
+              boxShadow: "0 20px 50px rgba(0,0,0,0.3)",
+              background: toast.type === "success"
+                ? "linear-gradient(135deg, #0A1F3D 0%, #14304F 100%)"
+                : "linear-gradient(135deg, #7a1f1f 0%, #9c2a2a 100%)",
+              color: "#fff",
+              animation: "adminModalIn 0.3s ease-out",
+            }}
+          >
+            <span
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                width: "48px",
+                height: "48px",
+                borderRadius: "50%",
+                background: toast.type === "success" ? "#28C75A" : "#ff6b6b",
+                fontSize: "22px",
+                fontWeight: 700,
+              }}
+            >
+              {toast.type === "success" ? "✓" : "!"}
+            </span>
+            <span style={{ fontSize: "15px", fontWeight: 500, lineHeight: 1.4 }}>
+              {toast.message}
+            </span>
+            <button
+              onClick={() => setToast(null)}
+              style={{
+                marginTop: "4px",
+                background: "rgba(255,255,255,0.15)",
+                border: "none",
+                color: "#fff",
+                cursor: "pointer",
+                fontSize: "13px",
+                borderRadius: "8px",
+                padding: "6px 16px",
+              }}
+            >
+              ✕
+            </button>
+          </div>
+        </div>
+      )}
+
+      <style jsx>{`
+        @keyframes adminModalIn {
+          from {
+            opacity: 0;
+            transform: scale(0.92) translateY(10px);
+          }
+          to {
+            opacity: 1;
+            transform: scale(1) translateY(0);
+          }
+        }
+        @keyframes adminSpin {
+          to {
+            transform: rotate(360deg);
+          }
+        }
+      `}</style>
     </div>
   );
 }

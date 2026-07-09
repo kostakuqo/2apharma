@@ -6,6 +6,7 @@ import { usePathname } from "next/navigation";
 import { useLang } from "../context/LangContext.jsx";
 import { Home, Info, Package, Handshake, Phone, Search, X } from "lucide-react";
 import { getProducts } from "../lib/getProducts.js";
+import { getSiteSettings } from "../lib/getSiteSettings.js";
 import styles from "./Navbar.module.css";
 
 const FlagAL = () => (
@@ -45,6 +46,8 @@ const NAV_ITEMS = [
   { href: "/contact", label: "contact", Icon: Phone },
 ];
 
+const DEFAULT_LOGO = { logoType: "text", logoMark: "2A", logoText: "Pharma", logoImageUrl: "" };
+
 export default function Navbar() {
   const { lang, toggle, tx } = useLang();
   const [langOpen, setLangOpen] = useState(false);
@@ -56,6 +59,7 @@ export default function Navbar() {
   const [searchQuery, setSearchQuery] = useState("");
   const [allProducts, setAllProducts] = useState([]);
   const [results, setResults] = useState([]);
+  const [logo, setLogo] = useState(DEFAULT_LOGO);
   const searchWrapRef = useRef(null);
   const searchInputRef = useRef(null);
 
@@ -67,6 +71,10 @@ export default function Navbar() {
 
   useEffect(() => {
     getProducts().then(setAllProducts).catch(console.error);
+  }, []);
+
+  useEffect(() => {
+    getSiteSettings().then(setLogo).catch(console.error);
   }, []);
 
   useEffect(() => {
@@ -112,8 +120,18 @@ export default function Navbar() {
       <header className={`${styles.nav} ${scrolled ? styles.scrolled : ""}`}>
         <div className={styles.inner}>
           <Link href="/" className={styles.logo}>
-            <div className={styles.logoMark}>2A</div>
-            <div className={styles.logoText}>Pharma</div>
+            {logo.logoType === "image" && logo.logoImageUrl ? (
+              <img
+                src={logo.logoImageUrl}
+                alt="2A Pharma"
+                style={{ height: "40px", width: "auto", objectFit: "contain" }}
+              />
+            ) : (
+              <>
+                <div className={styles.logoMark}>{logo.logoMark || "2A"}</div>
+                <div className={styles.logoText}>{logo.logoText || "Pharma"}</div>
+              </>
+            )}
           </Link>
 
           <nav className={styles.links}>

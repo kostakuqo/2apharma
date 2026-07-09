@@ -154,23 +154,47 @@ export default function HomeClient() {
 
       </div>
       <section className={styles.partnersSection}>
-        <div className={styles.partnersLabel}>{tx.partners.title}</div>
-        <div className={styles.partnersRow}>
-          {partners.map(p => (
-            <div key={p.id} className={styles.partner}>
-              {p.logo_url ? (
-                <img
-                  src={p.logo_url}
-                  alt={p.name}
-                  style={{ height: "60px", width: "auto", objectFit: "contain" }}
-                />
-              ) : (
-                p.name
-              )}
-            </div>
-          ))}
-        </div>
-      </section>
+  <div className={styles.partnersLabel}>{tx.partners.title}</div>
+
+  <div className={styles.partnersRow}>
+    {partners.map(p => (
+      <div key={p.id} className={styles.partner}>
+
+        {p.website ? (
+          <a
+            href={p.website}
+            target="_blank"
+            rel="noopener noreferrer"
+            className={styles.partnerLinkHome}
+          >
+            {p.logo_url ? (
+              <img
+                src={p.logo_url}
+                alt={p.name}
+                className={styles.partnerLogoHome}
+              />
+            ) : (
+              <span>{p.name}</span>
+            )}
+          </a>
+        ) : (
+          <>
+            {p.logo_url ? (
+              <img
+                src={p.logo_url}
+                alt={p.name}
+                className={styles.partnerLogoHome}
+              />
+            ) : (
+              <span>{p.name}</span>
+            )}
+          </>
+        )}
+
+      </div>
+    ))}
+  </div>
+</section>
       <section style={{ padding: "0 var(--section-px)" }}>
         <Map />
       </section>

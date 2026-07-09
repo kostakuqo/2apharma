@@ -164,20 +164,14 @@
 
 .heroStats {
   display: flex;
-
   justify-content: center;
   align-items: center;
-
   flex-wrap: wrap;
-
   width: 100%;
   max-width: 700px;
-
   gap: 56px;
-
   margin-top: 50px;
   padding-top: 32px;
-
   border-top: 1px solid rgba(255,255,255,0.15);
 }
 .statNum {
@@ -352,16 +346,18 @@
 .fTitle { font-size: 15px; font-weight: 600; color: #fff; margin-bottom: 8px; }
 .fDesc  { font-size: 13px; color: rgba(200,217,240,0.85); line-height: 1.6; }
 
-/* ══ PARTNERS — alb, in afara darkBlock ════ */
+
 .partnersSection {
   background: #fff;
   padding: 48px var(--section-px);
+  margin: 40px;
+  box-shadow: 0 8px 32px rgba(8,26,56,0.85);
 }
 
 .partnersLabel {
   text-align: center;
   font-size: 12px;
-  color: var(--gray-400);
+  color: var(--gray-800);
   text-transform: uppercase;
   letter-spacing: 0.12em;
   margin-bottom: 28px;
@@ -445,6 +441,60 @@
   color: #fff;
   box-shadow: 0 8px 32px rgba(40,199,90,0.4);
   transform: translateY(-2px);
+}
+.carousel {
+  overflow: hidden;
+  width: 100%;
+  position: relative;
+}
+
+.carouselTrack {
+  display: flex;
+  width: max-content;
+  animation: scrollProducts 35s linear infinite;
+}
+
+.carouselItem {
+  width: 320px;
+  flex-shrink: 0;
+  margin-right: 24px;
+}
+
+/* ndalet kur kalon mouse sipër */
+.carousel:hover .carouselTrack {
+  animation-play-state: paused;
+}
+.partnerLinkHome {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+  transition: transform .25s ease;
+}
+
+.partnerLinkHome:hover {
+  transform: scale(1.08);
+  cursor: pointer;
+}
+
+.partnerLogoHome {
+  height: 60px;
+  width: auto;
+  object-fit: contain;
+  transition: .25s ease;
+}
+
+
+@keyframes scrollProducts {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(-50%);
+  }
 }
 
 /* ══ RESPONSIVE ══ */
