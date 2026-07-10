@@ -749,6 +749,20 @@
   flex-shrink: 0;
 }
 .messageName { font-size: 15px; color: #111827; }
+.filtersBar {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  margin-bottom: 18px;
+}
+
+.filterInput,
+.filterSelect {
+  height: 38px;
+  padding: 0 12px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+}
 
 .newBadge {
   display: inline-block;

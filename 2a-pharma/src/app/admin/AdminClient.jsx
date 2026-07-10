@@ -8,6 +8,7 @@ import * as XLSX from "xlsx";
 import { collection, getDocs, addDoc, deleteDoc, doc, updateDoc, orderBy, query, setDoc, getDoc } from "firebase/firestore";
 import { useLang } from "../../context/LangContext.jsx";
 import styles from "./page.module.css";
+import { Filter } from "lucide-react";
 
 
 const iconProps = {
@@ -172,6 +173,7 @@ const adminTx = {
     confirmDelete: "A je i sigurt që do ta fshish produktin?",
     confirmDeleteMsg: "A je i sigurt që do ta fshish këtë mesazh?",
     confirmDeletePartner: "A je i sigurt që do ta fshish këtë partner?",
+    codLabel: "Kodi i produktit",
     nameEN: "Emri EN", nameAL: "Emri AL", nameIT: "Emri IT",
     catEN: "Kategoria EN", catAL: "Kategoria AL", catIT: "Kategoria IT",
     descEN: "Përshkrimi EN", descAL: "Përshkrimi AL", descIT: "Përshkrimi IT",
@@ -194,6 +196,22 @@ const adminTx = {
     importExcelFileLbl: "Skedari Excel", importPhotosLbl: "Foto (zgjidh të gjitha njëherësh)",
     importSkuHint: "Çdo rresht duhet të ketë një kolonë 'cod' (ose 'sku') që përputhet me emrin e skedarit të fotos (p.sh. cod=PRD001 → PRD001.jpg).",
     startImport: "Fillo importin", importingLabel: "Duke importuar...",
+    downloadTemplateUrl: "Shabllon (me URL)", downloadTemplatePhoto: "Shabllon (me foto)",
+    checkingUrls: "Duke verifikuar imazhet...",
+    previewTitle: "Shiko para se të importosh", previewCod: "Kodi", previewName: "Emri",
+    previewUrl: "URL", previewStatus: "Statusi", previewAction: "Veprimi",
+    statusUrlOk: "Imazhi u ngarkua ✓", statusUrlFail: "Imazhi nuk u ngarkua ✗", statusNoUrl: "Pa URL",
+    actionCreate: "Shto të ri", actionUpdate: "Përditëso", actionSkip: "Kapërce (pa kod)",
+    confirmImportBtn: "Konfirmo importin", closeBtn: "Mbyll",
+    importReportTitle: "Rezultati i importit", statusPhotoFound: "Foto u gjet ✓", statusPhotoMissing: "Foto mungon ⚠",
+    statusSkippedNoCode: "Kapërcyer — pa kod",
+    toastExcelEmpty: "Skedari Excel është bosh.",
+    toastSelectExcelFirst: "Zgjidh fillimisht skedarin Excel.",
+    toastExcelFailed: "Importi Excel dështoi.",
+    importSummary1: (created, updated, skipped, published, drafts) =>
+      `Importi: ${created} shtuar, ${updated} përditësuar, ${skipped} kapërcyer (pa kod) — ${published} publikuar, ${drafts} draft.`,
+    importSummary2: (created, updated, skipped, published, drafts) =>
+      `Importi: ${created} shtuar, ${updated} përditësuar, ${skipped} kapërcyer — ${published} publikuar, ${drafts} draft.`,
   },
   en: {
     title: "Admin Panel — 2A Pharma", logout: "Logout", products: "Products", messages: "Messages", partners: "Partners",
@@ -207,6 +225,7 @@ const adminTx = {
     confirmDelete: "Are you sure you want to delete this product?",
     confirmDeleteMsg: "Are you sure you want to delete this message?",
     confirmDeletePartner: "Are you sure you want to delete this partner?",
+    codLabel: "Product code",
     nameEN: "Name EN", nameAL: "Name AL", nameIT: "Name IT",
     catEN: "Category EN", catAL: "Category AL", catIT: "Category IT",
     descEN: "Description EN", descAL: "Description AL", descIT: "Description IT",
@@ -229,6 +248,22 @@ const adminTx = {
     importExcelFileLbl: "Excel file", importPhotosLbl: "Photos (select all at once)",
     importSkuHint: "Each row needs a 'cod' (or 'sku') column matching the photo filename (e.g. cod=PRD001 → PRD001.jpg).",
     startImport: "Start import", importingLabel: "Importing...",
+    downloadTemplateUrl: "Template (with URL)", downloadTemplatePhoto: "Template (with photos)",
+    checkingUrls: "Checking images...",
+    previewTitle: "Preview before importing", previewCod: "Code", previewName: "Name",
+    previewUrl: "URL", previewStatus: "Status", previewAction: "Action",
+    statusUrlOk: "Image loaded ✓", statusUrlFail: "Image failed to load ✗", statusNoUrl: "No URL",
+    actionCreate: "Create new", actionUpdate: "Update", actionSkip: "Skip (no code)",
+    confirmImportBtn: "Confirm import", closeBtn: "Close",
+    importReportTitle: "Import result", statusPhotoFound: "Photo found ✓", statusPhotoMissing: "Photo missing ⚠",
+    statusSkippedNoCode: "Skipped — no code",
+    toastExcelEmpty: "The Excel file is empty.",
+    toastSelectExcelFirst: "Please choose the Excel file first.",
+    toastExcelFailed: "Excel import failed.",
+    importSummary1: (created, updated, skipped, published, drafts) =>
+      `Import: ${created} added, ${updated} updated, ${skipped} skipped (no code) — ${published} published, ${drafts} draft.`,
+    importSummary2: (created, updated, skipped, published, drafts) =>
+      `Import: ${created} added, ${updated} updated, ${skipped} skipped — ${published} published, ${drafts} draft.`,
   },
   it: {
     title: "Pannello Admin — 2A Pharma", logout: "Esci", products: "Prodotti", messages: "Messaggi", partners: "Partner",
@@ -242,6 +277,7 @@ const adminTx = {
     confirmDelete: "Sei sicuro di voler eliminare questo prodotto?",
     confirmDeleteMsg: "Sei sicuro di voler eliminare questo messaggio?",
     confirmDeletePartner: "Sei sicuro di voler eliminare questo partner?",
+    codLabel: "Codice prodotto",
     nameEN: "Nome EN", nameAL: "Nome AL", nameIT: "Nome IT",
     catEN: "Categoria EN", catAL: "Categoria AL", catIT: "Categoria IT",
     descEN: "Descrizione EN", descAL: "Descrizione AL", descIT: "Descrizione IT",
@@ -264,6 +300,22 @@ const adminTx = {
     importExcelFileLbl: "File Excel", importPhotosLbl: "Foto (seleziona tutte insieme)",
     importSkuHint: "Ogni riga deve avere una colonna 'cod' (o 'sku') corrispondente al nome del file foto (es. cod=PRD001 → PRD001.jpg).",
     startImport: "Avvia importazione", importingLabel: "Importazione in corso...",
+    downloadTemplateUrl: "Modello (con URL)", downloadTemplatePhoto: "Modello (con foto)",
+    checkingUrls: "Verifica immagini...",
+    previewTitle: "Anteprima prima di importare", previewCod: "Codice", previewName: "Nome",
+    previewUrl: "URL", previewStatus: "Stato", previewAction: "Azione",
+    statusUrlOk: "Immagine caricata ✓", statusUrlFail: "Immagine non caricata ✗", statusNoUrl: "Nessun URL",
+    actionCreate: "Crea nuovo", actionUpdate: "Aggiorna", actionSkip: "Salta (nessun codice)",
+    confirmImportBtn: "Conferma importazione", closeBtn: "Chiudi",
+    importReportTitle: "Risultato importazione", statusPhotoFound: "Foto trovata ✓", statusPhotoMissing: "Foto mancante ⚠",
+    statusSkippedNoCode: "Saltato — nessun codice",
+    toastExcelEmpty: "Il file Excel è vuoto.",
+    toastSelectExcelFirst: "Scegli prima il file Excel.",
+    toastExcelFailed: "Importazione Excel fallita.",
+    importSummary1: (created, updated, skipped, published, drafts) =>
+      `Importazione: ${created} aggiunti, ${updated} aggiornati, ${skipped} saltati (senza codice) — ${published} pubblicati, ${drafts} bozza.`,
+    importSummary2: (created, updated, skipped, published, drafts) =>
+      `Importazione: ${created} aggiunti, ${updated} aggiornati, ${skipped} saltati — ${published} pubblicati, ${drafts} bozza.`,
   },
 };
 
@@ -287,6 +339,35 @@ function isValidImageUrl(value) {
   }
 }
 
+// Actually tries to load the image in the browser (not just "looks like a URL").
+// This is what catches links copied from other sites that block hotlinking,
+// or links that point to an HTML page instead of a real image file.
+function checkImageUrlLoads(url) {
+  return new Promise((resolve) => {
+    if (!isValidImageUrl(url)) {
+      resolve(false);
+      return;
+    }
+    const img = new window.Image();
+    const timer = setTimeout(() => resolve(false), 8000);
+    img.onload = () => { clearTimeout(timer); resolve(true); };
+    img.onerror = () => { clearTimeout(timer); resolve(false); };
+    img.src = url.trim();
+  });
+}
+
+function normalizeCode(c) {
+  return String(c || "").trim().toLowerCase();
+}
+
+// Finds an existing product with the same "cod" (case-insensitive, trimmed).
+// This is the single source of truth for "should this row update or create".
+function findProductByCode(products, cod) {
+  const norm = normalizeCode(cod);
+  if (!norm) return null;
+  return products.find((p) => normalizeCode(p.cod) === norm) || null;
+}
+
 const DEFAULT_SITE_SETTINGS = { logoType: "text", logoMark: "2A", logoText: "Pharma", logoImageUrl: "" };
 
 export default function AdminClient() {
@@ -299,11 +380,18 @@ export default function AdminClient() {
   const [sessionChecked, setSessionChecked] = useState(false);
   const [activeTab, setActiveTab] = useState("products");
   const [products, setProducts] = useState([]);
+  const [productSearch, setProductSearch] = useState("");
+  const [stockFilter, setStockFilter] = useState("all");
+  const [publishFilter, setPublishFilter] = useState("all");
+
+
+
   const [loading, setLoading] = useState(true);
   const [showForm, setShowForm] = useState(false);
   const [editProduct, setEditProduct] = useState(null);
 
   const emptyForm = {
+    cod: "",
     name_en: "", name_al: "", name_it: "",
     desc_en: "", desc_al: "", desc_it: "",
     category_en: "", category_al: "", category_it: "",
@@ -324,18 +412,46 @@ export default function AdminClient() {
   const [logoImageFile, setLogoImageFile] = useState(null);
   const [savingSettings, setSavingSettings] = useState(false);
 
-  // ── Import Excel + Poze (format 2) ──
+  // ── Import Excel cu URL (Format 1) ──
+  const [checkingUrls, setCheckingUrls] = useState(false);
+  const [importPreview, setImportPreview] = useState(null); // { fileName, rows: [...] }
+  const [confirmingImport, setConfirmingImport] = useState(false);
+
+  // ── Import Excel + Poze (Format 2) ──
   const [showPhotoImport, setShowPhotoImport] = useState(false);
   const [importExcelFile, setImportExcelFile] = useState(null);
   const [importPhotoFiles, setImportPhotoFiles] = useState([]);
   const [importingWithPhotos, setImportingWithPhotos] = useState(false);
+  const [importReport, setImportReport] = useState(null); // [{cod, status}]
 
   const [toast, setToast] = useState(null); // { message, type: "success" | "error" }
   const toastTimerRef = useRef(null);
-  const [busy, setBusy] = useState(false); // true în timpul oricărei salvări/ștergeri
+  const [busy, setBusy] = useState(false);
+  const filteredProducts = products.filter((p) => {
+    const search = productSearch.toLowerCase();
+
+    const matchSearch =
+      !search ||
+      p.cod?.toLowerCase().includes(search) ||
+      p.name_en?.toLowerCase().includes(search) ||
+      p.name_al?.toLowerCase().includes(search) ||
+      p.name_it?.toLowerCase().includes(search);
+
+    const matchStock =
+      stockFilter === "all" ||
+      p.stock === stockFilter;
+
+    const matchPublish =
+      publishFilter === "all" ||
+      (publishFilter === "published" && p.published) ||
+      (publishFilter === "draft" && !p.published);
+
+    return matchSearch && matchStock && matchPublish;
+  }); // true în timpul oricărei salvări/ștergeri
 
   function exportProductsExcel() {
     const excelData = products.map((p) => ({
+      cod: p.cod || "",
       id: p.id,
       name_en: p.name_en || "",
       name_al: p.name_al || "",
@@ -358,11 +474,23 @@ export default function AdminClient() {
     XLSX.writeFile(workbook, "products.xlsx");
   }
 
-  // ── Format 1: Excel cu image_url — publish automat dacă URL-ul e valid ──
-  async function handleImportExcel(e) {
+  function downloadTemplate(withUrl) {
+    const cols = withUrl
+      ? ["cod", "name_en", "name_al", "name_it", "category_en", "category_al", "category_it", "desc_en", "desc_al", "desc_it", "icon", "image_url", "stock"]
+      : ["cod", "name_en", "name_al", "name_it", "category_en", "category_al", "category_it", "desc_en", "desc_al", "desc_it", "icon", "stock"];
+    const exampleRow = Object.fromEntries(cols.map((c) => [c, c === "cod" ? "PRD001" : c === "stock" ? "in" : ""]));
+    const ws = XLSX.utils.json_to_sheet([exampleRow]);
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, "Template");
+    XLSX.writeFile(wb, withUrl ? "template_cu_url.xlsx" : "template_cu_foto.xlsx");
+  }
+
+  // ── Format 1, pasul 1: citește Excel-ul și verifică fiecare URL înainte de a scrie orice în baza de date ──
+  async function handleImportExcelFile(e) {
     const file = e.target.files[0];
     if (!file) return;
-    setBusy(true);
+    setCheckingUrls(true);
+    setImportPreview(null);
 
     try {
       const data = await file.arrayBuffer();
@@ -370,19 +498,61 @@ export default function AdminClient() {
       const worksheet = workbook.Sheets[workbook.SheetNames[0]];
       const rows = XLSX.utils.sheet_to_json(worksheet);
       if (!rows.length) {
-        showToast("Excel file is empty.", "error");
+        showToast(tx.toastExcelEmpty, "error");
         return;
       }
 
-      let updated = 0;
-      let created = 0;
-      let published = 0;
-      let drafts = 0;
+      const checked = await Promise.all(
+        rows.map(async (row) => {
+          const cod = String(row.cod || row.sku || "").trim();
+          const url = row.image_url ? String(row.image_url).trim() : "";
+          const hasUrl = !!url;
+          const urlLoads = hasUrl ? await checkImageUrlLoads(url) : false;
+          const existing = cod ? findProductByCode(products, cod) : null;
 
-      for (const row of rows) {
-        const hasUrl = isValidImageUrl(row.image_url);
+          let status;
+          if (!hasUrl) status = tx.statusNoUrl;
+          else status = urlLoads ? tx.statusUrlOk : tx.statusUrlFail;
+
+          const action = !cod ? "skip" : existing ? "update" : "create";
+
+          return {
+            cod,
+            name: row.name_en || row.name_al || row.name_it || "—",
+            url,
+            urlLoads,
+            status,
+            action,
+            row,
+          };
+        })
+      );
+
+      setImportPreview({ fileName: file.name, rows: checked });
+    } catch (err) {
+      console.error(err);
+      showToast(tx.toastExcelFailed, "error");
+    } finally {
+      setCheckingUrls(false);
+      e.target.value = "";
+    }
+  }
+
+  // ── Format 1, pasul 2: după ce ai văzut previzualizarea, confirmi și abia atunci se scrie în Firestore ──
+  async function handleConfirmImportExcel() {
+    if (!importPreview) return;
+    setConfirmingImport(true);
+    setBusy(true);
+
+    try {
+      let created = 0, updated = 0, skipped = 0, published = 0, drafts = 0;
+
+      for (const item of importPreview.rows) {
+        if (item.action === "skip") { skipped++; continue; }
+        const row = item.row;
 
         const productData = {
+          cod: item.cod,
           name_en: row.name_en || "",
           name_al: row.name_al || "",
           name_it: row.name_it || "",
@@ -393,53 +563,44 @@ export default function AdminClient() {
           desc_al: row.desc_al || "",
           desc_it: row.desc_it || "",
           icon: row.icon || "",
-          image_url: hasUrl ? row.image_url.trim() : "",
+          image_url: item.urlLoads ? item.url : "",
           stock: row.stock || "in",
-          published: hasUrl,
+          published: item.urlLoads,
         };
 
-        if (row.id) {
-          const ref = doc(db, "products", row.id);
-          const snap = await getDoc(ref);
-
-          if (snap.exists()) {
-            await updateDoc(ref, productData);
-            updated++;
-          } else {
-            await addDoc(collection(db, "products"), productData);
-            created++;
-          }
-
+        const existing = findProductByCode(products, item.cod);
+        if (existing) {
+          await updateDoc(doc(db, "products", existing.id), productData);
+          updated++;
         } else {
           await addDoc(collection(db, "products"), productData);
           created++;
         }
 
-        if (hasUrl) published++; else drafts++;
+        if (item.urlLoads) published++; else drafts++;
       }
 
       await loadProducts();
-      showToast(
-        `Import: ${created} adăugate, ${updated} actualizate — ${published} publicate, ${drafts} draft (fără URL valid).`,
-        "success"
-      );
+      showToast(tx.importSummary1(created, updated, skipped, published, drafts), "success");
+      setImportPreview(null);
     } catch (err) {
       console.error(err);
-      showToast("Excel import failed.", "error");
+      showToast(tx.toastExcelFailed, "error");
     } finally {
+      setConfirmingImport(false);
       setBusy(false);
-      e.target.value = "";
     }
   }
 
   // ── Format 2: Excel fără URL + poze încărcate separat, potrivite după coloana "cod" / "sku" ──
   async function handleImportWithPhotos() {
     if (!importExcelFile) {
-      showToast("Alege întâi fișierul Excel.", "error");
+      showToast(tx.toastSelectExcelFirst, "error");
       return;
     }
     setImportingWithPhotos(true);
     setBusy(true);
+    setImportReport(null);
 
     try {
       const data = await importExcelFile.arrayBuffer();
@@ -451,16 +612,21 @@ export default function AdminClient() {
         return;
       }
 
-      let created = 0;
-      let updated = 0;
-      let published = 0;
-      let drafts = 0;
+      let created = 0, updated = 0, published = 0, drafts = 0, skipped = 0;
+      const report = [];
 
       for (const row of rows) {
-        const sku = String(row.cod || row.sku || "").trim();
+        const cod = String(row.cod || row.sku || "").trim();
+
+        if (!cod) {
+          skipped++;
+          report.push({ cod: "—", status: tx.statusSkippedNoCode });
+          continue;
+        }
+
         const matchFile = importPhotoFiles.find((f) => {
           const baseName = f.name.replace(/\.[^/.]+$/, "").trim();
-          return sku && baseName.toLowerCase() === sku.toLowerCase();
+          return baseName.toLowerCase() === cod.toLowerCase();
         });
 
         let imageUrl = "";
@@ -470,6 +636,7 @@ export default function AdminClient() {
         const isPublished = Boolean(imageUrl);
 
         const productData = {
+          cod,
           name_en: row.name_en || "",
           name_al: row.name_al || "",
           name_it: row.name_it || "",
@@ -485,8 +652,9 @@ export default function AdminClient() {
           published: isPublished,
         };
 
-        if (row.id) {
-          await updateDoc(doc(db, "products", row.id), productData);
+        const existing = findProductByCode(products, cod);
+        if (existing) {
+          await updateDoc(doc(db, "products", existing.id), productData);
           updated++;
         } else {
           await addDoc(collection(db, "products"), productData);
@@ -494,11 +662,13 @@ export default function AdminClient() {
         }
 
         if (isPublished) published++; else drafts++;
+        report.push({ cod, status: matchFile ? tx.statusPhotoFound : tx.statusPhotoMissing });
       }
 
       await loadProducts();
+      setImportReport(report);
       showToast(
-        `Import: ${created} adăugate, ${updated} actualizate — ${published} publicate, ${drafts} draft (fără poză potrivită).`,
+        `Import: ${created} adăugate, ${updated} actualizate, ${skipped} sărite — ${published} publicate, ${drafts} draft.`,
         "success"
       );
       setShowPhotoImport(false);
@@ -566,8 +736,16 @@ export default function AdminClient() {
       let imageUrl = form.image_url;
       if (imageFile) imageUrl = await uploadImage(imageFile, "products");
       const finalData = { ...form, image_url: imageUrl, published: Boolean(imageUrl) };
-      if (editProduct) {
-        await updateDoc(doc(db, "products", editProduct.id), finalData);
+
+      // Chiar și la salvarea manuală, dacă a fost introdus un cod care se potrivește
+      // cu alt produs existent (diferit de cel editat acum), evităm crearea unui duplicat.
+      const existingByCode = form.cod ? findProductByCode(products, form.cod) : null;
+      const targetId = editProduct
+        ? editProduct.id
+        : (existingByCode ? existingByCode.id : null);
+
+      if (targetId) {
+        await updateDoc(doc(db, "products", targetId), finalData);
       } else {
         await addDoc(collection(db, "products"), finalData);
       }
@@ -603,7 +781,7 @@ export default function AdminClient() {
 
   function handleEdit(product) {
     setEditProduct(product);
-    setForm(product);
+    setForm({ ...emptyForm, ...product });
     setShowForm(true);
   }
 
@@ -750,6 +928,7 @@ export default function AdminClient() {
 
   const unreadCount = messages.filter(m => !m.read).length;
   const draftCount = products.filter(p => !p.published).length;
+
   const getName = p => lang === "al" ? p.name_al : lang === "it" ? p.name_it : p.name_en;
   const getCat = p => lang === "al" ? p.category_al : lang === "it" ? p.category_it : p.category_en;
   const getStock = s => s === "in" ? tx.inStock : s === "out" ? tx.outStock : tx.lowStock;
@@ -810,6 +989,46 @@ export default function AdminClient() {
         <>
           <div className={styles.toolbar}>
             <h2 className={styles.subtitle}>{tx.products}</h2>
+            <div className={styles.filtersBar}>
+              <div className={styles.filterTitle}>
+    <Filter width={16} height={16} />
+    
+  </div>
+
+              <input
+                className={styles.filterInput}
+                placeholder="kerko produktin..."
+                value={productSearch ?? ""}
+                onChange={(e) => setProductSearch(e.target.value)}
+              />
+
+              <select
+                className={styles.filterSelect}
+                value={stockFilter}
+                onChange={(e) => setStockFilter(e.target.value)}
+              >
+                <option value="all">I gjithe stoku</option>
+                <option value="in">ne stok</option>
+                <option value="low">Stoc i limituar</option>
+                <option value="out">
+                  Pa stok</option>
+              </select>
+
+              <select
+                className={styles.filterSelect}
+                value={publishFilter}
+                onChange={(e) => setPublishFilter(e.target.value)}
+              >
+                <option value="all">Toate produsele</option>
+                <option value="published">Publicate</option>
+                <option value="draft">Draft</option>
+              </select>
+
+              <span>
+                {filteredProducts.length} / {products.length}
+              </span>
+
+            </div>
 
             <div className={styles.toolbarActions}>
               <input
@@ -817,15 +1036,16 @@ export default function AdminClient() {
                 type="file"
                 accept=".xlsx,.xls"
                 style={{ display: "none" }}
-                onChange={handleImportExcel}
+                onChange={handleImportExcelFile}
               />
 
               <button
                 className={styles.excelBtn}
                 onClick={() => document.getElementById("excelImport").click()}
+                disabled={checkingUrls}
               >
                 <IconDownload width={15} height={15} />
-                {tx.importExcel}
+                {checkingUrls ? tx.checkingUrls : tx.importExcel}
               </button>
 
               <button className={styles.excelBtn} onClick={() => setShowPhotoImport(true)}>
@@ -838,6 +1058,16 @@ export default function AdminClient() {
                 {tx.exportExcel}
               </button>
 
+              <button className={styles.excelBtn} onClick={() => downloadTemplate(true)}>
+                <IconDownload width={15} height={15} />
+                {tx.downloadTemplateUrl}
+              </button>
+
+              <button className={styles.excelBtn} onClick={() => downloadTemplate(false)}>
+                <IconDownload width={15} height={15} />
+                {tx.downloadTemplatePhoto}
+              </button>
+
               <button
                 className={styles.addBtn}
                 onClick={() => { setShowForm(true); setEditProduct(null); setForm(emptyForm); }}
@@ -847,6 +1077,53 @@ export default function AdminClient() {
               </button>
             </div>
           </div>
+
+          {importPreview && (
+            <div className={styles.formCard}>
+              <h3>{tx.previewTitle} — {importPreview.fileName}</h3>
+
+              <div className={styles.tableWrap}>
+
+
+                <table className={styles.table}>
+                  <thead>
+                    <tr>
+                      <th>{tx.previewCod}</th>
+                      <th>{tx.previewName}</th>
+                      <th>{tx.previewUrl}</th>
+                      <th>{tx.previewStatus}</th>
+                      <th>{tx.previewAction}</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {importPreview.rows.map((item, idx) => (
+                      <tr key={idx}>
+                        <td>{item.cod || "—"}</td>
+                        <td>{item.name}</td>
+                        <td style={{ maxWidth: 220, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+                          {item.url || "—"}
+                        </td>
+                        <td>{item.status}</td>
+                        <td>
+                          {item.action === "create" && tx.actionCreate}
+                          {item.action === "update" && tx.actionUpdate}
+                          {item.action === "skip" && tx.actionSkip}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+              <div className={styles.formActions}>
+                <button className={styles.saveBtn} onClick={handleConfirmImportExcel} disabled={confirmingImport}>
+                  {confirmingImport ? tx.importingLabel : <><IconCheck width={15} height={15} /> {tx.confirmImportBtn}</>}
+                </button>
+                <button className={styles.cancelBtn} onClick={() => setImportPreview(null)}>
+                  <IconX width={15} height={15} /> {tx.closeBtn}
+                </button>
+              </div>
+            </div>
+          )}
 
           {showPhotoImport && (
             <div className={styles.formCard}>
@@ -888,10 +1165,34 @@ export default function AdminClient() {
             </div>
           )}
 
+          {importReport && (
+            <div className={styles.formCard}>
+              <h3>{tx.importReportTitle}</h3>
+              <div className={styles.tableWrap}>
+                <table className={styles.table}>
+                  <thead>
+                    <tr><th>{tx.previewCod}</th><th>{tx.previewStatus}</th></tr>
+                  </thead>
+                  <tbody>
+                    {importReport.map((r, idx) => (
+                      <tr key={idx}><td>{r.cod}</td><td>{r.status}</td></tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+              <div className={styles.formActions}>
+                <button className={styles.cancelBtn} onClick={() => setImportReport(null)}>
+                  <IconX width={15} height={15} /> {tx.closeBtn}
+                </button>
+              </div>
+            </div>
+          )}
+
           {showForm && (
             <div className={styles.formCard}>
               <h3>{editProduct ? tx.editProduct : tx.newProduct}</h3>
               <div className={styles.formGrid}>
+                <div className={styles.formGroup}><label>{tx.codLabel}</label><input value={form.cod} onChange={e => setForm({ ...form, cod: e.target.value })} placeholder="PRD001" /></div>
                 <div className={styles.formGroup}><label>{tx.nameEN}</label><input value={form.name_en} onChange={e => setForm({ ...form, name_en: e.target.value })} /></div>
                 <div className={styles.formGroup}><label>{tx.nameAL}</label><input value={form.name_al} onChange={e => setForm({ ...form, name_al: e.target.value })} /></div>
                 <div className={styles.formGroup}><label>{tx.nameIT}</label><input value={form.name_it} onChange={e => setForm({ ...form, name_it: e.target.value })} /></div>
@@ -926,7 +1227,7 @@ export default function AdminClient() {
           <div className={styles.tableWrap}>
             <table className={styles.table}>
               <thead>
-                <tr><th>{tx.photo}</th><th>{tx.name}</th><th>{tx.category}</th><th>{tx.stock}</th><th>{tx.actions}</th></tr>
+                <tr><th>{tx.photo}</th><th>{tx.codLabel}</th><th>{tx.name}</th><th>{tx.category}</th><th>{tx.stock}</th><th>{tx.actions}</th></tr>
               </thead>
               <tbody>
                 {products.map(p => (
@@ -936,6 +1237,7 @@ export default function AdminClient() {
                         ? <img src={p.image_url} alt={p.name_en} className={styles.productThumb} />
                         : <span className={styles.thumbPlaceholderWarning} title="Fără poză — produs Draft"><IconAlert width={18} height={18} /></span>}
                     </td>
+                    <td>{p.cod || "—"}</td>
                     <td className={styles.productName}>
                       {getName(p)}
                       {!p.published && <span className={styles.draftBadge}>{tx.draft}</span>}
@@ -965,6 +1267,7 @@ export default function AdminClient() {
             </h2>
             <button className={styles.addBtn} onClick={loadMessages}><IconRefresh width={15} height={15} /> {tx.refresh}</button>
           </div>
+
 
           {loadingMessages ? (
             <div className={styles.loading}><span className={styles.loadingSpinner} />{tx.loadingMessages}</div>
