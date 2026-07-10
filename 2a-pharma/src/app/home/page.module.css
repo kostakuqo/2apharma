@@ -351,7 +351,7 @@
   background: #fff;
   padding: 48px var(--section-px);
   margin: 40px;
-  box-shadow: 0 8px 32px rgba(8,26,56,0.85);
+  box-shadow: 0 4px 12px rgba(8,26,56,0.55);
 }
 
 .partnersLabel {
@@ -375,7 +375,7 @@
 .partner {
   padding: 10px 20px;
   border: 1.5px solid var(--navy-soft);
-  border-radius: var(--r-md);
+  border-radius: 26px;
   font-size: 13px;
   font-weight: 600;
   color: var(--navy);
@@ -392,6 +392,7 @@
   color: var(--green-dark);
   transform: translateY(-2px);
   box-shadow: 0 4px 12px rgba(26, 138, 60, 0.15);
+  cursor: pointer;
 }
 
 /* ══ CTA — transparent, mosteneste din darkBlock ══ */

@@ -1,6 +1,6 @@
 .card {
   background: var(--white);
-  box-shadow: 0 8px 32px #081a38d9;
+  box-shadow: 0 2px 12px #081a38d9;
   border-radius: var(--r-lg);
   overflow: hidden;
   transition: all var(--t-fast);

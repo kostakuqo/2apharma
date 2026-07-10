@@ -100,14 +100,14 @@
 
 
 .formCard {
-  background: #fff;
+  /* background: #B9D9EB; */
   border: 1.5px solid #E8EDF5;
   border-radius: 22px;
   padding: 40px;
   display: flex;
   flex-direction: column;
   gap: 20px;
-  box-shadow: 0 4px 24px rgba(15,42,82,0.07);
+  box-shadow: 0 4px 24px rgba(15,42,82,0.57);
 }
 
 .formTitle {
@@ -138,6 +138,7 @@
   outline: none;
   transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
   background: #F8FAFC;
+   box-shadow: 0 4px 24px rgba(15,42,82,0.57);
 }
 .input:focus, .textarea:focus {
   border-color: #1A8A3C;
@@ -206,6 +207,8 @@
   display: flex;
   flex-direction: column;
   gap: 14px;
+  
+  box-shadow: 0 4px 24px rgba(15,42,82,0.57);
 }
 
 .infoCard {
@@ -261,7 +264,7 @@
 .infoTitle {
   font-size: 10px;
   font-weight: 700;
-  color: #94a3b8;
+  color: #183F68;
   text-transform: uppercase;
   letter-spacing: 0.1em;
   margin-bottom: 4px;

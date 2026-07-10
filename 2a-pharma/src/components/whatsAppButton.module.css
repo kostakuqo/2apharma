@@ -1,7 +1,7 @@
 .whatsappBtn {
   position: fixed;
-  bottom: 24px;
-  right: 24px;
+  bottom: 20px;
+  right: 26px;
   z-index: 999;
   width: 60px;
   height: 60px;
@@ -34,7 +34,8 @@
   .whatsappBtn {
     width: 52px;
     height: 52px;
-    bottom: 16px;
+    bottom: 80px;
     right: 16px;
   }
+
 }

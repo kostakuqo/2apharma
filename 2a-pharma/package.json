@@ -27,7 +27,8 @@
     "speakeasy": "^2.0.0",
     "swiper": "^14.0.2",
     "thirty-two": "^1.0.2",
-    "totp-generator": "^2.0.1"
+    "totp-generator": "^2.0.1",
+    "xlsx": "^0.18.5"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
