@@ -36,6 +36,16 @@ const IconUpload = (p) => (
     <path d="M5 21h14" />
   </svg>
 );
+
+const IconImages = (p) => (
+  <svg {...iconProps} {...p}>
+    <rect x="3" y="3" width="14" height="14" rx="2" />
+    <path d="M7 7h.01" />
+    <path d="M3 13l3.5-3.5a1.5 1.5 0 0 1 2.1 0L13 14" />
+    <path d="M21 8v9a2 2 0 0 1-2 2H8" />
+  </svg>
+);
+
 const IconTrash = (p) => (
   <svg {...iconProps} {...p}>
     <path d="M4 7h16" /><path d="M9 7V5a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2" />
@@ -178,6 +188,12 @@ const adminTx = {
     toastSettingsSaved: "Logo u ruajt me sukses!", toastMessageDeleted: "Mesazhi u fshi.",
     toastMessageRead: "Mesazhi u shënua si i lexuar.", toastError: "Diçka shkoi keq. Provo përsëri.",
     savingLabel: "Duke ruajtur...", visit: "Shiko faqen",
+    draft: "Draft", publishedLbl: "Publikuar",
+    importExcel: "Importo Excel", exportExcel: "Eksporto Excel", importWithPhotos: "Importo me foto",
+    importPanelTitle: "Import Excel + Foto (sipas kodit)",
+    importExcelFileLbl: "Skedari Excel", importPhotosLbl: "Foto (zgjidh të gjitha njëherësh)",
+    importSkuHint: "Çdo rresht duhet të ketë një kolonë 'cod' (ose 'sku') që përputhet me emrin e skedarit të fotos (p.sh. cod=PRD001 → PRD001.jpg).",
+    startImport: "Fillo importin", importingLabel: "Duke importuar...",
   },
   en: {
     title: "Admin Panel — 2A Pharma", logout: "Logout", products: "Products", messages: "Messages", partners: "Partners",
@@ -207,6 +223,12 @@ const adminTx = {
     toastSettingsSaved: "Logo saved successfully!", toastMessageDeleted: "Message deleted.",
     toastMessageRead: "Message marked as read.", toastError: "Something went wrong. Please try again.",
     savingLabel: "Saving...", visit: "Visit site",
+    draft: "Draft", publishedLbl: "Published",
+    importExcel: "Import Excel", exportExcel: "Export Excel", importWithPhotos: "Import with photos",
+    importPanelTitle: "Import Excel + Photos (by code)",
+    importExcelFileLbl: "Excel file", importPhotosLbl: "Photos (select all at once)",
+    importSkuHint: "Each row needs a 'cod' (or 'sku') column matching the photo filename (e.g. cod=PRD001 → PRD001.jpg).",
+    startImport: "Start import", importingLabel: "Importing...",
   },
   it: {
     title: "Pannello Admin — 2A Pharma", logout: "Esci", products: "Prodotti", messages: "Messaggi", partners: "Partner",
@@ -236,6 +258,12 @@ const adminTx = {
     toastSettingsSaved: "Logo salvato con successo!", toastMessageDeleted: "Messaggio eliminato.",
     toastMessageRead: "Messaggio segnato come letto.", toastError: "Qualcosa è andato storto. Riprova.",
     savingLabel: "Salvataggio in corso...", visit: "Visita il sito",
+    draft: "Bozza", publishedLbl: "Pubblicato",
+    importExcel: "Importa Excel", exportExcel: "Esporta Excel", importWithPhotos: "Importa con foto",
+    importPanelTitle: "Importa Excel + Foto (per codice)",
+    importExcelFileLbl: "File Excel", importPhotosLbl: "Foto (seleziona tutte insieme)",
+    importSkuHint: "Ogni riga deve avere una colonna 'cod' (o 'sku') corrispondente al nome del file foto (es. cod=PRD001 → PRD001.jpg).",
+    startImport: "Avvia importazione", importingLabel: "Importazione in corso...",
   },
 };
 
@@ -247,6 +275,16 @@ async function uploadImage(file, folder = "") {
   const res = await fetch("https://api.cloudinary.com/v1_1/diwmjt7aa/image/upload", { method: "POST", body: formData });
   const data = await res.json();
   return data.secure_url;
+}
+
+function isValidImageUrl(value) {
+  if (!value || typeof value !== "string") return false;
+  try {
+    const u = new URL(value.trim());
+    return u.protocol === "http:" || u.protocol === "https:";
+  } catch {
+    return false;
+  }
 }
 
 const DEFAULT_SITE_SETTINGS = { logoType: "text", logoMark: "2A", logoText: "Pharma", logoImageUrl: "" };
@@ -286,12 +324,17 @@ export default function AdminClient() {
   const [logoImageFile, setLogoImageFile] = useState(null);
   const [savingSettings, setSavingSettings] = useState(false);
 
+  // ── Import Excel + Poze (format 2) ──
+  const [showPhotoImport, setShowPhotoImport] = useState(false);
+  const [importExcelFile, setImportExcelFile] = useState(null);
+  const [importPhotoFiles, setImportPhotoFiles] = useState([]);
+  const [importingWithPhotos, setImportingWithPhotos] = useState(false);
 
   const [toast, setToast] = useState(null); // { message, type: "success" | "error" }
   const toastTimerRef = useRef(null);
   const [busy, setBusy] = useState(false); // true în timpul oricărei salvări/ștergeri
-  function exportProductsExcel() {
 
+  function exportProductsExcel() {
     const excelData = products.map((p) => ({
       id: p.id,
       name_en: p.name_en || "",
@@ -305,36 +348,27 @@ export default function AdminClient() {
       desc_it: p.desc_it || "",
       icon: p.icon || "",
       image_url: p.image_url || "",
-      stock: p.stock || ""
+      stock: p.stock || "",
+      published: p.published ? "true" : "false",
     }));
 
     const worksheet = XLSX.utils.json_to_sheet(excelData);
     const workbook = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(
-      workbook,
-      worksheet,
-      "Products"
-    );
-    XLSX.writeFile(
-      workbook,
-      "products.xlsx"
-    );
-
+    XLSX.utils.book_append_sheet(workbook, worksheet, "Products");
+    XLSX.writeFile(workbook, "products.xlsx");
   }
+
+  // ── Format 1: Excel cu image_url — publish automat dacă URL-ul e valid ──
   async function handleImportExcel(e) {
     const file = e.target.files[0];
     if (!file) return;
     setBusy(true);
 
-
     try {
-
       const data = await file.arrayBuffer();
       const workbook = XLSX.read(data);
-      const worksheet =
-        workbook.Sheets[workbook.SheetNames[0]];
-      const rows =
-        XLSX.utils.sheet_to_json(worksheet);
+      const worksheet = workbook.Sheets[workbook.SheetNames[0]];
+      const rows = XLSX.utils.sheet_to_json(worksheet);
       if (!rows.length) {
         showToast("Excel file is empty.", "error");
         return;
@@ -342,7 +376,12 @@ export default function AdminClient() {
 
       let updated = 0;
       let created = 0;
+      let published = 0;
+      let drafts = 0;
+
       for (const row of rows) {
+        const hasUrl = isValidImageUrl(row.image_url);
+
         const productData = {
           name_en: row.name_en || "",
           name_al: row.name_al || "",
@@ -354,54 +393,125 @@ export default function AdminClient() {
           desc_al: row.desc_al || "",
           desc_it: row.desc_it || "",
           icon: row.icon || "",
-          image_url: row.image_url || "",
-          stock: row.stock || "in"
-
+          image_url: hasUrl ? row.image_url.trim() : "",
+          stock: row.stock || "in",
+          published: hasUrl,
         };
 
-
-
         if (row.id) {
-          await updateDoc(
-            doc(db, "products", row.id),
-            productData
-          );
-          updated++;
+          const ref = doc(db, "products", row.id);
+          const snap = await getDoc(ref);
+
+          if (snap.exists()) {
+            await updateDoc(ref, productData);
+            updated++;
+          } else {
+            await addDoc(collection(db, "products"), productData);
+            created++;
+          }
 
         } else {
-          await addDoc(
-            collection(db, "products"),
-            productData
-          );
+          await addDoc(collection(db, "products"), productData);
           created++;
-
         }
 
+        if (hasUrl) published++; else drafts++;
       }
-
-
 
       await loadProducts();
       showToast(
-        `Import completed. Updated: ${updated}, Added: ${created}`,
+        `Import: ${created} adăugate, ${updated} actualizate — ${published} publicate, ${drafts} draft (fără URL valid).`,
         "success"
       );
     } catch (err) {
-
       console.error(err);
-      showToast(
-        "Excel import failed.",
-        "error"
-      );
-
+      showToast("Excel import failed.", "error");
     } finally {
       setBusy(false);
       e.target.value = "";
-
     }
-
   }
 
+  // ── Format 2: Excel fără URL + poze încărcate separat, potrivite după coloana "cod" / "sku" ──
+  async function handleImportWithPhotos() {
+    if (!importExcelFile) {
+      showToast("Alege întâi fișierul Excel.", "error");
+      return;
+    }
+    setImportingWithPhotos(true);
+    setBusy(true);
+
+    try {
+      const data = await importExcelFile.arrayBuffer();
+      const workbook = XLSX.read(data);
+      const worksheet = workbook.Sheets[workbook.SheetNames[0]];
+      const rows = XLSX.utils.sheet_to_json(worksheet);
+      if (!rows.length) {
+        showToast("Excel file is empty.", "error");
+        return;
+      }
+
+      let created = 0;
+      let updated = 0;
+      let published = 0;
+      let drafts = 0;
+
+      for (const row of rows) {
+        const sku = String(row.cod || row.sku || "").trim();
+        const matchFile = importPhotoFiles.find((f) => {
+          const baseName = f.name.replace(/\.[^/.]+$/, "").trim();
+          return sku && baseName.toLowerCase() === sku.toLowerCase();
+        });
+
+        let imageUrl = "";
+        if (matchFile) {
+          imageUrl = await uploadImage(matchFile, "products");
+        }
+        const isPublished = Boolean(imageUrl);
+
+        const productData = {
+          name_en: row.name_en || "",
+          name_al: row.name_al || "",
+          name_it: row.name_it || "",
+          category_en: row.category_en || "",
+          category_al: row.category_al || "",
+          category_it: row.category_it || "",
+          desc_en: row.desc_en || "",
+          desc_al: row.desc_al || "",
+          desc_it: row.desc_it || "",
+          icon: row.icon || "",
+          image_url: imageUrl,
+          stock: row.stock || "in",
+          published: isPublished,
+        };
+
+        if (row.id) {
+          await updateDoc(doc(db, "products", row.id), productData);
+          updated++;
+        } else {
+          await addDoc(collection(db, "products"), productData);
+          created++;
+        }
+
+        if (isPublished) published++; else drafts++;
+      }
+
+      await loadProducts();
+      showToast(
+        `Import: ${created} adăugate, ${updated} actualizate — ${published} publicate, ${drafts} draft (fără poză potrivită).`,
+        "success"
+      );
+      setShowPhotoImport(false);
+      setImportExcelFile(null);
+      setImportPhotoFiles([]);
+    } catch (err) {
+      console.error(err);
+      showToast("Excel import failed.", "error");
+    } finally {
+      setImportingWithPhotos(false);
+      setBusy(false);
+    }
+  }
 
   function showToast(message, type = "success") {
     if (toastTimerRef.current) clearTimeout(toastTimerRef.current);
@@ -455,7 +565,7 @@ export default function AdminClient() {
     try {
       let imageUrl = form.image_url;
       if (imageFile) imageUrl = await uploadImage(imageFile, "products");
-      const finalData = { ...form, image_url: imageUrl };
+      const finalData = { ...form, image_url: imageUrl, published: Boolean(imageUrl) };
       if (editProduct) {
         await updateDoc(doc(db, "products", editProduct.id), finalData);
       } else {
@@ -639,6 +749,7 @@ export default function AdminClient() {
   }
 
   const unreadCount = messages.filter(m => !m.read).length;
+  const draftCount = products.filter(p => !p.published).length;
   const getName = p => lang === "al" ? p.name_al : lang === "it" ? p.name_it : p.name_en;
   const getCat = p => lang === "al" ? p.category_al : lang === "it" ? p.category_it : p.category_en;
   const getStock = s => s === "in" ? tx.inStock : s === "out" ? tx.outStock : tx.lowStock;
@@ -647,7 +758,7 @@ export default function AdminClient() {
     { num: products.length, lbl: tx.totalProducts, Icon: IconPackage, tone: "navy" },
     { num: products.filter(p => p.stock === "in").length, lbl: tx.inStock, Icon: IconCheck, tone: "green" },
     { num: products.filter(p => p.stock === "out").length, lbl: tx.outStock, Icon: IconX, tone: "red" },
-    { num: products.filter(p => p.stock === "low").length, lbl: tx.lowStock, Icon: IconAlert, tone: "amber" },
+    { num: draftCount, lbl: tx.draft, Icon: IconAlert, tone: draftCount > 0 ? "amber" : "muted" },
     { num: unreadCount, lbl: tx.unread, Icon: IconMail, tone: unreadCount > 0 ? "red" : "muted" },
     { num: partners.length, lbl: tx.totalPartners, Icon: IconHandshake, tone: "navy" },
   ];
@@ -698,13 +809,9 @@ export default function AdminClient() {
       {activeTab === "products" && (
         <>
           <div className={styles.toolbar}>
+            <h2 className={styles.subtitle}>{tx.products}</h2>
 
-            <h2 className={styles.subtitle}>
-              {tx.products}
-            </h2>
-
-            <div style={{ display: "flex", gap: "10px" }}>
-
+            <div className={styles.toolbarActions}>
               <input
                 id="excelImport"
                 type="file"
@@ -713,44 +820,73 @@ export default function AdminClient() {
                 onChange={handleImportExcel}
               />
 
-
               <button
                 className={styles.excelBtn}
-                onClick={() =>
-                  document.getElementById("excelImport").click()
-                }
+                onClick={() => document.getElementById("excelImport").click()}
               >
                 <IconDownload width={15} height={15} />
-                Import Excel
+                {tx.importExcel}
               </button>
 
+              <button className={styles.excelBtn} onClick={() => setShowPhotoImport(true)}>
+                <IconImages width={15} height={15} />
+                {tx.importWithPhotos}
+              </button>
 
-              <button
-                className={styles.excelBtn}
-                onClick={exportProductsExcel}
-              >
+              <button className={styles.excelBtn} onClick={exportProductsExcel}>
                 <IconUpload width={15} height={15} />
-                Export Excel
+                {tx.exportExcel}
               </button>
-
 
               <button
                 className={styles.addBtn}
-                onClick={() => {
-                  setShowForm(true);
-                  setEditProduct(null);
-                  setForm(emptyForm);
-                }}
+                onClick={() => { setShowForm(true); setEditProduct(null); setForm(emptyForm); }}
               >
                 <IconPlus width={15} height={15} />
                 {tx.addProduct}
               </button>
-
-
             </div>
-
-
           </div>
+
+          {showPhotoImport && (
+            <div className={styles.formCard}>
+              <h3>{tx.importPanelTitle}</h3>
+              <p className={styles.importHint}>{tx.importSkuHint}</p>
+              <div className={styles.formGrid}>
+                <div className={styles.formGroup}>
+                  <label>{tx.importExcelFileLbl}</label>
+                  <input
+                    type="file"
+                    accept=".xlsx,.xls"
+                    onChange={(e) => setImportExcelFile(e.target.files[0] || null)}
+                  />
+                </div>
+                <div className={styles.formGroup}>
+                  <label>{tx.importPhotosLbl}</label>
+                  <input
+                    type="file"
+                    accept="image/*"
+                    multiple
+                    onChange={(e) => setImportPhotoFiles(Array.from(e.target.files || []))}
+                  />
+                  {importPhotoFiles.length > 0 && (
+                    <span className={styles.fileCountHint}>{importPhotoFiles.length} foto selectate</span>
+                  )}
+                </div>
+              </div>
+              <div className={styles.formActions}>
+                <button className={styles.saveBtn} onClick={handleImportWithPhotos} disabled={importingWithPhotos}>
+                  {importingWithPhotos ? tx.importingLabel : <><IconCheck width={15} height={15} /> {tx.startImport}</>}
+                </button>
+                <button
+                  className={styles.cancelBtn}
+                  onClick={() => { setShowPhotoImport(false); setImportExcelFile(null); setImportPhotoFiles([]); }}
+                >
+                  <IconX width={15} height={15} /> {tx.cancel}
+                </button>
+              </div>
+            </div>
+          )}
 
           {showForm && (
             <div className={styles.formCard}>
@@ -798,9 +934,12 @@ export default function AdminClient() {
                     <td className={styles.iconCell}>
                       {p.image_url
                         ? <img src={p.image_url} alt={p.name_en} className={styles.productThumb} />
-                        : <span className={styles.thumbPlaceholder}><IconPhoto width={18} height={18} /></span>}
+                        : <span className={styles.thumbPlaceholderWarning} title="Fără poză — produs Draft"><IconAlert width={18} height={18} /></span>}
                     </td>
-                    <td className={styles.productName}>{getName(p)}</td>
+                    <td className={styles.productName}>
+                      {getName(p)}
+                      {!p.published && <span className={styles.draftBadge}>{tx.draft}</span>}
+                    </td>
                     <td className={styles.productCat}>{getCat(p)}</td>
                     <td><span className={`${styles.badge} ${styles[`badge_${p.stock}`]}`}>{getStock(p.stock)}</span></td>
                     <td>

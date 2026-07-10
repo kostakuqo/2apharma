@@ -18,17 +18,27 @@ function getAdminDb() {
   return getFirestore(app);
 }
 
+// Aceeași regulă ca în getProducts.js (client): published === false ascunde
+// produsul; lipsa câmpului (produse vechi) sau published === true îl arată.
+function isPublished(product) {
+  return product.published !== false;
+}
+
 export async function getProductsServer() {
   const db = getAdminDb();
   const snap = await db.collection("products").get();
-  return snap.docs.map(d => ({ id: d.id, ...d.data() }));
+  return snap.docs
+    .map(d => ({ id: d.id, ...d.data() }))
+    .filter(isPublished);
 }
 
 export async function getProductByIdServer(id) {
   const db = getAdminDb();
   const snap = await db.collection("products").doc(id).get();
   if (!snap.exists) return null;
-  return { id: snap.id, ...snap.data() };
+  const product = { id: snap.id, ...snap.data() };
+  if (!isPublished(product)) return null;
+  return product;
 }
 
 export async function getPartnersServer() {
