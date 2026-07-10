@@ -350,7 +350,7 @@
 .partnersSection {
   background: #fff;
   padding: 48px var(--section-px);
-  margin: 40px;
+  margin: 0px;
   box-shadow: 0 4px 12px rgba(8,26,56,0.55);
 }
 
@@ -515,10 +515,24 @@
   grid-template-columns: repeat(2, 1fr);
   gap: 12px;
   max-width: 900px;
-  margin: 0 auto;
+ 
+}
+.partnersSection{
+  .partnersSection {
+  background: #fff;
+  
+  margin: 12px;
+  box-shadow: 0 4px 12px rgba(8,26,56,0.55);
+}
 }
 }
 
 @media (max-width: 480px) {
   .featuresGrid { grid-template-columns: 1fr; }
+  .partnersSection {
+  background: #fff;
+  padding: 48px var(--section-px);
+  margin: 0px;
+  box-shadow: 0 4px 12px rgba(8,26,56,0.55);
+}
 }
