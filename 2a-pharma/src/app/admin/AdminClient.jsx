@@ -8,7 +8,6 @@ import * as XLSX from "xlsx";
 import { collection, getDocs, addDoc, deleteDoc, doc, updateDoc, orderBy, query, setDoc, getDoc } from "firebase/firestore";
 import { useLang } from "../../context/LangContext.jsx";
 import styles from "./page.module.css";
-import { Filter } from "lucide-react";
 
 
 const iconProps = {
@@ -44,6 +43,21 @@ const IconImages = (p) => (
     <path d="M7 7h.01" />
     <path d="M3 13l3.5-3.5a1.5 1.5 0 0 1 2.1 0L13 14" />
     <path d="M21 8v9a2 2 0 0 1-2 2H8" />
+  </svg>
+);
+
+const IconFilter = (p) => (
+  <svg {...iconProps} {...p}>
+    <path d="M4 6h16" />
+    <path d="M7 12h10" />
+    <path d="M10 18h4" />
+  </svg>
+);
+
+const IconSearch = (p) => (
+  <svg {...iconProps} {...p}>
+    <circle cx="11" cy="11" r="7" />
+    <path d="m21 21-4.3-4.3" />
   </svg>
 );
 
@@ -989,47 +1003,6 @@ export default function AdminClient() {
         <>
           <div className={styles.toolbar}>
             <h2 className={styles.subtitle}>{tx.products}</h2>
-            <div className={styles.filtersBar}>
-              <div className={styles.filterTitle}>
-    <Filter width={16} height={16} />
-    
-  </div>
-
-              <input
-                className={styles.filterInput}
-                placeholder="kerko produktin..."
-                value={productSearch ?? ""}
-                onChange={(e) => setProductSearch(e.target.value)}
-              />
-
-              <select
-                className={styles.filterSelect}
-                value={stockFilter}
-                onChange={(e) => setStockFilter(e.target.value)}
-              >
-                <option value="all">I gjithe stoku</option>
-                <option value="in">ne stok</option>
-                <option value="low">Stoc i limituar</option>
-                <option value="out">
-                  Pa stok</option>
-              </select>
-
-              <select
-                className={styles.filterSelect}
-                value={publishFilter}
-                onChange={(e) => setPublishFilter(e.target.value)}
-              >
-                <option value="all">Toate produsele</option>
-                <option value="published">Publicate</option>
-                <option value="draft">Draft</option>
-              </select>
-
-              <span>
-                {filteredProducts.length} / {products.length}
-              </span>
-
-            </div>
-
             <div className={styles.toolbarActions}>
               <input
                 id="excelImport"
@@ -1040,7 +1013,7 @@ export default function AdminClient() {
               />
 
               <button
-                className={styles.excelBtn}
+                className={`${styles.excelBtn} ${styles.excelBtnBlue}`}
                 onClick={() => document.getElementById("excelImport").click()}
                 disabled={checkingUrls}
               >
@@ -1048,22 +1021,22 @@ export default function AdminClient() {
                 {checkingUrls ? tx.checkingUrls : tx.importExcel}
               </button>
 
-              <button className={styles.excelBtn} onClick={() => setShowPhotoImport(true)}>
+              <button className={`${styles.excelBtn} ${styles.excelBtnPurple}`} onClick={() => setShowPhotoImport(true)}>
                 <IconImages width={15} height={15} />
                 {tx.importWithPhotos}
               </button>
 
-              <button className={styles.excelBtn} onClick={exportProductsExcel}>
+              <button className={`${styles.excelBtn} ${styles.excelBtnGreen}`} onClick={exportProductsExcel}>
                 <IconUpload width={15} height={15} />
                 {tx.exportExcel}
               </button>
 
-              <button className={styles.excelBtn} onClick={() => downloadTemplate(true)}>
+              <button className={`${styles.excelBtn} ${styles.excelBtnTeal}`} onClick={() => downloadTemplate(true)}>
                 <IconDownload width={15} height={15} />
                 {tx.downloadTemplateUrl}
               </button>
 
-              <button className={styles.excelBtn} onClick={() => downloadTemplate(false)}>
+              <button className={`${styles.excelBtn} ${styles.excelBtnAmber}`} onClick={() => downloadTemplate(false)}>
                 <IconDownload width={15} height={15} />
                 {tx.downloadTemplatePhoto}
               </button>
@@ -1076,6 +1049,45 @@ export default function AdminClient() {
                 {tx.addProduct}
               </button>
             </div>
+          </div>
+
+          <div className={styles.filtersBar}>
+            <span className={styles.filterTitle}><IconFilter width={16} height={16} /></span>
+
+            <div className={styles.filterSearchWrap}>
+              <IconSearch width={15} height={15} className={styles.filterSearchIcon} />
+              <input
+                className={styles.filterInput}
+                placeholder="kerko produktin sipas kodi ose emrit..."
+                value={productSearch ?? ""}
+                onChange={(e) => setProductSearch(e.target.value)}
+              />
+            </div>
+
+            <select
+              className={styles.filterSelect}
+              value={stockFilter}
+              onChange={(e) => setStockFilter(e.target.value)}
+            >
+              <option value="all">I gjithe stoku</option>
+              <option value="in">Ne stok</option>
+              <option value="low">Stok i kufizuar</option>
+              <option value="out">Pa stok</option>
+            </select>
+
+            <select
+              className={styles.filterSelect}
+              value={publishFilter}
+              onChange={(e) => setPublishFilter(e.target.value)}
+            >
+              <option value="all">Te gjitha</option>
+              <option value="published">Te Publikuara</option>
+              <option value="draft">Draft</option>
+            </select>
+
+            <span className={styles.filterCount}>
+              {filteredProducts.length} nga {products.length}produse
+            </span>
           </div>
 
           {importPreview && (
@@ -1230,7 +1242,9 @@ export default function AdminClient() {
                 <tr><th>{tx.photo}</th><th>{tx.codLabel}</th><th>{tx.name}</th><th>{tx.category}</th><th>{tx.stock}</th><th>{tx.actions}</th></tr>
               </thead>
               <tbody>
-                {products.map(p => (
+                {filteredProducts.length === 0 ? (
+                  <tr><td colSpan={6} className={styles.emptyCell}>Niciun produs nu corespunde filtrelor selectate.</td></tr>
+                ) : filteredProducts.map(p => (
                   <tr key={p.id}>
                     <td className={styles.iconCell}>
                       {p.image_url
