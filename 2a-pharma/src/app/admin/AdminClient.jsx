@@ -226,6 +226,11 @@ const adminTx = {
       `Importi: ${created} shtuar, ${updated} përditësuar, ${skipped} kapërcyer (pa kod) — ${published} publikuar, ${drafts} draft.`,
     importSummary2: (created, updated, skipped, published, drafts) =>
       `Importi: ${created} shtuar, ${updated} përditësuar, ${skipped} kapërcyer — ${published} publikuar, ${drafts} draft.`,
+    filterSearchPlaceholder: "Kërko sipas kodit ose emrit...",
+    filterStockAll: "I gjithë stoku", filterStockIn: "Në stok", filterStockLow: "Stok i kufizuar", filterStockOut: "Pa stok",
+    filterPublishAll: "Të gjitha", filterPublishPublished: "Të publikuara", filterPublishDraft: "Draft",
+    filterCount: (shown, total) => `${shown} nga ${total} produkte`,
+    noProductsMatchFilter: "Asnjë produkt nuk përputhet me filtrat e zgjedhur.",
   },
   en: {
     title: "Admin Panel — 2A Pharma", logout: "Logout", products: "Products", messages: "Messages", partners: "Partners",
@@ -278,6 +283,11 @@ const adminTx = {
       `Import: ${created} added, ${updated} updated, ${skipped} skipped (no code) — ${published} published, ${drafts} draft.`,
     importSummary2: (created, updated, skipped, published, drafts) =>
       `Import: ${created} added, ${updated} updated, ${skipped} skipped — ${published} published, ${drafts} draft.`,
+    filterSearchPlaceholder: "Search by code or name...",
+    filterStockAll: "All stock", filterStockIn: "In stock", filterStockLow: "Low stock", filterStockOut: "Out of stock",
+    filterPublishAll: "All", filterPublishPublished: "Published", filterPublishDraft: "Draft",
+    filterCount: (shown, total) => `${shown} of ${total} products`,
+    noProductsMatchFilter: "No product matches the selected filters.",
   },
   it: {
     title: "Pannello Admin — 2A Pharma", logout: "Esci", products: "Prodotti", messages: "Messaggi", partners: "Partner",
@@ -330,6 +340,11 @@ const adminTx = {
       `Importazione: ${created} aggiunti, ${updated} aggiornati, ${skipped} saltati (senza codice) — ${published} pubblicati, ${drafts} bozza.`,
     importSummary2: (created, updated, skipped, published, drafts) =>
       `Importazione: ${created} aggiunti, ${updated} aggiornati, ${skipped} saltati — ${published} pubblicati, ${drafts} bozza.`,
+    filterSearchPlaceholder: "Cerca per codice o nome...",
+    filterStockAll: "Tutte le scorte", filterStockIn: "Disponibile", filterStockLow: "Scorte basse", filterStockOut: "Non disponibile",
+    filterPublishAll: "Tutti", filterPublishPublished: "Pubblicati", filterPublishDraft: "Bozza",
+    filterCount: (shown, total) => `${shown} di ${total} prodotti`,
+    noProductsMatchFilter: "Nessun prodotto corrisponde ai filtri selezionati.",
   },
 };
 
@@ -1058,7 +1073,7 @@ export default function AdminClient() {
               <IconSearch width={15} height={15} className={styles.filterSearchIcon} />
               <input
                 className={styles.filterInput}
-                placeholder="kerko produktin sipas kodi ose emrit..."
+                placeholder={tx.filterSearchPlaceholder}
                 value={productSearch ?? ""}
                 onChange={(e) => setProductSearch(e.target.value)}
               />
@@ -1069,10 +1084,10 @@ export default function AdminClient() {
               value={stockFilter}
               onChange={(e) => setStockFilter(e.target.value)}
             >
-              <option value="all">I gjithe stoku</option>
-              <option value="in">Ne stok</option>
-              <option value="low">Stok i kufizuar</option>
-              <option value="out">Pa stok</option>
+              <option value="all">{tx.filterStockAll}</option>
+              <option value="in">{tx.filterStockIn}</option>
+              <option value="low">{tx.filterStockLow}</option>
+              <option value="out">{tx.filterStockOut}</option>
             </select>
 
             <select
@@ -1080,13 +1095,13 @@ export default function AdminClient() {
               value={publishFilter}
               onChange={(e) => setPublishFilter(e.target.value)}
             >
-              <option value="all">Te gjitha</option>
-              <option value="published">Te Publikuara</option>
-              <option value="draft">Draft</option>
+              <option value="all">{tx.filterPublishAll}</option>
+              <option value="published">{tx.filterPublishPublished}</option>
+              <option value="draft">{tx.filterPublishDraft}</option>
             </select>
 
             <span className={styles.filterCount}>
-              {filteredProducts.length} nga {products.length}produse
+              {tx.filterCount(filteredProducts.length, products.length)}
             </span>
           </div>
 
@@ -1243,7 +1258,7 @@ export default function AdminClient() {
               </thead>
               <tbody>
                 {filteredProducts.length === 0 ? (
-                  <tr><td colSpan={6} className={styles.emptyCell}>Niciun produs nu corespunde filtrelor selectate.</td></tr>
+                  <tr><td colSpan={6} className={styles.emptyCell}>{tx.noProductsMatchFilter}</td></tr>
                 ) : filteredProducts.map(p => (
                   <tr key={p.id}>
                     <td className={styles.iconCell}>

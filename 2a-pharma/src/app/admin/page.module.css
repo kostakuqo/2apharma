@@ -1123,6 +1123,40 @@
   .messagesList::before { left: 20px; }
   .timelineDot { left: -25px; }
   .timelineArrow { left: -20px; width: 17px; }
+
+  /* Toolbar cu butoane Excel — grilă 2 coloane, mai ușor de atins pe mobil */
+  .toolbarActions {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+  .excelBtn {
+    width: 100%;
+    justify-content: center;
+    padding: 10px 8px;
+    font-size: 12px;
+    text-align: center;
+  }
+  .toolbarActions .addBtn {
+    grid-column: 1 / -1;
+    width: 100%;
+    justify-content: center;
+    margin-top: 2px;
+  }
+
+  /* Bara de filtre — stivuită vertical, fiecare câmp pe lățime completă */
+  .filtersBar {
+    margin: 0 16px 14px;
+    padding: 12px;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+  }
+  .filterTitle { align-self: flex-start; }
+  .filterSearchWrap { width: 100%; flex: none; min-width: 0; }
+  .filterSelect { width: 100%; }
+  .filterCount { margin-left: 0; align-self: flex-start; }
 }
 
 @media (max-width: 480px) {
