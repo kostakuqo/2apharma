@@ -35,7 +35,7 @@ const SERVICE_ICON_IMAGES = [
 ];
 
 const LABELS = {
-  al: { tag: "Çfarë Ofrojmë", sub: "Zgjidhje të plota për çdo hallkë të furnizimit me pajisje mjekësore." },
+  al: { tag: "Çfarë Ofrojmë", sub: "Zgjidhje të plota për çdo hallkë të furnizimit me ilace dhe pajisje mjekësore." },
   en: { tag: "What We Offer", sub: "Comprehensive solutions across every step of medical equipment supply." },
   it: { tag: "Cosa Offriamo", sub: "Soluzioni complete per ogni fase della fornitura di apparecchiature mediche." },
 };

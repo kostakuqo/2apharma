@@ -270,9 +270,9 @@ export default function Navbar() {
               )}
             </div>
 
-            <a href="tel:+355684083950" className={styles.phone}>
+            <a href="tel:+355689053241" className={styles.phone}>
               <Phone size={14} />
-              +355 68 4083 950
+              +355689053241
             </a>
 
             <button
@@ -357,8 +357,8 @@ export default function Navbar() {
               ))}
             </div>
 
-            <a href="tel:+355684083950" className={styles.mobilePhone}>
-              +355 68 4083 950
+            <a href="tel:+355689053241" className={styles.mobilePhone}>
+              +355 68 905 3241
             </a>
           </div>
         )}

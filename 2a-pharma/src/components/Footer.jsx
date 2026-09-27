@@ -63,8 +63,7 @@ export default function Footer() {
 
           <div className={styles.col}>
             <div className={styles.colTitle}>Contact</div>
-            <a href="tel:+355684083950">+355 68 4083 950</a>
-            <a href="tel:+355689053225">+355 68 905 3241</a>
+            <a href="tel:+355689053241">+355 68 905 3241</a>
             <a href="mailto:info@2a-pharma.al">info@2a-pharma.al</a>
             <span>Tiranë, Shqipëri</span>
           </div>

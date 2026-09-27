@@ -55,7 +55,7 @@ export const translations = {
       gridTag: "Çfarë ofrojmë",
       gridTitle: "Shërbimet Tona Kryesore",
       items: [
-        { title: "Distribucion", desc: "Shpërndajmë pajisje dhe produkte mjekësore në të gjithë Shqipërinë, me logjistikë të shpejtë dhe të besueshme drejt klinikave, spitaleve dhe farmacive." },
+        { title: "Distribucion", desc: "Shpërndajmë ilace dhe produkte mjekësore në të gjithë Shqipërinë, me logjistikë të shpejtë dhe të besueshme drejt klinikave, spitaleve dhe farmacive." },
         { title: "Shërbime Rregullatore për Barna", desc: "Ofrojmë mbështetje të plotë rregullatore — regjistrim, dokumentacion dhe përputhshmëri me kërkesat ligjore — për produktet që përfaqësojmë." },
         { title: "Marketing dhe Shitje", desc: "Ekipi ynë komercial promovon dhe shet produktet me një qasje të orientuar te klienti, ndërtuar mbi njohuri të thella të tregut shqiptar." },
         { title: "Dyqan Online", desc: "Porositni produktet tona direkt online, me katalog të përditësuar dhe dërgesë të shpejtë kudo në vend." },
@@ -73,8 +73,6 @@ export const translations = {
       items: [
         { type: "event", date: "Shtator 2026", tag: "Eveniment", title: "Pjesëmarrje në Panairin Shëndetësor Kombëtar", excerpt: "2A Pharma prezantoi linjën e re të pajisjeve diagnostike në Panairin Shëndetësor Kombëtar në Tiranë." },
         { type: "news", date: "Gusht 2026", tag: "Lajm", title: "Rinovimi i Certifikimit ISO", excerpt: "Kemi rinovuar me sukses certifikimin ISO për cilësi dhe standarde në furnizimin e pajisjeve mjekësore." },
-        { type: "news", date: "Korrik 2026", tag: "Lajm", title: "Linjë e Re Produktesh për Ultratinguj", excerpt: "Kemi shtuar në portofolin tonë aparate të reja ultratingulli, me shpërndarje ekskluzive për Shqipërinë." },
-        { type: "event", date: "Qershor 2026", tag: "Eveniment", title: "Ditë e Hapur Trajnimi Teknik", excerpt: "Organizuam një sesion falas trajnimi teknik për stafin e klinikave partnere mbi mirëmbajtjen bazë të pajisjeve." },
       ],
       ctaTitle: "Dëshironi të merrni lajmet tona të para?",
       ctaSub: "Kontaktoni ekipin tonë dhe do t'ju mbajmë të informuar për çdo risi apo eveniment.",
@@ -85,7 +83,7 @@ export const translations = {
       servicesTitle: "Shërbimet",
       mission: {
         title: "Misioni Ynë",
-        text: "Jemi të angazhuar të furnizojmë pajisje mjekësore të certifikuara dhe të besueshme në të gjithë Shqipërinë, të mbështetura nga ekspertizë teknike në çdo hap — nga zgjedhja dhe instalimi deri te mirëmbajtja afatgjatë.",
+        text: "Të ofrojmë ilace dhe pajisje mjekësore të cilësisë së lartë për pacientet dhe institucionet shëndetësore në Shqipëri, duke kontribuar në përmirësimin e kujdesit shëndetësor.",
       },
       expertise: {
         title: "Ekspertiza dhe Gama Jonë e Shërbimeve",
@@ -196,8 +194,6 @@ export const translations = {
       items: [
         { type: "event", date: "September 2026", tag: "Event", title: "Participation in the National Health Expo", excerpt: "2A Pharma presented its new line of diagnostic equipment at the National Health Expo in Tirana." },
         { type: "news", date: "August 2026", tag: "News", title: "ISO Certification Renewed", excerpt: "We successfully renewed our ISO certification for quality and standards in medical equipment supply." },
-        { type: "news", date: "July 2026", tag: "News", title: "New Ultrasound Product Line", excerpt: "We added new ultrasound machines to our portfolio, with exclusive distribution for Albania." },
-        { type: "event", date: "June 2026", tag: "Event", title: "Open Technical Training Day", excerpt: "We hosted a free technical training session for partner clinics' staff on basic equipment maintenance." },
       ],
       ctaTitle: "Want to be the first to know?",
       ctaSub: "Contact our team and we'll keep you posted on every update and event.",
@@ -215,8 +211,8 @@ export const translations = {
         columns: [
           { title: "TECHNICAL SERVICES", items: ["Installation & commissioning", "Preventive maintenance", "Emergency repairs", "Calibration & testing", "Spare parts supply"] },
           { title: "SALES & CONSULTANCY", items: ["Equipment consultancy", "Needs assessment", "Custom solutions", "Flexible financing options"] },
-          { title: "TRAINING & SUPPORT", items: ["On-site staff training", "User manuals & guides", "Ongoing technical support", "Remote diagnostics"] },
-          { title: "QUALITY & COMPLIANCE", items: ["Certified products only", "Local regulatory compliance", "CE documentation", "Warranty management"] },
+          // { title: "TRAINING & SUPPORT", items: ["On-site staff training", "User manuals & guides", "Ongoing technical support", "Remote diagnostics"] },
+          // { title: "QUALITY & COMPLIANCE", items: ["Certified products only", "Local regulatory compliance", "CE documentation", "Warranty management"] },
         ],
       },
       aboutCompany: {
@@ -314,8 +310,6 @@ export const translations = {
       items: [
         { type: "event", date: "Settembre 2026", tag: "Evento", title: "Partecipazione alla Fiera Nazionale della Salute", excerpt: "2A Pharma ha presentato la nuova linea di apparecchiature diagnostiche alla Fiera Nazionale della Salute a Tirana." },
         { type: "news", date: "Agosto 2026", tag: "Notizia", title: "Rinnovata la Certificazione ISO", excerpt: "Abbiamo rinnovato con successo la certificazione ISO per la qualità e gli standard nella fornitura di apparecchiature mediche." },
-        { type: "news", date: "Luglio 2026", tag: "Notizia", title: "Nuova Linea di Ecografi", excerpt: "Abbiamo aggiunto al nostro portafoglio nuovi apparecchi ecografici, con distribuzione esclusiva per l'Albania." },
-        { type: "event", date: "Giugno 2026", tag: "Evento", title: "Giornata di Formazione Tecnica Gratuita", excerpt: "Abbiamo organizzato una sessione gratuita di formazione tecnica per il personale delle cliniche partner sulla manutenzione di base." },
       ],
       ctaTitle: "Volete essere i primi a saperlo?",
       ctaSub: "Contattate il nostro team e vi terremo aggiornati su ogni novità ed evento.",
