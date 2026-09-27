@@ -315,7 +315,17 @@ export default function Navbar() {
                 value={searchQuery}
                 onChange={e => setSearchQuery(e.target.value)}
                 className={styles.mobileSearchInput}
-                autoFocus
+                /* ELIMINAT (2026-09-27): "autoFocus" încerca să deschidă
+                   tastatura chiar în momentul în care se deschidea meniul
+                   mobil (hamburger). Pe iOS Safari, asta declanșează un bug
+                   cunoscut: viewport-ul vizual rămâne "deplasat" din cauza
+                   apariției/dispariției rapide a tastaturii, iar elementele
+                   position:fixed (meniul, bottom nav-ul) rămân dezaliniate
+                   față de ecranul real — exact "scroll orizontal + plutire"
+                   raportat, reparat temporar de un pinch-zoom (care resetează
+                   forțat viewport-ul). Fără autoFocus, userul dă tap manual
+                   pe input dacă vrea să caute — tastatura nu mai apare
+                   automat la simpla deschidere a meniului. */
               />
               {searchQuery && (
                 <button
