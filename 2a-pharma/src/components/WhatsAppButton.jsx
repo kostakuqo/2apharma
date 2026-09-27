@@ -3,7 +3,7 @@
 import styles from "./whatsAppButton.module.css";
 
 export default function WhatsAppButton() {
-  const phoneNumber = "+355684083950"; 
+  const phoneNumber = "+355689053241"; 
   const message = "Pershendetje! Jam i interesuar për produktet tuaja.";
 
   const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
