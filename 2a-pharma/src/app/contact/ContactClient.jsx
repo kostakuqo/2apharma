@@ -193,8 +193,8 @@ export default function ContactClient() {
                 <div className={styles.infoTitle}>
                   {lang === "al" ? "Telefon" : lang === "it" ? "Telefono" : "Phone"}
                 </div>
-                <a href="tel:+355684083950" className={styles.infoLink}>
-                  +355 68 4083 950
+                <a href="tel:+355689053241" className={styles.infoLink}>
+                  +355 68 905 3241
                 </a>
               </div>
             </div>

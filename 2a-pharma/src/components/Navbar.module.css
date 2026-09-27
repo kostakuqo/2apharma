@@ -14,21 +14,12 @@
   background: linear-gradient(135deg, #EAF7F0 0%, #EDF4FB 55%, #F1FAF4 100%);
   box-shadow: 0 2px 10px rgba(15, 23, 42, 0.06);
   transition: box-shadow var(--t-fast);
-  border-bottom: 2px solid #014697;
-
-  /* ADĂUGAT (2026-09-27): înlocuiește vechiul overflow-x:hidden pus pe
-     html/body (care rupea sticky-ul și ascundea hamburger-ul). Pusă direct
-     pe .nav, "clip" taie doar ce iese din bara asta (ex. .logo cu
-     margin-left negativ) fără să afecteze restul paginii sau
-     position:sticky al altor elemente.
-     CORECTAT (2026-09-27): fără overflow-y explicit, specificația CSS
-     transformă automat overflow-y în "auto" ori de câte ori overflow-x nu e
-     "visible" — asta transforma .nav într-un container care taie/scrolează
-     și pe verticală, ascunzând dropdown-ul de limbă (.langDropdown, care e
-     absolute și iese sub bară) pe iPhone/Safari. Punem overflow-y: visible
-     explicit, ca să păstrăm doar tăierea orizontală dorită. */
-  overflow-x: clip;
-  overflow-y: visible;
+  /* CORECTAT (2026-09-27): pe iOS Safari, un element cu position:sticky
+     care are el însuși overflow diferit de "visible" poate rupe recalcularea
+     zonei de tap după scroll — elementul rămâne vizibil, dar taps-urile nu
+     mai ajung la el (asta cauza "click pe logo nu merge" pe iPhone).
+     Soluția: NU punem overflow pe .nav (elementul sticky) — îl mutăm pe
+     .inner mai jos, un copil non-sticky care oricum conține logo-ul. */
 }
 
 .nav.scrolled {
@@ -43,6 +34,14 @@
   padding: 0 var(--section-px);
   max-width: 1400px;
   margin: 0 auto;
+  /* ADĂUGAT (2026-09-27): tăierea orizontală (pentru .logo cu margin-left
+     negativ) e mutată aici, pe un element non-sticky, ca să nu mai rupă
+     hit-testing-ul de sticky pe iOS (vezi comentariul de la .nav).
+     overflow-y: visible explicit, ca dropdown-ul de limbă (.langDropdown,
+     care iese sub bară) să nu fie tăiat — fără el, spec-ul CSS ar transforma
+     automat overflow-y în "auto" doar pentru că overflow-x nu e "visible". */
+  overflow-x: clip;
+  overflow-y: visible;
 }
 
 .logo {
@@ -664,7 +663,14 @@
     position: fixed !important;
     bottom: 0 !important;
     left: 0 !important;
-    width: 100vw !important;
+    /* CORECTAT (2026-09-27): "100vw" pe iOS Safari poate fi puțin mai lat
+       decât ecranul vizibil real (nu ține cont corect de safe-area/notch),
+       ceea ce crea un mic scroll orizontal fantomă pe toată pagina — cel mai
+       vizibil, pentru că acest element era singurul cu 100vw și position:
+       fixed. "right: 0" + "width: auto" se întind exact între marginile
+       reale ale ecranului, indiferent de calculul lui vw pe iOS. */
+    right: 0 !important;
+    width: auto !important;
     display: flex !important;
     z-index: 99999 !important;
     background: linear-gradient(135deg, #EAF7F0 0%, #EDF4FB 55%, #F1FAF4 100%);
