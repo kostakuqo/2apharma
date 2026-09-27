@@ -24,19 +24,19 @@ const STATS = [
 const CARDS = {
   al: [
     { title: "Misioni Ynë", text: "Të ofrojmë ilace dhe pajisje mjekësore të cilësisë së lartë për pacientet dhe institucionet shëndetësore në Shqipëri, duke kontribuar në përmirësimin e kujdesit shëndetësor." },
-    { title: "Vizioni Ynë", text: "Të jemi furnizuesi kryesor dhe më i besueshëm i ilaceve dhe mjekësore në rajon." },
+    { title: "Vizioni Ynë", text: "Të jemi furnizuesi kryesor dhe më i besueshëm i ilaceve dhe pajisjeve mjekësore në rajon." },
     { title: "Vlerat Tona", text: "Cilësia, integriteti dhe dedikimi ndaj klientëve janë themelet e biznesit tonë. Çdo produkt që ofrojmë kalon standarde strikte kontrolli." },
     { title: "Arritjet Tona", text: "Mbi 10 vjet eksperiencë, mbi 500 produkte të certifikuara dhe bashkëpunim me institucionet kryesore shëndetësore të Shqipërisë." },
   ],
   en: [
-    { title: "Our Mission", text: "To provide high-quality medical equipment to healthcare institutions in Albania, contributing to the improvement of healthcare." },
-    { title: "Our Vision", text: "To be the leading and most trusted supplier of medical equipment in the region, known for quality and excellent service." },
+    { title: "Our Mission", text: "To provide high-quality drugs and medical equipment to patients and healthcare institutions in Albania, contributing to the improvement of healthcare." },
+    { title: "Our Vision", text: "To be the leading and most trusted supplier of drugs and medical equipment in the region." },
     { title: "Our Values", text: "Quality, integrity and dedication to customers are the foundations of our business. Every product we offer passes strict quality control." },
     { title: "Our Achievements", text: "Over 10 years of experience, over 500 certified products and collaboration with Albania's leading healthcare institutions." },
   ],
   it: [
-    { title: "La Nostra Missione", text: "Fornire apparecchiature mediche di alta qualità alle istituzioni sanitarie in Albania, contribuendo al miglioramento dell'assistenza sanitaria." },
-    { title: "La Nostra Visione", text: "Essere il principale e più affidabile fornitore di apparecchiature mediche nella regione, noto per la qualità e il servizio eccellente." },
+    { title: "La Nostra Missione", text: "Fornire farmaci e apparecchiature mediche di alta qualità a pazienti e istituzioni sanitarie in Albania, contribuendo al miglioramento dell'assistenza sanitaria." },
+    { title: "La Nostra Visione", text: "Essere il principale e più affidabile fornitore di farmaci e apparecchiature mediche nella regione." },
     { title: "I Nostri Valori", text: "Qualità, integrità e dedizione ai clienti sono le fondamenta del nostro business. Ogni prodotto che offriamo supera severi controlli di qualità." },
     { title: "I Nostri Risultati", text: "Oltre 10 anni di esperienza, oltre 500 prodotti certificati e collaborazione con le principali istituzioni sanitarie albanesi." },
   ],
@@ -52,12 +52,12 @@ const HERO_STORY = {
     "Vizioni ynë bazohet në menaxhimin total të cilësisë, besueshmërinë dhe profesionalizmin. Ne synojmë të përmbushim dhe të kalojmë pritshmëritë e klientëve tanë duke ofruar çmime konkurruese dhe produkte të certifikuara, me cilësi të lartë, në përputhje me standardet e kërkuara. Në 2A Pharma, jemi plotësisht të angazhuar ndaj biznesit tonë dhe ofrimit të zgjidhjeve gjithëpërfshirëse për të përmbushur nevojat e pacienteve dhe strukturave shendetesore.",
   ],
   en: [
-    "2A Pharma was established in 2012 and specializes in the distribution of surgical materials, sutures, medical sets, and other hospital equipment. Our core activity is the supply of hospitals, clinics, and medical laboratories with high-quality medical products and equipment.",
+    "2A Pharma was established in 2012 and specializes in the distribution of hospital drugs, surgical equipment and materials, surgical sutures, medical sets and other hospital equipment. Our core activity is supplying hospitals, clinics and medical laboratories with high-quality medical products and equipment.",
     "Our objective is to become a leading combination of Quality and Innovation in the healthcare sector, supported by a highly experienced team with expertise in medicine and the procurement and supply of hospital materials. We collaborate with leading European manufacturers and suppliers to provide our clients with high-quality products, delivered efficiently, reliably, and on time.",
     "Our vision is founded on total quality management, reliability, and professionalism. We strive to meet and exceed our customers' expectations by offering competitive pricing and certified, high-quality products that comply with the required standards. At 2A Pharma, we are fully committed to our business and to providing comprehensive solutions to meet the needs of all surgical specialties.",
   ],
   it: [
-    "2A Pharma è stata fondata nel 2012 ed è specializzata nella distribuzione di materiali chirurgici, suture, set medici e altre attrezzature ospedaliere. La nostra attività principale è la fornitura a ospedali, cliniche e laboratori medici di prodotti e attrezzature mediche di alta qualità.",
+    "2A Pharma è stata fondata nel 2012 ed è specializzata nella distribuzione di farmaci ospedalieri, apparecchiature e materiali chirurgici, suture chirurgiche, set medici e altre attrezzature ospedaliere. La nostra attività principale è la fornitura a ospedali, cliniche e laboratori medici di prodotti e apparecchiature mediche di alta qualità.",
     "Il nostro obiettivo è diventare la combinazione leader di Qualità e Innovazione nel settore sanitario, supportati da un team altamente esperto con competenze in medicina e nell'approvvigionamento e fornitura di materiali ospedalieri. Collaboriamo con i principali produttori e fornitori europei per offrire ai nostri clienti prodotti di alta qualità, consegnati in modo efficiente, affidabile e puntuale.",
     "La nostra visione si fonda sulla gestione totale della qualità, sull'affidabilità e sulla professionalità. Ci impegniamo a soddisfare e superare le aspettative dei nostri clienti offrendo prezzi competitivi e prodotti certificati e di alta qualità, conformi agli standard richiesti. In 2A Pharma, siamo pienamente impegnati nella nostra attività e nel fornire soluzioni complete per soddisfare le esigenze di tutte le specialità chirurgiche.",
   ],

@@ -167,7 +167,7 @@ export const translations = {
     },
     about: {
       label: "About Us", title: "Who We Are",
-      sub: "A leading company in the supply of hospital medications and professional medical equipment in Albania.",
+      sub: "A leading company in the supply of hospital drugs and professional medical equipment in Albania.",
     },
     // ── STATIC — Services page (/services) ──
     services: {
@@ -204,7 +204,7 @@ export const translations = {
       servicesTitle: "Services",
       mission: {
         title: "Our Mission",
-        text: "We are committed to supplying certified, reliable medical equipment across Albania, backed by expert technical support at every step — from selection and installation to long-term maintenance.",
+        text: "To provide high-quality medications and medical equipment to patients and healthcare institutions across Albania, contributing to the improvement of healthcare.",
       },
       expertise: {
         title: "Our Expertise & Range of Services",
@@ -320,7 +320,7 @@ export const translations = {
       servicesTitle: "Servizi",
       mission: {
         title: "La Nostra Missione",
-        text: "Ci impegniamo a fornire apparecchiature mediche certificate e affidabili in tutta l'Albania, supportate da competenza tecnica in ogni fase — dalla scelta e installazione fino alla manutenzione a lungo termine.",
+        text: "Fornire farmaci e apparecchiature mediche di alta qualità a pazienti e istituzioni sanitarie in tutta l'Albania, contribuendo al miglioramento dell'assistenza sanitaria.",
       },
       expertise: {
         title: "La Nostra Competenza e Gamma di Servizi",
