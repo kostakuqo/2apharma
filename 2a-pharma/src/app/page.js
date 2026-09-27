@@ -2,7 +2,7 @@ import HomeClient from "./home/HomeClient.jsx";
 
 export const metadata = {
   title: "2A Pharma | Pharma Distribution Company",
-  description: "Furnizuesi juaj i besueshëm i ilacev dhe pajisjeve mjekësore profesionale. Produkte të certifikuara për klinika, spitale dhe farmaci në Shqipëri.",
+  description: "Your trusted supplier of professional medicines and medical equipment. Certified products for clinics, hospitals, and pharmacies in Albania.",
   keywords: "ilace, pajisje mjekësore, medical equipment, Albania, Shqipëri",
 };
 

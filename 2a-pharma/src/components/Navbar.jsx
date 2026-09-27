@@ -121,6 +121,24 @@ export default function Navbar() {
     setSearchOpen(false);
   }, [pathname]);
 
+  // ADĂUGAT (2026-09-27): meniul mobil (.mobileMenu) era randat "în flow"
+  // (împingea conținutul de sub el), ceea ce pe iOS Safari cauza un
+  // recalcul de layout vizibil ca scroll orizontal + "plutire" a paginii
+  // exact în momentul deschiderii, și făcea butoanele de limbă din meniu
+  // instabile la tap imediat după. Acum .mobileMenu e un overlay fix (vezi
+  // Navbar.module.css) care nu mai împinge nimic — dar, cât timp el
+  // acoperă ecranul, blocăm scroll-ul paginii din spate, altfel pe iOS tot
+  // se pot întâmpla scroll-uri "fantomă" în fundal, sub overlay.
+  useEffect(() => {
+    if (menuOpen) {
+      const prevOverflow = document.body.style.overflow;
+      document.body.style.overflow = "hidden";
+      return () => {
+        document.body.style.overflow = prevOverflow;
+      };
+    }
+  }, [menuOpen]);
+
   const isActive = (href) =>
     href === "/" ? pathname === "/" : pathname.startsWith(href);
 

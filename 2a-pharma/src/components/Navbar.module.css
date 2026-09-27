@@ -296,8 +296,22 @@
   border-radius: 2px;
 }
 
-/* ── Mobile dropdown menu ── */
+/* ── Mobile dropdown menu ──
+   SCHIMBAT (2026-09-27): era randat "în flow" (împingea în jos tot ce urma
+   după el — inclusiv bottom nav-ul fix), ceea ce pe iOS Safari declanșa un
+   recalcul de layout vizibil ca scroll orizontal + "plutire" a paginii chiar
+   în momentul deschiderii, și lăsa butoanele de limbă din meniu instabile
+   la tap imediat după. Acum e un overlay fix, cu propriul scroll — nu mai
+   împinge nimic, nu mai declanșează reflow pe restul paginii. */
 .mobileMenu {
+  position: fixed;
+  top: 68px; /* înălțimea .inner pe mobil (vezi @media 768px) */
+  left: 0;
+  right: 0;
+  bottom: 0;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  z-index: 100000; /* peste bottomNav (99999), cât timp meniul e deschis */
   display: flex;
   flex-direction: column;
   padding: 12px var(--section-px) 20px;
