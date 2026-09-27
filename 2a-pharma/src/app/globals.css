@@ -42,6 +42,14 @@
 
   --t-fast: 0.15s ease;
   --t-mid:  0.25s ease;
+
+  /* ADĂUGAT (2026-09-27): înălțimea bottom-nav-ului fix de pe mobil
+     (Navbar.module.css → .bottomNav), ca variabilă, ca s-o poți refolosi
+     oriunde e nevoie de spațiu rezervat pentru el (vezi body la breakpoint-ul
+     de mai jos). Dacă modifici padding-ul/dimensiunea bottomNav-ului din
+     Navbar.module.css, actualizează și valoarea de aici ca să rămână
+     sincronizate. */
+  --bottom-nav-h: 64px;
 }
 
 *, *::before, *::after {
@@ -76,7 +84,7 @@ img { max-width: 100%; display: block; }
   font-size: 16px;
   font-weight: 700;
   color: var(--green-soft);
-  
+
   text-transform: uppercase;
   letter-spacing: 0.12em;
   margin-bottom: 8px;
@@ -102,5 +110,14 @@ img { max-width: 100%; display: block; }
   :root {
     --section-px: 20px;
     --section-py: 48px;
+  }
+
+  /* ADĂUGAT (2026-09-27): rezervă spațiu jos, cât înălțimea bottom-nav-ului
+     fix de pe mobil (Navbar.jsx → .bottomNav, activ sub 768px), plus
+     safe-area pe telefoanele cu bară de gesturi (iPhone). Fără asta,
+     footer-ul și orice conținut de la finalul fiecărei pagini rămân
+     parțial ascunse sub bara fixă de jos. */
+  body {
+    padding-bottom: calc(var(--bottom-nav-h) + env(safe-area-inset-bottom));
   }
 }

@@ -203,8 +203,8 @@ export default function ContactClient() {
               <div className={styles.infoIcon}><Mail size={20} /></div>
               <div>
                 <div className={styles.infoTitle}>Email</div>
-                <a href="mailto:info@2apharma.al" className={styles.infoLink}>
-                  info@2apharma.al
+                <a href="mailto:info@2a-pharma.al" className={styles.infoLink}>
+                  info@2a-pharma.al
                 </a>
               </div>
             </div>

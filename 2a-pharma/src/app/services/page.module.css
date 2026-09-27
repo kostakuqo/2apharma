@@ -1,0 +1,198 @@
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ─── PAGE ─── */
+.page {
+  min-height: 60vh;
+  background: #F8FAFC;
+}
+
+/* ─── HERO CU IMAGINE + TITLU SUPRAPUS ───
+   ÎMBUNĂTĂȚIT (2026-09-27): gradient navy→verde discret peste imagine (nu
+   doar un overlay negru plat), plus un tag mic deasupra titlului și un
+   subtitlu dedesubt, la fel ca restul secțiunilor "hero" de pe site. */
+.imageHero {
+  position: relative;
+  min-height: 340px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #0F2A52; /* fallback dacă imaginea lipsește */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  overflow: hidden;
+}
+
+.imageHeroOverlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(10,20,40,0.82) 0%, rgba(15,42,82,0.65) 55%, rgba(26,138,60,0.55) 100%);
+  pointer-events: none;
+}
+
+.imageHeroInner {
+  position: relative;
+  z-index: 1;
+  max-width: 640px;
+  padding: 0 var(--section-px);
+  text-align: center;
+  animation: fadeInUp 0.45s ease both;
+}
+
+.imageHeroTag {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 6px 14px;
+  background: rgba(40,199,90,0.15);
+  border: 1px solid rgba(40,199,90,0.35);
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 700;
+  color: #7DD9A0;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 20px;
+}
+
+.imageHeroTitle {
+  font-family: var(--font-serif);
+  font-size: 48px;
+  font-weight: 400;
+  color: #fff;
+  letter-spacing: -0.5px;
+  margin: 0 0 14px;
+}
+
+.imageHeroSub {
+  font-size: 16px;
+  color: rgba(220,232,250,0.88);
+  line-height: 1.7;
+  margin: 0;
+}
+
+/* ─── GRID DE CARDURI ───
+   ÎNLOCUIT (2026-09-27): lista verticală cu rânduri a devenit un grid de
+   carduri pe 2 coloane — cerc-iconiță + index numeric sus, titlu, liniuță
+   de accent verde, descriere. Fundal alb, umbră discretă, ridicare la
+   hover, la fel ca restul cardurilor de pe site. */
+.servicesGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 64px var(--section-px) 80px;
+}
+
+.serviceCard {
+  background: #fff;
+  border: 1px solid #E8EDF5;
+  border-radius: 20px;
+  padding: 32px 30px;
+  box-shadow: 0 4px 24px rgba(15,42,82,0.06);
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+  animation: fadeInUp 0.4s ease both;
+}
+
+.serviceCard:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 36px rgba(15,42,82,0.12);
+  border-color: rgba(26,138,60,0.25);
+}
+
+.serviceCardTop {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.serviceIconCircle {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: #F0FBF4;
+  border: 1px solid #DCF3E3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #1A8A3C;
+  flex-shrink: 0;
+  overflow: hidden;
+  transition: background 0.25s ease, border-color 0.25s ease;
+}
+
+.serviceCard:hover .serviceIconCircle {
+  background: #1A8A3C;
+  border-color: #1A8A3C;
+}
+
+/* Imagine (logo/pictogramă de la designer) în locul iconiței din cod —
+   object-fit: contain ca imaginea să nu fie tăiată/deformată, indiferent
+   de proporțiile fișierului primit. */
+.serviceIconImg {
+  width: 52%;
+  height: 52%;
+  object-fit: contain;
+}
+
+.serviceIndex {
+  font-family: var(--font-serif);
+  font-size: 34px;
+  font-weight: 400;
+  color: #E2E9F2;
+  line-height: 1;
+}
+
+.serviceRowTitle {
+  font-size: 19px;
+  font-weight: 700;
+  color: #0F2A52;
+  margin: 0 0 12px;
+  line-height: 1.3;
+}
+
+.serviceAccent {
+  width: 36px;
+  height: 3px;
+  background: var(--green);
+  border-radius: 2px;
+  margin-bottom: 16px;
+}
+
+.serviceRowDesc {
+  font-size: 14.5px;
+  color: #64748b;
+  line-height: 1.8;
+  margin: 0;
+}
+
+/* ─── EMPTY ─── */
+.emptyState {
+  text-align: center;
+  padding: 80px 20px;
+  color: #94a3b8;
+  font-size: 15px;
+  animation: fadeInUp 0.3s ease both;
+}
+
+.emptyIcon {
+  font-size: 48px;
+  margin-bottom: 16px;
+  opacity: 0.5;
+}
+
+@media (max-width: 900px) {
+  .servicesGrid { grid-template-columns: 1fr; max-width: 560px; }
+}
+
+@media (max-width: 640px) {
+  .imageHero { min-height: 260px; }
+  .imageHeroTitle { font-size: 34px; }
+  .servicesGrid { padding: 48px var(--section-px) 64px; gap: 18px; }
+  .serviceCard { padding: 26px 24px; }
+}

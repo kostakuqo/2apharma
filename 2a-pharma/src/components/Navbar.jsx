@@ -4,7 +4,7 @@ import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useLang } from "../context/LangContext.jsx";
-import { Home, Info, Package, Handshake, Phone, Search, X } from "lucide-react";
+import { Home, Info, Package, Wrench, Handshake, Newspaper, Phone, Search, X } from "lucide-react";
 import { getProducts } from "../lib/getProducts.js";
 import { getSiteSettings } from "../lib/getSiteSettings.js";
 import styles from "./Navbar.module.css";
@@ -38,11 +38,17 @@ const LANGS = [
   { code: "it", label: "IT", Flag: FlagIT },
 ];
 
+// ADĂUGAT (2026-09-27): 2 pagini noi — "services" (Wrench) și "eventsNews"
+// (Newspaper) — cerute de user. Rutele lor (app/services, app/events-news)
+// și traducerile (tx.nav.services / tx.nav.eventsNews, plus conținutul
+// static tx.services / tx.eventsNews) au fost adăugate în LangContext.jsx.
 const NAV_ITEMS = [
   { href: "/", label: "home", Icon: Home },
   { href: "/about", label: "about", Icon: Info },
-  { href: "/products", label: "products", Icon: Package },
+  // { href: "/products", label: "products", Icon: Package },
+  { href: "/services", label: "services", Icon: Wrench },
   { href: "/partners", label: "partners", Icon: Handshake },
+  { href: "/events-news", label: "eventsNews", Icon: Newspaper },
   { href: "/contact", label: "contact", Icon: Phone },
 ];
 
@@ -121,10 +127,15 @@ export default function Navbar() {
         <div className={styles.inner}>
           <Link href="/" className={styles.logo}>
             {logo.logoType === "image" && logo.logoImageUrl ? (
+              // SCHIMBAT (2026-09-27): logo mai mare (64px, față de 40px) și
+              // mai clar — fundalul navbar-ului a fost deschis la culoare
+              // (vezi Navbar.module.css, .nav) ca să se potrivească cu
+              // fundalul pal al imaginii primite de la designer, în loc să
+              // arate ca un dreptunghi alb pe fundalul navy-verde vechi.
               <img
                 src={logo.logoImageUrl}
                 alt="2A Pharma"
-                style={{ height: "40px", width: "auto", objectFit: "contain" }}
+                style={{ height: "64px", width: "auto", objectFit: "contain" }}
               />
             ) : (
               <>

@@ -73,4 +73,23 @@
   .top { flex-direction: column; }
   .cols { gap: 28px; }
   .social { justify-content: center; }
+
+  /* ADĂUGAT (2026-09-27, pentru mobil): pe ecran îngust, "space-between"
+     între copyright și linkuri (Privacy/Terms/Sitemap) le împinge unul într-o
+     parte și unul în alta, arătând dezordonat — le centrăm pe amândouă,
+     stivuite, ca pe restul footer-ului. */
+  .bottom {
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+  }
+  .copy { margin-bottom: 0; }
+  .links { justify-content: center; flex-wrap: wrap; }
+}
+
+@media (max-width: 480px) {
+  /* ADĂUGAT (2026-09-27): pe telefoane mici, cele 3 coloane (Produkte /
+     Company / Contact) puse una lângă alta cu gap 28px încă se înghesuie —
+     le stivuim pe o singură coloană, mai lizibil. */
+  .cols { flex-direction: column; gap: 24px; width: 100%; }
 }

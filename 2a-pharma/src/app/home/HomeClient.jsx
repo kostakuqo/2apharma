@@ -11,25 +11,78 @@ import { db } from "../../lib/firebase.js";
 import { collection, getDocs } from "firebase/firestore";
 
 const STATS = [
-  { num: "500+", label: "Products", labelAl: "Produkte" },
+  { num: "1000+", label: "Products", labelAl: "Produkte" },
   { num: "50+", label: "Partners", labelAl: "Partnerë" },
   { num: "10+", label: "Years", labelAl: "Vjet" },
 ];
 
+// ÎNLOCUIT (2026-09-27): imagine în locul path-ului video de fundal al
+// hero-ului — pune fișierul tău real la public/images/heroimage.png (sau
+// schimbă calea de mai jos cu numele fișierului tău). Dacă lipsește,
+// fundalul rămâne pur gradient verde-albastru (vezi .hero din CSS) — nu
+// dă eroare.
+//
+// ATENȚIE la cale: în Next.js, orice fișier pus în folderul `public/` e
+// servit direct din rădăcina site-ului — deci un fișier la
+// `public/images/heroimage.png` se referă în cod ca `/images/heroimage.png`,
+// NICIODATĂ cu `public/` sau cu numele proiectului (`2a-pharma/...`) în
+// față — acelea nu există ca URL-uri reale în browser. Și calea trebuie
+// mereu între ghilimele (e un string), nu scrisă goală ca mai sus.
+const HERO_IMAGE = "/images/heroimage.png";
+
+// ADĂUGATE (2026-09-27): 2 imagini de fundal noi, pentru secțiunile
+// "Our Mission" și "About the Company" adăugate mai jos pe Home — pune
+// fișierele tale reale la aceste căi (sau schimbă calea în cod). Dacă
+// lipsesc, secțiunile rămân cu un fundal navy/verde simplu — nu dă eroare.
+const MISSION_IMAGE = "/images/mission.jpg";
+const ABOUT_COMPANY_IMAGE = "/images/about-company.jpg";
+
 const IconShield = () => <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" /></svg>;
 const IconPhone = () => <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.47 2 2 0 0 1 3.58 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.54a16 16 0 0 0 6.29 6.29l.91-.91a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z" /></svg>;
 const IconArrow = () => <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M5 12h14M12 5l7 7-7 7" /></svg>;
-const IconTruck = () => <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="1" y="3" width="15" height="13" /><path d="M16 8h4l3 3v5h-7V8z" /><circle cx="5.5" cy="18.5" r="2.5" /><circle cx="18.5" cy="18.5" r="2.5" /></svg>;
-const IconCert = () => <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="8" r="6" /><path d="M15.477 12.89L17 22l-5-3-5 3 1.523-9.11" /></svg>;
-const IconHeadset = () => <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M3 18v-6a9 9 0 0 1 18 0v6" /><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3v5z" /><path d="M3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3v5z" /></svg>;
-const IconRefresh = () => <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><polyline points="23 4 23 10 17 10" /><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10" /></svg>;
 
-const FEATURE_ICONS = [
-  <IconCert key="cert" />,
-  <IconTruck key="truck" />,
-  <IconHeadset key="headset" />,
-  <IconRefresh key="refresh" />
+// SCHIMBAT (2026-09-27): toate iconițele "de conținut" (Features,
+// Services teaser, About the Company, Figures) au fost trecute de la
+// SVG-uri scrise în cod la IMAGINI — designerul creează pictograme/logo-uri
+// proprii pentru fiecare. Pune fișierele la căile de mai jos (sau schimbă
+// căile cu numele reale ale fișierelor primite). Dacă un fișier lipsește,
+// cercul/căsuța rămâne goală — nu dă eroare.
+// (IconShield/IconPhone/IconArrow de mai sus RĂMÂN cod — sunt iconițe
+// mici, funcționale, din butoane/badge-uri, nu "logo-uri" de conținut.)
+const FEATURE_ICON_IMAGES = [
+  "/images/icons/feature-cert.png",
+  "/images/icons/feature-truck.png",
+  "/images/icons/feature-headset.png",
+  "/images/icons/feature-refresh.png",
 ];
+
+// ADĂUGATE (2026-09-27): secțiuni noi pe Home, după un design de referință
+// trimis de user (Services teaser, Our Mission, Expertise, About the
+// Company, Figures) — toate STATIC (conținut scris direct în translations,
+// nu Firebase), la fel ca paginile /services și /events-news.
+
+// SCHIMBAT (2026-09-27): Services au acum exact 4 elemente reale
+// (Distribution, Medicine regulatory services, Marketing and sales, Online
+// shop), identice pe /services și pe Home — nu mai e nevoie de un subset
+// de indexi, se randează direct tot `tx.services.items`. Imaginile sunt
+// poziționale, în aceeași ordine ca pe pagina /services.
+const HOME_SERVICE_ICON_IMAGES = [
+  "/images/icons/service-distribution.png",
+  "/images/icons/service-regulatory.png",
+  "/images/icons/service-marketing.png",
+  "/images/icons/service-online-shop.png",
+];
+
+const ABOUT_COMPANY_ICON_IMAGES = [
+  "/images/icons/about-products.png",
+  "/images/icons/about-partners.png",
+  "/images/icons/about-years.png",
+];
+
+// SIMPLIFICAT (2026-09-27): "2A Pharma in Figures" e acum un rând simplu de
+// 3 statistici (10+ ani experiență, 500+ produse, 24-48h livrare), definite
+// direct în `home.figures.stats` din LangContext.jsx — la fel ca secțiunea
+// de statistici de pe pagina /about.
 
 export default function HomeClient() {
   const { lang, tx } = useLang();
@@ -57,51 +110,129 @@ export default function HomeClient() {
     load();
   }, []);
 
+  const home = tx.home || {};
+  const homeServices = tx.services?.items || [];
+
   return (
     <>
       <div className={styles.darkBlock}>
         <section className={styles.hero}>
-          <video
-            className={styles.heroBgVideo}
-            autoPlay
-            muted
-            loop
-            playsInline
-            preload="auto"
-          >
-            <source src="/videos/hero-1135993583-640_adpp_is.mp4" type="video/mp4" />
-          </video>
+          <img
+            className={styles.heroBgImage}
+            src={HERO_IMAGE}
+            alt=""
+          />
           <div className={styles.heroOverlay} />
 
           <div className={styles.heroLeft}>
-            <div className={styles.heroBadge}>
-              <IconShield /> {tx.hero.badge}
-            </div>
+            {/* SIMPLIFICAT (2026-09-27): la cererea userului, hero-ul
+                arată DOAR titlul — am scos badge-ul, subtitlul, butoanele
+                și rândul de statistici (STATS rămâne definit mai sus, dar
+                nemaifiind randat aici — poate fi șters complet dacă nu se
+                mai folosește nicăieri altundeva). */}
             <h1 className={styles.heroTitle}>
               {tx.hero.title1}<br />
               <span>{tx.hero.title2}</span><br />
               {tx.hero.title3}
             </h1>
-            <p className={styles.heroSub}>{tx.hero.sub}</p>
-            <div className={styles.heroBtns}>
-              <Link href="/products" className={styles.btnGreen}>
-                {tx.hero.btnProducts} <IconArrow />
-              </Link>
-              <Link href="/contact" className={styles.btnOutline}>
-                <IconPhone /> {tx.hero.btnContact}
-              </Link>
-            </div>
-            <div className={styles.heroStats}>
-              {STATS.map((s, i) => (
-                <div key={i} className={styles.statItem}>
-                  <div className={styles.statNum}>{s.num}</div>
-                  <div className={styles.statLbl}>{lang === "al" ? s.labelAl : s.label}</div>
+          </div>
+        </section>
+
+        {/* ── SERVICES (teaser) ──
+            REVENIT (2026-09-27): pe Home rămâne un grid de 4 carduri
+            (cerc-iconiță sus, titlu dedesubt, fără descriere) — conform
+            screenshot-ului trimis de user — DIFERIT de lista verticală cu
+            descrieri de pe pagina /services (acolo rămâne lista). */}
+        <section className={styles.homeServicesSection}>
+          <h2 className={styles.homeSectionTitle}>{home.servicesTitle}</h2>
+          <div className={styles.homeSectionUnderline} />
+          <div className={styles.homeServicesGrid}>
+            {homeServices.map((s, i) => {
+              const iconSrc = HOME_SERVICE_ICON_IMAGES[i % HOME_SERVICE_ICON_IMAGES.length];
+              return (
+                <div key={i} className={styles.homeServiceItem}>
+                  <div className={styles.homeServiceIconCircle}>
+                    <img src={iconSrc} alt="" className={styles.homeServiceIconImg} />
+                  </div>
+                  <div className={styles.homeServiceItemTitle}>{s.title}</div>
                 </div>
-              ))}
+              );
+            })}
+          </div>
+        </section>
+
+        {/* ── OUR MISSION ── */}
+        <section
+          className={styles.missionSection}
+          style={{ backgroundImage: `url(${MISSION_IMAGE})` }}
+        >
+          <div className={styles.missionOverlay} />
+          <div className={styles.missionInner}>
+            <h2 className={styles.missionTitle}>{home.mission?.title}</h2>
+            <p className={styles.missionText}>{home.mission?.text}</p>
+          </div>
+        </section>
+
+        {/* ── EXPERTISE / RANGE OF SERVICES (static) ── */}
+        <section className={styles.expertiseSection}>
+          <h2 className={styles.homeSectionTitle}>{home.expertise?.title}</h2>
+          <div className={styles.homeSectionUnderline} />
+          <div className={styles.expertiseGrid}>
+            {(home.expertise?.columns || []).map((col, i) => (
+              <div key={i} className={styles.expertiseCol}>
+                <h3>{col.title}</h3>
+                <ul>
+                  {col.items.map((item, j) => (
+                    <li key={j}>{item}</li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* ── ABOUT THE COMPANY (stats) ── */}
+        <section
+          className={styles.aboutCompanySection}
+          style={{ backgroundImage: `url(${ABOUT_COMPANY_IMAGE})` }}
+        >
+          <div className={styles.aboutCompanyOverlay} />
+          <div className={styles.aboutCompanyInner}>
+            <h2 className={styles.homeSectionTitleLight}>{home.aboutCompany?.title}</h2>
+            <div className={styles.homeSectionUnderlineLight} />
+            <div className={styles.aboutCompanyGrid}>
+              {(home.aboutCompany?.stats || []).map((s, i) => {
+                const iconSrc = ABOUT_COMPANY_ICON_IMAGES[i % ABOUT_COMPANY_ICON_IMAGES.length];
+                return (
+                  <div key={i} className={styles.aboutStatCard}>
+                    <div className={styles.aboutStatIcon}>
+                      <img src={iconSrc} alt="" className={styles.aboutStatIconImg} />
+                    </div>
+                    <div className={styles.aboutStatNum}>{s.num}</div>
+                    <div className={styles.aboutStatLabel}>{s.label}</div>
+                  </div>
+                );
+              })}
             </div>
           </div>
         </section>
-        <section className={styles.productsSection}>
+
+        {/* ── FIGURES ── */}
+        <section className={styles.figuresSection}>
+          <h2 className={styles.homeSectionTitle}>{home.figures?.title}</h2>
+          <div className={styles.homeSectionUnderline} />
+          <div className={styles.figuresStatsRow}>
+            {(home.figures?.stats || []).map((s, i) => (
+              <div key={i} className={styles.figuresStatCard}>
+                <div className={styles.figuresCellNum}>{s.num}</div>
+                <div className={styles.figuresCellLabel}>{s.label}</div>
+              </div>
+            ))}
+          </div>
+        </section>
+        </div>
+
+        {/* <section className={styles.productsSection}>
           <div className={styles.secHeader}>
             <div className="section-label">{tx.products.label}</div>
             <h2 className={styles.secTitle}>{tx.products.title}</h2>
@@ -115,8 +246,8 @@ export default function HomeClient() {
               {tx.products.viewAll} <IconArrow />
             </Link>
           </div>
-        </section>
-        <section className={styles.featuresSection}>
+        </section> */}
+        {/* <section className={styles.featuresSection}>
           <div className={styles.secHeaderCenter}>
             <div className="section-label">{tx.features.label}</div>
             <h2 className={styles.secTitle}>{tx.features.title}</h2>
@@ -124,14 +255,16 @@ export default function HomeClient() {
           <div className={styles.featuresGrid}>
             {tx.features.items.map((f, i) => (
               <div key={i} className={styles.fCard}>
-                <div className={styles.fIcon}>{FEATURE_ICONS[i]}</div>
+                <div className={styles.fIcon}>
+                  <img src={FEATURE_ICON_IMAGES[i % FEATURE_ICON_IMAGES.length]} alt="" className={styles.fIconImg} />
+                </div>
                 <div className={styles.fTitle}>{f.title}</div>
                 <div className={styles.fDesc}>{f.desc}</div>
               </div>
             ))}
           </div>
-        </section>
-        <section className={styles.ctaSection}>
+        </section> */}
+        {/* <section className={styles.ctaSection}>
           <h2 className={styles.ctaTitle}>
             {lang === "al"
               ? "Keni nevojë për pajisje mjekësore?"
@@ -150,13 +283,13 @@ export default function HomeClient() {
             <IconPhone />
             {lang === "al" ? "Na kontaktoni" : lang === "it" ? "Contattaci" : "Contact us"} <IconArrow />
           </Link>
-        </section>
+        </section> */}
 
-      </div>
+      {/* </div> */}
       <section className={styles.partnersSection}>
-  <div className={styles.partnersLabel}>{tx.partners.title}</div>
+  {/* <div className={styles.partnersLabel}>{tx.partners.title}</div> */}
 
-  <div className={styles.partnersRow}>
+  {/* <div className={styles.partnersRow}>
     {partners.map(p => (
       <div key={p.id} className={styles.partner}>
 
@@ -193,7 +326,7 @@ export default function HomeClient() {
 
       </div>
     ))}
-  </div>
+  </div> */}
 </section>
       <section style={{ padding: "0 var(--section-px)" }}>
         <Map />

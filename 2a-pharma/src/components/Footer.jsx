@@ -11,6 +11,11 @@ const DEFAULT_LOGO = { logoType: "text", logoMark: "2A", logoText: "Pharma", log
 export default function Footer() {
   const { lang, tx } = useLang();
   const [logo, setLogo] = useState(DEFAULT_LOGO);
+  // ADĂUGAT (2026-09-27): copyright/"All rights reserved" în footer — anul
+  // se calculează automat (new Date().getFullYear()), deci nu trebuie
+  // schimbat manual în fiecare an; restul textului vine tradus din
+  // tx.footer.copySuffix (LangContext.jsx).
+  const year = new Date().getFullYear();
 
   useEffect(() => {
     getSiteSettings().then(setLogo).catch(console.error);
@@ -59,8 +64,8 @@ export default function Footer() {
           <div className={styles.col}>
             <div className={styles.colTitle}>Contact</div>
             <a href="tel:+355684083950">+355 68 4083 950</a>
-            <a href="tel:+355689053225">+355 68 905 3225</a>
-            <a href="mailto:info@2apharma.al">info@2apharma.al</a>
+            <a href="tel:+355689053225">+355 68 905 3241</a>
+            <a href="mailto:info@2a-pharma.al">info@2a-pharma.al</a>
             <span>Tiranë, Shqipëri</span>
           </div>
         </div>
@@ -86,15 +91,15 @@ export default function Footer() {
           </svg>
         </a>
 
-        <a href="#" target="_blank" rel="noopener noreferrer" className={styles.socialBtn} aria-label="Twitter / X">
+        {/* <a href="#" target="_blank" rel="noopener noreferrer" className={styles.socialBtn} aria-label="Twitter / X">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
             <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.744l7.737-8.835L1.254 2.25H8.08l4.259 5.631 5.905-5.631zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
           </svg>
-        </a>
+        </a> */}
       </div>
 
       <div className={styles.bottom}>
-        <div className={styles.copy}>{tx.footer?.copy}</div>
+        <div className={styles.copy}>© {year} {tx.footer?.copySuffix}</div>
         <div className={styles.links}>
           <Link href="#">{tx.footer?.privacy}</Link>
           <Link href="#">{tx.footer?.terms}</Link>

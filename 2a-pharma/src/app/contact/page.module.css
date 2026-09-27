@@ -207,7 +207,7 @@
   display: flex;
   flex-direction: column;
   gap: 14px;
-  
+
   box-shadow: 0 4px 24px rgba(15,42,82,0.57);
 }
 
@@ -302,9 +302,22 @@
 
 @media (max-width: 600px) {
   .pageHeader { padding: 50px var(--section-px) 60px; }
+  .heroTag { font-size: 13px; }
   .pageTitle { font-size: 30px; }
   .pageSub { font-size: 14px; }
   .contentWrap { padding: 36px var(--section-px); }
-  .formCard { padding: 24px; }
+  .formCard { padding: 24px; gap: 16px; }
   .mapWrap { padding: 0 var(--section-px) 40px; }
+
+  /* ADĂUGAT (2026-09-27, pentru mobil): două probleme reale de UX pe
+     telefon:
+     1) font-size sub 16px pe un input/textarea face ca Safari pe iPhone să
+        dea automat zoom pe pagină la focus — enervant și derutant. Aducem
+        la 16px doar pe mobil, ca să nu schimbăm aspectul pe desktop.
+     2) butonul de submit era "align-self: flex-start" (lat doar cât
+        textul) — pe ecran îngust e un buton mic, greu de apăsat cu
+        degetul; pe mobil îl facem lat cât formularul, ca o zonă de tap
+        mai mare. */
+  .input, .textarea { font-size: 16px; }
+  .submitBtn { width: 100%; align-self: stretch; }
 }

@@ -11,25 +11,33 @@
   100% { background-position: 0% 50%; }
 }
 
-/* ══ HERO ══════════════════════════════════════ */
+/* ══ HERO ══════════════════════════════════════
+   SCHIMBAT (2026-09-27): nu mai e video de fundal + overlay navy închis —
+   acum e o imagine (placeholder, vezi HERO_IMAGE din HomeClient.jsx) peste
+   un fundal verde-albastru FOARTE pal (gradient discret, ca în poza de
+   referință trimisă de user), cu un overlay alb semi-transparent peste
+   imagine ca să rămână același ton pal indiferent ce imagine pui acolo.
+   Fundalul fiind acum deschis la culoare, textele din hero (titlu, sub,
+   badge, stats, buton outline) au fost schimbate din alb/deschis în
+   navy/verde închis, altfel ar fi ilizibile. ═══════════════════════ */
 .hero {
-  display: flex;
- flex-direction: row;
-  align-items: center;
-  justify-content: center;
+  display: block;
   width: 100%;
-  min-height: 82vh;
-  background: transparent;
+  background: linear-gradient(135deg, #EAF7F0 0%, #EDF4FB 55%, #F1FAF4 100%);
   position: relative;
   overflow: hidden;
 }
-.heroBgVideo {
-  position: absolute;
-  top: 0;
-  left: 0;
+
+.heroBgImage {
+  /* SCHIMBAT (2026-09-27): imaginea nu mai e absolută + object-fit peste o
+     cutie de înălțime fixă (asta fie o tăia cu "cover", fie lăsa spații
+     goale lateral cu "contain") — acum e o imagine normală, lățime 100%,
+     înălțime automată, deci se întinde pe TOATĂ lățimea ecranului, complet
+     necropată, și secțiunea .hero își ia înălțimea exact după imagine. */
+  display: block;
   width: 100%;
-  height: 100%;
-  object-fit: cover;
+  height: auto;
+  position: relative;
   z-index: 0;
   pointer-events: none;
 }
@@ -37,12 +45,11 @@
 .heroOverlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(
-    135deg,
-    rgba(15, 42, 82, 0.80) 0%,
-    rgba(26, 63, 122, 0.70) 50%,
-   rgba(15, 42, 82, 0.80)100%
-  );
+  /* SCHIMBAT (2026-09-27): scos overlay-ul alb semi-transparent — la
+     cererea userului, spăla prea tare imaginea din hero și nu se mai
+     vedea clar. Div-ul rămâne (îl poți refolosi ulterior), dar nu mai
+     desenează nimic peste imagine. */
+  background: transparent;
   z-index: 1;
 }
 
@@ -51,7 +58,7 @@
   position: absolute;
   width: 500px; height: 500px;
   border-radius: 50%;
-  background: rgba(28,199,90,0.15);
+  background: rgba(28,199,90,0.10);
   filter: blur(100px);
   top: -150px; left: -150px;
   z-index: 0;
@@ -65,15 +72,27 @@
 }
 
 .heroLeft {
+  /* SCHIMBAT (2026-09-27): .hero nu mai are o înălțime fixă (ia acum
+     înălțimea imaginii, vezi .heroBgImage) — .heroLeft e poziționat
+     absolut peste toată zona imaginii, ca titlul să rămână suprapus peste
+     ea, indiferent de înălțimea rezultată.
+     SCHIMBAT (2026-09-27): mutat mai spre stânga — padding-left redus
+     separat de restul laturilor (era padding: 80px var(--section-px) pe
+     toate laturile). AICI modifici tu cât de aproape de margine vrei
+     titlul: scade fracția (chiar 0) ca să-l apropii mai mult de marginea
+     ecranului, sau mărește-o ca să-l depărtezi. */
+  position: absolute;
+  inset: 0;
   width: 100%;
   max-width: 1100px;
-  padding: 80px var(--section-px);
+  padding: 80px var(--section-px) 80px calc(var(--section-px) * 0.35);
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
-  text-align: center;
-  position: relative;
+  /* SCHIMBAT (2026-09-27): titlul mutat mai spre stânga — era centrat
+     (align-items/text-align: center), acum e aliniat la stânga. */
+  align-items: flex-start;
+  text-align: left;
   z-index: 1;
   margin: 0 auto;
 }
@@ -83,12 +102,12 @@
   align-items: center;
   gap: 7px;
   padding: 7px 16px;
-  background: rgba(194,237,208,0.2);
-  border: 1px solid rgba(125,217,160,0.5);
+  background: rgba(40,199,90,0.12);
+  border: 1px solid rgba(26,138,60,0.3);
   border-radius: 20px;
   font-size: 12px;
-  font-weight: 500;
-  color: #7DD9A0;
+  font-weight: 600;
+  color: #1A8A3C;
   margin-bottom: 24px;
   width: fit-content;
 }
@@ -99,17 +118,17 @@
   font-weight: 400;
   line-height: 1.12;
 
-  color: #fff;
+  color: #0F2A52;
 
   margin-bottom: 24px;
 
   max-width: 900px;
 }
-.heroTitle span { color: #28C75A; }
+.heroTitle span { color: #1A8A3C; }
 
 .heroSub {
   font-size: 18px;
-  color: var(--gray-100);
+  color: #475569;
 
   line-height: 1.9;
 
@@ -142,11 +161,11 @@
 .btnGreen:hover { background: var(--green-dark); }
 
 .btnOutline {
-  background: rgba(255,255,255,0.12);
-  color: #fff;
+  background: rgba(15,42,82,0.04);
+  color: #0F2A52;
   padding: 13px 26px;
   border-radius: var(--r-md);
-  border: 1px solid rgba(255,255,255,0.35);
+  border: 1px solid rgba(15,42,82,0.25);
   font-size: 14px;
   font-weight: 500;
   display: inline-flex;
@@ -158,8 +177,8 @@
   font-family: var(--font-sans);
 }
 .btnOutline:hover {
-  background: rgba(255,255,255,0.22);
-  border-color: rgba(255,255,255,0.6);
+  background: rgba(15,42,82,0.09);
+  border-color: rgba(15,42,82,0.4);
 }
 
 .heroStats {
@@ -172,19 +191,18 @@
   gap: 56px;
   margin-top: 50px;
   padding-top: 32px;
-  border-top: 1px solid rgba(255,255,255,0.15);
+  border-top: 1px solid rgba(15,42,82,0.12);
 }
 .statNum {
   font-family: var(--font-serif);
   font-size: 28px;
-  color: #28C75A;
+  color: #1A8A3C;
 }
 .statLbl {
   font-size: 14px;
-  color: var(--gray-100);
+  color: #64748b;
   margin-top: 2px;
 }
-
 
 
 
@@ -339,8 +357,14 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #7DD9A0;
   margin-bottom: 16px;
+  overflow: hidden;
+}
+
+.fIconImg {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
 }
 
 .fTitle { font-size: 15px; font-weight: 600; color: #fff; margin-bottom: 8px; }
@@ -487,6 +511,296 @@
   transition: .25s ease;
 }
 
+/* ══════════════════════════════════════════════════════════════
+   ADĂUGATE (2026-09-27): 5 secțiuni noi pe Home, sub Hero — Services
+   (teaser), Our Mission, Expertise (static), About the Company (stats),
+   Figures. Toate STATICE (conținutul e în translations, nu Firebase).
+   Titlurile secțiunilor reutilizează același stil (serif navy + liniuță
+   verde dedesubt), definit o singură dată aici.
+   ══════════════════════════════════════════════════════════════ */
+
+.homeSectionTitle {
+  font-family: var(--font-serif);
+  font-size: 34px;
+  font-weight: 400;
+  color: var(--navy);
+  text-align: center;
+  margin: 0;
+}
+
+.homeSectionUnderline {
+  width: 64px;
+  height: 3px;
+  background: var(--green);
+  border-radius: 2px;
+  margin: 18px auto 0;
+}
+
+.homeSectionTitleLight {
+  font-family: var(--font-serif);
+  font-size: 34px;
+  font-weight: 400;
+  color: #fff;
+  text-align: center;
+  margin: 0;
+}
+
+.homeSectionUnderlineLight {
+  width: 64px;
+  height: 3px;
+  background: #7DD9A0;
+  border-radius: 2px;
+  margin: 18px auto 0;
+}
+
+/* ── SERVICES (teaser) ──
+   REVENIT (2026-09-27): grid de 4 carduri (cerc-iconiță sus, titlu
+   dedesubt) — conform screenshot-ului trimis de user. Pagina /services
+   păstrează propria listă verticală cu descrieri (vezi
+   app/services/page.module.css) — cele două secțiuni NU mai sunt identice
+   ca layout, doar conținutul (cele 4 servicii) e același. */
+.homeServicesSection {
+  background: #fff;
+  padding: var(--section-py) var(--section-px);
+}
+
+.homeServicesGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+  max-width: 1100px;
+  margin: 44px auto 0;
+}
+
+.homeServiceItem {
+  background: #F8FAFC;
+  border: 1px solid #E8EDF5;
+  border-radius: var(--r-lg);
+  padding: 32px 18px;
+  text-align: center;
+  transition: transform var(--t-fast), box-shadow var(--t-fast);
+}
+.homeServiceItem:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 28px rgba(15,42,82,0.1);
+}
+
+.homeServiceIconCircle {
+  width: 78px;
+  height: 78px;
+  border-radius: 50%;
+  border: 2px solid var(--green);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--green);
+  margin: 0 auto 18px;
+  background: #fff;
+  overflow: hidden;
+}
+
+/* Imagine (pictogramă/logo de la designer) în cerc — object-fit: contain
+   ca imaginea să nu fie tăiată/deformată, indiferent de fișierul primit. */
+.homeServiceIconImg {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.homeServiceItemTitle {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--navy);
+  line-height: 1.35;
+}
+
+/* ── OUR MISSION ── */
+.missionSection {
+  position: relative;
+  min-height: 420px;
+  display: flex;
+  align-items: center;
+  background-color: #0F2A52;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  overflow: hidden;
+}
+
+.missionOverlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, rgba(10,20,40,0.72) 0%, rgba(10,20,40,0.42) 60%, rgba(10,20,40,0.2) 100%);
+  pointer-events: none;
+}
+
+.missionInner {
+  position: relative;
+  z-index: 1;
+  max-width: 620px;
+  padding: 60px var(--section-px);
+}
+
+.missionTitle {
+  font-family: var(--font-serif);
+  font-size: 42px;
+  font-weight: 400;
+  color: #fff;
+  margin-bottom: 20px;
+}
+
+.missionText {
+  font-size: 16px;
+  color: rgba(255,255,255,0.9);
+  line-height: 1.9;
+}
+
+/* ── EXPERTISE (static) ── */
+.expertiseSection {
+  background: #fff;
+  padding: var(--section-py) var(--section-px);
+}
+
+.expertiseGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 32px;
+  max-width: 1100px;
+  margin: 48px auto 0;
+}
+
+.expertiseCol h3 {
+  font-size: 14px;
+  font-weight: 800;
+  color: var(--navy);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin: 0 0 16px;
+}
+
+.expertiseCol ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.expertiseCol li {
+  font-size: 14px;
+  color: #64748b;
+  line-height: 1.5;
+}
+
+/* ── ABOUT THE COMPANY (stats) ── */
+.aboutCompanySection {
+  position: relative;
+  padding: 80px var(--section-px);
+  background-color: #0F2A52;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  overflow: hidden;
+}
+
+.aboutCompanyOverlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(15,42,82,0.78), rgba(26,138,60,0.55));
+  pointer-events: none;
+}
+
+.aboutCompanyInner {
+  position: relative;
+  z-index: 1;
+}
+
+.aboutCompanyGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  max-width: 800px;
+  margin: 40px auto 0;
+}
+
+.aboutStatCard {
+  background: rgba(255,255,255,0.96);
+  border-radius: var(--r-lg);
+  padding: 30px 16px;
+  text-align: center;
+}
+
+.aboutStatIcon {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 10px;
+}
+
+.aboutStatIconImg {
+  width: 30%;
+  height: 30%;
+  object-fit: contain;
+}
+
+.aboutStatNum {
+  font-family: var(--font-serif);
+  font-size: 30px;
+  color: var(--navy);
+}
+
+.aboutStatLabel {
+  font-size: 13px;
+  color: #64748b;
+  margin-top: 4px;
+}
+
+/* ── FIGURES ──
+   SIMPLIFICAT (2026-09-27): de la "tabelul" de 4 coloane × 3 rânduri la un
+   rând simplu de 3 statistici mari (10+ ani experiență, 500+ produse în
+   stoc, 24-48h timp de livrare), la fel ca secțiunea de statistici de pe
+   pagina /about. */
+.figuresSection {
+  background: #F8FAFC;
+  padding: var(--section-py) var(--section-px);
+}
+
+.figuresStatsRow {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  max-width: 900px;
+  margin: 48px auto 0;
+}
+
+.figuresStatCard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 32px 20px;
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 4px 32px rgba(8,26,56,0.08);
+}
+
+.figuresCellNum {
+  font-family: var(--font-serif);
+  font-size: 36px;
+  font-weight: 700;
+  color: #1E8FD9;
+  line-height: 1.2;
+}
+
+.figuresCellLabel {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--navy);
+  margin-top: 8px;
+  line-height: 1.4;
+}
+
 
 @keyframes scrollProducts {
   from {
@@ -501,6 +815,9 @@
 /* ══ RESPONSIVE ══ */
 @media (max-width: 1024px) {
   .featuresGrid { grid-template-columns: repeat(2, 1fr); }
+  .homeServicesGrid { grid-template-columns: repeat(2, 1fr); }
+  .expertiseGrid { grid-template-columns: repeat(2, 1fr); }
+  .aboutCompanyGrid { grid-template-columns: repeat(2, 1fr); }
 }
 
 @media (max-width: 768px) {
@@ -510,17 +827,24 @@
   .productsGrid { grid-template-columns: 1fr; }
   .featuresGrid { grid-template-columns: 1fr 1fr; }
   .heroStats { gap: 20px; }
+  .homeSectionTitle, .homeSectionTitleLight { font-size: 26px; }
+  .missionTitle { font-size: 30px; }
+  .missionInner { max-width: 100%; }
+  /* SCHIMBAT (2026-09-27): pe mobil, padding-ul lateral e mai mic —
+     reducem fracția aplicată pe stânga, ca titlul să nu se lipească de
+     margine pe ecrane mici. */
+  .heroLeft { padding: 60px var(--section-px) 60px calc(var(--section-px) * 0.6); }
 .partnersRow {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 12px;
   max-width: 900px;
- 
+
 }
 .partnersSection{
   .partnersSection {
   background: #fff;
-  
+
   margin: 12px;
   box-shadow: 0 4px 12px rgba(8,26,56,0.55);
 }
@@ -529,6 +853,10 @@
 
 @media (max-width: 480px) {
   .featuresGrid { grid-template-columns: 1fr; }
+  .homeServicesGrid { grid-template-columns: 1fr; }
+  .expertiseGrid { grid-template-columns: 1fr; }
+  .aboutCompanyGrid { grid-template-columns: 1fr; }
+  .figuresStatsRow { grid-template-columns: 1fr; }
   .partnersSection {
   background: #fff;
   padding: 48px var(--section-px);

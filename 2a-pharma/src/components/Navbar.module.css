@@ -1,10 +1,25 @@
+/* SCHIMBAT (2026-09-27): navbar-ul a trecut de la un fundal navy→verde
+   ÎNCHIS la un fundal deschis (verde-albastru pal, aceeași gamă ca hero-ul
+   de pe Home), ca să se potrivească cu logo-ul primit de la designer —
+   acela are un fundal alb/pal "copt" în imagine (scenă decorativă cu
+   hexagoane), și pe fundalul navy-verde închis arăta ca un dreptunghi alb
+   nepotrivit. Pe fundal deschis, marginile logo-ului se contopesc natural.
+   Din această cauză, TOATE culorile de text/iconițe din navbar au trecut
+   de la alb la navy, ca să rămână lizibile pe fundal deschis (linkuri,
+   telefon, search, limbă, hamburger, bottom nav mobil). */
 .nav {
   position: sticky;
   top: 0;
   z-index: 100;
-  background: linear-gradient(135deg, #0F2A52 0%, #1A3F7A 50%, #1A8A3C 100%);
+  background: linear-gradient(135deg, #EAF7F0 0%, #EDF4FB 55%, #F1FAF4 100%);
   box-shadow: 0 2px 10px rgba(15, 23, 42, 0.06);
   transition: box-shadow var(--t-fast);
+  /* ADĂUGAT (2026-09-27): înlocuiește vechiul overflow-x:hidden pus pe
+     html/body (care rupea sticky-ul și ascundea hamburger-ul). Pusă direct
+     pe .nav, "clip" taie doar ce iese din bara asta (ex. .logo cu
+     margin-left negativ) fără să afecteze restul paginii sau
+     position:sticky al altor elemente. */
+  overflow-x: clip;
 }
 
 .nav.scrolled {
@@ -27,6 +42,17 @@
   gap: 10px;
   text-decoration: none;
   flex-shrink: 0;
+  /* SCHIMBAT (2026-09-27): logo-ul (imagine) poate fi acum mai mare decât
+     bara de navigare — "iese" ușor peste marginile ei (vezi height-ul mai
+     mare pe img-ul din Navbar.jsx + overflow:visible aici) pentru claritate
+     și impact vizual mai mare, fără să mărească bara în sine. */
+  height: 100%;
+  overflow: visible;
+  /* SCHIMBAT (2026-09-27): tras complet până la marginea din stânga a
+     barei — anulează exact padding-ul lateral al .inner
+     (calc(-1 * var(--section-px))), indiferent de valoarea lui, ca logo-ul
+     să fie chiar la marginea ecranului, nu doar mai aproape de ea. */
+  margin-left: calc(-1 * var(--section-px));
 }
 
 .logoMark {
@@ -45,7 +71,7 @@
 .logoText {
   font-size: 18px;
   font-weight: 700;
-  color: var(--gray-100);
+  color: var(--navy);
   white-space: nowrap;
 }
 
@@ -60,7 +86,7 @@
 .links a {
   font-size: 18px;
   font-weight: 500;
-  color: var(--gray-100);
+  color: var(--navy);
   text-decoration: none;
   padding: 6px 0;
   border-bottom: 2px solid transparent;
@@ -120,23 +146,23 @@
 }
 
 .langBtn:hover {
-  background: rgba(255, 255, 255, 0.12);
+  background: rgba(15, 42, 82, 0.06);
 }
 
 .langActive {
-  background: rgba(26, 138, 60, 0.35) !important;
+  background: rgba(26, 138, 60, 0.14) !important;
   border: 2px solid #1A8A3C !important;
   border-radius: var(--r-sm);
 }
 
 .langActive .langLabel {
-  color: #fff;
+  color: var(--navy);
 }
 
 .langLabel {
   font-size: 11px;
   font-weight: 700;
-  color: rgba(255, 255, 255, 0.75);
+  color: rgba(15, 42, 82, 0.65);
   letter-spacing: 0.05em;
 }
 
@@ -145,8 +171,8 @@
   display: none;
   align-items: center;
   gap: 6px;
-  background: rgba(255, 255, 255, 0.12);
-  color: white;
+  background: rgba(15, 42, 82, 0.06);
+  color: var(--navy);
   border: none;
   padding: 8px 10px;
   border-radius: 8px;
@@ -228,9 +254,9 @@
   gap: 6px;
   font-size: 13px;
   font-weight: 600;
-  color: var(--gray-100);
+  color: var(--navy);
   padding: 9px 14px;
-  border: 1.5px solid var(--gray-100);
+  border: 1.5px solid var(--navy);
   border-radius: var(--r-md);
   text-decoration: none;
   white-space: nowrap;
@@ -240,6 +266,7 @@
 .phone:hover {
   background: var(--green);
   color: #fff;
+  border-color: var(--green);
 }
 
 /* ── Hamburger ── */
@@ -257,7 +284,7 @@
   display: block;
   width: 24px;
   height: 2.5px;
-  background: #fff;
+  background: var(--navy);
   border-radius: 2px;
 }
 
@@ -334,7 +361,10 @@
   text-decoration: none;
 }
 
-/* ── Bottom Nav ── */
+/* ── Bottom Nav ──
+   SCHIMBAT (2026-09-27): la fel ca .nav, deschis la culoare (aceeași
+   gamă pal verde-albastru) pentru consecvență cu restul header-ului și cu
+   logo-ul — textul/iconițele au trecut de la alb la navy pentru lizibilitate. */
 .bottomNav {
   display: none;
 }
@@ -344,7 +374,7 @@
   position: relative;
   display: flex;
   align-items: center;
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(15, 42, 82, 0.06);
   border-radius: 20px;
   overflow: visible;
   width: 36px;
@@ -355,8 +385,8 @@
 
 .searchWrap.searchOpen {
   width: 220px;
-  background: rgba(255, 255, 255, 0.15);
-  border-color: rgba(255, 255, 255, 0.2);
+  background: rgba(15, 42, 82, 0.08);
+  border-color: rgba(15, 42, 82, 0.12);
 }
 
 .searchBtn {
@@ -365,7 +395,7 @@
   min-width: 36px;
   border: none;
   background: transparent;
-  color: #fff;
+  color: var(--navy);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -377,7 +407,7 @@
 .searchInput {
   border: none;
   background: transparent;
-  color: #fff;
+  color: var(--navy);
   font-size: 13px;
   font-family: var(--font-sans);
   outline: none;
@@ -387,7 +417,7 @@
 }
 
 .searchInput::placeholder {
-  color: rgba(255, 255, 255, 0.5);
+  color: rgba(15, 42, 82, 0.45);
 }
 
 .searchOpen .searchInput {
@@ -417,7 +447,7 @@
   text-decoration: none;
   transition: background 0.15s ease;
   border-bottom: 1px solid var(--gray-50);
-  max-width: 600px; 
+  max-width: 600px;
 }
 
 .dropdownItem:last-child {
@@ -611,7 +641,7 @@
   position: relative;
   display: flex;
   align-items: center;
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(15, 42, 82, 0.06);
   border-radius: 20px;
   overflow: visible;
   width: 36px;
@@ -628,9 +658,9 @@
     width: 100vw !important;
     display: flex !important;
     z-index: 99999 !important;
-    background: linear-gradient(135deg, #0F2A52 0%, #1A3F7A 50%, #1A8A3C 100%);
-    border-top: 1px solid rgba(255, 255, 255, 0.08);
-    box-shadow: 0 -4px 20px rgba(15, 42, 82, 0.15);
+    background: linear-gradient(135deg, #EAF7F0 0%, #EDF4FB 55%, #F1FAF4 100%);
+    border-top: 1px solid rgba(15, 42, 82, 0.08);
+    box-shadow: 0 -4px 20px rgba(15, 42, 82, 0.1);
     padding: 4px 0 max(4px, env(safe-area-inset-bottom));
   }
 
@@ -644,7 +674,7 @@
     min-width: 0;
     padding: 4px 2px;
     text-decoration: none;
-    color: rgba(255, 255, 255, 0.5);
+    color: rgba(15, 42, 82, 0.5);
     transition: color 0.2s;
     overflow: hidden;
   }
@@ -663,7 +693,7 @@
   .bottomNavLabel {
     font-size: 9px;
     font-weight: 500;
-    color: rgba(255, 255, 255, 0.5);
+    color: rgba(15, 42, 82, 0.5);
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -672,17 +702,17 @@
   }
 
   .bottomNavActive {
-    color: #fff;
+    color: var(--navy);
   }
 
   .bottomNavActive .bottomNavIcon {
-    background: rgba(26, 138, 60, 0.35);
-    color: #fff;
+    background: rgba(26, 138, 60, 0.16);
+    color: var(--navy);
   }
 
   .bottomNavActive .bottomNavLabel {
     font-weight: 700;
-    color: #fff;
+    color: var(--navy);
   }
 }
 
