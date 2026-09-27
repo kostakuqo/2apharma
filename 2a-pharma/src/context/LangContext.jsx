@@ -11,9 +11,9 @@ export const translations = {
     },
     hero: {
       badge: "Pajisje Mjekësore të Certifikuara",
-      title1: "Cilësi,",
-      title2: "Eficiencë",
-      title3: "dhe Shëndet",
+      title1: "Distributori",
+      title2: "juaj",
+      title3: "Farmaceutik",
       sub: "Furnizuesi juaj i besueshëm i pajisjeve mjekësore profesionale. Produkte të certifikuara për klinika, spitale dhe farmaci.",
       btnProducts: "Shiko Produktet",
       btnContact: "Na Kontaktoni",
@@ -85,7 +85,7 @@ export const translations = {
       servicesTitle: "Shërbimet",
       mission: {
         title: "Misioni Ynë",
-        text: "Misioni ynë është të arrijmë cilësi, etikë dhe efikasitet në çdo aktivitet",
+        text: "Jemi të angazhuar të furnizojmë pajisje mjekësore të certifikuara dhe të besueshme në të gjithë Shqipërinë, të mbështetura nga ekspertizë teknike në çdo hap — nga zgjedhja dhe instalimi deri te mirëmbajtja afatgjatë.",
       },
       expertise: {
         title: "Ekspertiza dhe Gama Jonë e Shërbimeve",
@@ -99,7 +99,7 @@ export const translations = {
       aboutCompany: {
         title: "Rreth Kompanisë",
         stats: [
-          { num: "1000+", label: "Produkte" },
+          { num: "500+", label: "Produkte" },
           { num: "50+", label: "Partnerë" },
           { num: "10+", label: "Vjet Përvojë" },
         ],
@@ -134,9 +134,9 @@ export const translations = {
     },
     hero: {
       badge: "Certified Medical Equipment",
-      title1: "Quality,",
-      title2: "Efficiency",
-      title3: "and Health",
+      title1: "Your",
+      title2: "Pharmaceutical",
+      title3: "Distributor",
       sub: "Your trusted supplier of professional medical equipment. Certified products for clinics, hospitals and pharmacies.",
       btnProducts: "View Products",
       btnContact: "Contact Us",
@@ -252,9 +252,9 @@ export const translations = {
     },
     hero: {
       badge: "Apparecchiature Mediche Certificate",
-      title1: "Qualità,",
-      title2: "Efficienza",
-      title3: "e Salute",
+      title1: "Il Vostro",
+      title2: "Distributore",
+      title3: "Farmaceutico",
       sub: "Il tuo fornitore affidabile di apparecchiature mediche professionali. Prodotti certificati per cliniche, ospedali e farmacie.",
       btnProducts: "Vedi Prodotti",
       btnContact: "Contattaci",

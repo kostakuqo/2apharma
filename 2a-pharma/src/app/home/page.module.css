@@ -823,7 +823,7 @@
 @media (max-width: 768px) {
   .hero { grid-template-columns: 1fr; }
   .heroRight { display: none; }
-  .heroTitle { font-size: 30px; }
+  .heroTitle { font-size: 20px; }
   .productsGrid { grid-template-columns: 1fr; }
   .featuresGrid { grid-template-columns: 1fr 1fr; }
   .heroStats { gap: 20px; }
