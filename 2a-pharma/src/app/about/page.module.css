@@ -282,6 +282,17 @@
   border-radius: 16px;
   margin-bottom: 20px;
   transition: transform 0.28s ease;
+  overflow: hidden;
+}
+
+/* ADĂUGAT (2026-09-27): imaginea de icoană din interiorul .cardIcon
+   (Misioni / Vizioni / Vlerat / Arritjet) — dimensionată să încapă în
+   cercul/pătratul de 60x60 al lui .cardIcon, indiferent de dimensiunea
+   reală a fișierului png/svg. */
+.cardIconImg {
+  width: 52px;
+  height: 52px;
+  object-fit: contain;
 }
 
 /* icon background diferit per card */
@@ -451,12 +462,14 @@
   .hero { padding: 60px var(--section-px) 70px; }
   .heroTitle { font-size: 30px; }
   .heroSub { font-size: 15px; }
+  .heroStory { margin-top: 22px; padding-top: 22px; gap: 14px; }
+  .heroStoryP { font-size: 14px; line-height: 1.75; }
   .statsRow { grid-template-columns: 1fr; }
   .statNum { font-size: 34px; }
   .content { padding: 56px var(--section-px); }
   .sectionTitle { font-size: 28px; }
   .card { padding: 26px; }
-  .trustBanner { padding: 50px var(--section-px); }
+  .trustBanner { padding: 50px var(--section-px); margin: 12px; }
   .trustTitle { font-size: 26px; }
   .galleryContent { padding: 56px var(--section-px); }
   .galleryGrid { grid-template-columns: 1fr; }
