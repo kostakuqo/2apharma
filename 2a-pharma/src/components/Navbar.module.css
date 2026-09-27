@@ -14,7 +14,7 @@
   background: linear-gradient(135deg, #EAF7F0 0%, #EDF4FB 55%, #F1FAF4 100%);
   box-shadow: 0 2px 10px rgba(15, 23, 42, 0.06);
   transition: box-shadow var(--t-fast);
-  border-bottom: 10px solid #014697;
+  border-bottom: 2px solid #014697;
 
   /* ADĂUGAT (2026-09-27): înlocuiește vechiul overflow-x:hidden pus pe
      html/body (care rupea sticky-ul și ascundea hamburger-ul). Pusă direct

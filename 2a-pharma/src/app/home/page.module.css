@@ -562,7 +562,7 @@
 .homeServicesSection {
   background: #fff;
   padding: var(--section-py) var(--section-px);
-   border-top: 10px solid #014697;
+   border-top: 2px solid #014697;
 }
 
 .homeServicesGrid {

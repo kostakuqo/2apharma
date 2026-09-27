@@ -1,61 +1,12 @@
-import ProductDetailClient from "./ProductDetailClient";
-import { getProductsServer, getProductByIdServer } from "@/lib/getProductsServer";
+// DEZACTIVAT (2026-09-27): pagina de detalii produs a fost dezactivată la
+// cererea userului — orice cerere spre /products/orice-id redirectionează
+// acum direct pe Home, în loc să deschidă pagina de produs.
+// (generateStaticParams / generateMetadata / ProductDetailClient nu mai sunt
+// folosite aici — dacă vrei să reactivezi pagina, ai nevoie de versiunea
+// veche a fișierului, cu importurile getProductsServer / getProductByIdServer
+// și ProductDetailClient.)
+import { redirect } from "next/navigation";
 
-const BASE_URL = "https://kostakuqo.github.io/2apharma";
-
-export async function generateStaticParams() {
-  try {
-    const products = await getProductsServer();
-    return products.map((p) => ({
-      id: p.id.toString(),
-    }));
-  } catch (e) {
-    console.error("generateStaticParams failed:", e);
-    return [];
-  }
-}
-
-export async function generateMetadata({ params }) {
-  const { id } = await params;
-
-  try {
-    const product = await getProductByIdServer(id);
-
-    if (!product) {
-      return {
-        title: "Produkt | 2A Pharma",
-        description: "Detaje të produktit mjekësor — 2A Pharma Shqipëri",
-      };
-    }
-
-    const title = `${product.name_al} | 2A Pharma`;
-    const description =
-      product.desc_al ||
-      `${product.name_al} - ${product.category_al}. Pajisje mjekësore profesionale nga 2A Pharma Shqipëri.`;
-
-    return {
-      title,
-      description,
-      alternates: {
-        canonical: `${BASE_URL}/products/${id}`,
-      },
-      openGraph: {
-        title,
-        description,
-        url: `${BASE_URL}/products/${id}`,
-        images: product.image_url ? [product.image_url] : undefined,
-      },
-    };
-  } catch (e) {
-    console.error("generateMetadata failed:", e);
-    return {
-      title: "Produkt | 2A Pharma",
-      description: "Detaje të produktit mjekësor — 2A Pharma Shqipëri",
-    };
-  }
-}
-
-export default async function ProductDetailPage({ params }) {
-  const { id } = await params;
-  return <ProductDetailClient id={id} />;
+export default function ProductDetailPage() {
+  redirect("/");
 }

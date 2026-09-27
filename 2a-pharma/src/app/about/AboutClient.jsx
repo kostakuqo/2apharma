@@ -23,8 +23,8 @@ const STATS = [
 
 const CARDS = {
   al: [
-    { title: "Misioni Ynë", text: "Të ofrojmë pajisje mjekësore të cilësisë së lartë për institucionet shëndetësore në Shqipëri, duke kontribuar në përmirësimin e kujdesit shëndetësor." },
-    { title: "Vizioni Ynë", text: "Të jemi furnizuesi kryesor dhe më i besueshëm i pajisjeve mjekësore në rajon, i njohur për cilësinë dhe shërbimin e shkëlqyer." },
+    { title: "Misioni Ynë", text: "Të ofrojmë ilace dhe pajisje mjekësore të cilësisë së lartë për pacientet dhe institucionet shëndetësore në Shqipëri, duke kontribuar në përmirësimin e kujdesit shëndetësor." },
+    { title: "Vizioni Ynë", text: "Të jemi furnizuesi kryesor dhe më i besueshëm i ilaceve dhe mjekësore në rajon." },
     { title: "Vlerat Tona", text: "Cilësia, integriteti dhe dedikimi ndaj klientëve janë themelet e biznesit tonë. Çdo produkt që ofrojmë kalon standarde strikte kontrolli." },
     { title: "Arritjet Tona", text: "Mbi 10 vjet eksperiencë, mbi 500 produkte të certifikuara dhe bashkëpunim me institucionet kryesore shëndetësore të Shqipërisë." },
   ],
@@ -47,9 +47,9 @@ const CARDS = {
 // împărțit pe paragrafe (fiecare element din array = un <p>).
 const HERO_STORY = {
   al: [
-    "2A Pharma u themelua në vitin 2012 dhe specializohet në shpërndarjen e materialeve kirurgjikale, fijeve kirurgjikale (sutura), seteve mjekësore dhe pajisjeve të tjera spitalore. Aktiviteti ynë kryesor është furnizimi i spitaleve, klinikave dhe laboratorëve mjekësorë me produkte dhe pajisje mjekësore me cilësi të lartë.",
-    "Objektivi ynë është të bëhemi kombinimi kryesor i Cilësisë dhe Inovacionit në sektorin e kujdesit shëndetësor, të mbështetur nga një ekip me përvojë të gjerë dhe ekspertizë në mjekësi, si dhe në prokurimin dhe furnizimin e materialeve spitalore. Bashkëpunojmë me prodhues dhe furnitorë kryesorë evropianë për t'u ofruar klientëve tanë produkte me cilësi të lartë, të dorëzuara në mënyrë efikase, të besueshme dhe në kohë.",
-    "Vizioni ynë bazohet në menaxhimin total të cilësisë, besueshmërinë dhe profesionalizmin. Ne synojmë të përmbushim dhe të kalojmë pritshmëritë e klientëve tanë duke ofruar çmime konkurruese dhe produkte të certifikuara, me cilësi të lartë, në përputhje me standardet e kërkuara. Në 2A Pharma, jemi plotësisht të angazhuar ndaj biznesit tonë dhe ofrimit të zgjidhjeve gjithëpërfshirëse për të përmbushur nevojat e të gjitha specialiteteve kirurgjikale.",
+    "2A Pharma u themelua në vitin 2012 dhe specializohet në shpërndarjen e ilaceve spitalore,pajisjeve dhe materialeve kirurgjikale, fijeve kirurgjikale, seteve mjekësore dhe pajisjeve të tjera spitalore. Aktiviteti ynë kryesor është furnizimi i spitaleve, klinikave dhe laboratorëve mjekësorë me produkte dhe pajisje mjekësore me cilësi të lartë.",
+    "Objektivi ynë është të bëhemi kombinimi kryesor i Cilësisë dhe Inovacionit në sektorin e kujdesit shëndetësor, të mbështetur nga një ekip me përvojë të gjerë dhe ekspertizë në mjekësi, si dhe në prokurimin dhe furnizimin e ilaçeve dhe materialeve spitalore. Bashkëpunojmë me prodhues dhe furnitorë kryesorë evropianë për t'u ofruar klientëve tanë produkte me cilësi të lartë, të dorëzuara në mënyrë efikase, të besueshme dhe në kohë.",
+    "Vizioni ynë bazohet në menaxhimin total të cilësisë, besueshmërinë dhe profesionalizmin. Ne synojmë të përmbushim dhe të kalojmë pritshmëritë e klientëve tanë duke ofruar çmime konkurruese dhe produkte të certifikuara, me cilësi të lartë, në përputhje me standardet e kërkuara. Në 2A Pharma, jemi plotësisht të angazhuar ndaj biznesit tonë dhe ofrimit të zgjidhjeve gjithëpërfshirëse për të përmbushur nevojat e pacienteve dhe strukturave shendetesore.",
   ],
   en: [
     "2A Pharma was established in 2012 and specializes in the distribution of surgical materials, sutures, medical sets, and other hospital equipment. Our core activity is the supply of hospitals, clinics, and medical laboratories with high-quality medical products and equipment.",

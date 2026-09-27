@@ -45,7 +45,7 @@ const LANGS = [
 const NAV_ITEMS = [
   { href: "/", label: "home", Icon: Home },
   { href: "/about", label: "about", Icon: Info },
-  { href: "/products", label: "products", Icon: Package },
+  // { href: "/products", label: "products", Icon: Package },
   { href: "/services", label: "services", Icon: Wrench },
   { href: "/partners", label: "partners", Icon: Handshake },
   { href: "/events-news", label: "eventsNews", Icon: Newspaper },
