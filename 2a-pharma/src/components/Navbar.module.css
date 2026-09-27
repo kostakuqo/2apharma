@@ -14,12 +14,21 @@
   background: linear-gradient(135deg, #EAF7F0 0%, #EDF4FB 55%, #F1FAF4 100%);
   box-shadow: 0 2px 10px rgba(15, 23, 42, 0.06);
   transition: box-shadow var(--t-fast);
+  border-bottom: 10px solid #014697;
+
   /* ADĂUGAT (2026-09-27): înlocuiește vechiul overflow-x:hidden pus pe
      html/body (care rupea sticky-ul și ascundea hamburger-ul). Pusă direct
      pe .nav, "clip" taie doar ce iese din bara asta (ex. .logo cu
      margin-left negativ) fără să afecteze restul paginii sau
-     position:sticky al altor elemente. */
+     position:sticky al altor elemente.
+     CORECTAT (2026-09-27): fără overflow-y explicit, specificația CSS
+     transformă automat overflow-y în "auto" ori de câte ori overflow-x nu e
+     "visible" — asta transforma .nav într-un container care taie/scrolează
+     și pe verticală, ascunzând dropdown-ul de limbă (.langDropdown, care e
+     absolute și iese sub bară) pe iPhone/Safari. Punem overflow-y: visible
+     explicit, ca să păstrăm doar tăierea orizontală dorită. */
   overflow-x: clip;
+  overflow-y: visible;
 }
 
 .nav.scrolled {

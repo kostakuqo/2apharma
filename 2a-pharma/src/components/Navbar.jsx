@@ -45,7 +45,7 @@ const LANGS = [
 const NAV_ITEMS = [
   { href: "/", label: "home", Icon: Home },
   { href: "/about", label: "about", Icon: Info },
-  // { href: "/products", label: "products", Icon: Package },
+  { href: "/products", label: "products", Icon: Package },
   { href: "/services", label: "services", Icon: Wrench },
   { href: "/partners", label: "partners", Icon: Handshake },
   { href: "/events-news", label: "eventsNews", Icon: Newspaper },
@@ -109,6 +109,17 @@ export default function Navbar() {
     document.addEventListener("mousedown", handleClick);
     return () => document.removeEventListener("mousedown", handleClick);
   }, []);
+
+  // ADĂUGAT (2026-09-27): pe iPhone/Safari, la tap pe un link din meniul
+  // mobil, navigarea (Next.js router) poate "depăși" apelul lui
+  // onClick={() => setMenuOpen(false)} de pe Link înainte ca acesta să apuce
+  // să ruleze complet — meniul rămâne deschis peste pagina nouă. Închidem
+  // meniul (și search-ul) automat de fiecare dată când se schimbă ruta,
+  // indiferent de onClick, ca plasă de siguranță pentru toate browserele.
+  useEffect(() => {
+    setMenuOpen(false);
+    setSearchOpen(false);
+  }, [pathname]);
 
   const isActive = (href) =>
     href === "/" ? pathname === "/" : pathname.startsWith(href);

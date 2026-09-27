@@ -46,13 +46,13 @@ export default function Footer() {
         </div>
 
         <div className={styles.cols}>
-          <div className={styles.col}>
+          {/* <div className={styles.col}>
             <div className={styles.colTitle}>{tx.nav.products}</div>
             <Link href="/products">Diagnostics</Link>
             <Link href="/products">Respiratory</Link>
             <Link href="/products">Consumables</Link>
             <Link href="/products">Mobility</Link>
-          </div>
+          </div> */}
 
           <div className={styles.col}>
             <div className={styles.colTitle}>Company</div>
