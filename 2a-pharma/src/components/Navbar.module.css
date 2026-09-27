@@ -309,6 +309,13 @@
   left: 0;
   right: 0;
   bottom: 0;
+  /* CORECTAT (2026-09-27): fără overflow-x explicit, spec-ul CSS transformă
+     automat overflow-x în "auto" doar pentru că overflow-y e "auto" —
+     exact același bug care a rupt sticky-ul pe .nav/body înainte. De data
+     asta a făcut ca .mobileMenu să pornească scrolat orizontal pe iPhone
+     (confirmat din screenshot: tot textul din meniu era tăiat ~35-40px la
+     stânga). "overflow-x: hidden" explicit anulează acea conversie. */
+  overflow-x: hidden;
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
   z-index: 100000; /* peste bottomNav (99999), cât timp meniul e deschis */
