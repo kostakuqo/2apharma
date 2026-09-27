@@ -4,7 +4,7 @@ import LayoutShell from "../components/LayoutShell.jsx";
 
 export const metadata = {
   title: "2A Pharma",
-  description: "Pajisje Mjekësore Profesionale",
+  description: "Pharma Distribution Company",
 };
 
 export default function RootLayout({ children }) {

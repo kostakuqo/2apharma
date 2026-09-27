@@ -74,6 +74,17 @@ body {
   flex-direction: column;
   min-height: 100vh;
   margin: 0;
+  /* RE-ADĂUGAT (2026-09-27), corect de data asta: pe iPhone, orice element
+     cu margine negativă sau lățime puțin peste 100% (ex. .logo din Navbar)
+     creează un scroll orizontal fantomă — pagina "sare" stânga-dreapta la
+     scroll/tap. Prima oară am pus doar overflow-x:hidden, fără overflow-y,
+     și asta a rupt position:sticky (bara de navigare) — spec-ul CSS
+     transformă automat overflow-y în "auto" quando overflow-x nu e
+     "visible", iar acel "auto" pe <body> a stricat sticky-ul.
+     Cu overflow-y: visible explicit aici, evităm exact acea conversie:
+     tăiem doar orizontal, sticky-ul rămâne intact. */
+  overflow-x: clip;
+  overflow-y: visible;
 }
 
 a { text-decoration: none; color: inherit; }

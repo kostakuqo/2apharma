@@ -46,7 +46,7 @@ export const translations = {
     },
     about: {
       label: "Rreth Nesh", title: "Kush Jemi Ne",
-      sub: "Kompani lider në furnizimin e pajisjeve mjekësore profesionale në Shqipëri.",
+      sub: "Kompani lider në furnizimin e ilaceve spitalore dhe pajisjeve mjekësore profesionale në Shqipëri.",
     },
     // ── STATIK — pagina Shërbimet (/services) ──
     services: {
@@ -167,7 +167,7 @@ export const translations = {
     },
     about: {
       label: "About Us", title: "Who We Are",
-      sub: "Leading company in supplying professional medical equipment in Albania.",
+      sub: "A leading company in the supply of hospital medications and professional medical equipment in Albania.",
     },
     // ── STATIC — Services page (/services) ──
     services: {
@@ -283,7 +283,7 @@ export const translations = {
     },
     about: {
       label: "Chi Siamo", title: "Chi Siamo",
-      sub: "Azienda leader nella fornitura di apparecchiature mediche professionali in Albania.",
+      sub: "Azienda leader nella fornitura di farmaci ospedalieri e apparecchiature mediche professionali in Albania",
     },
     // ── STATICA — pagina Servizi (/services) ──
     services: {
