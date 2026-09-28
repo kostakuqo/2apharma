@@ -4,7 +4,7 @@ import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useLang } from "../context/LangContext.jsx";
-import { Home, Info, Package, Wrench, Handshake, Newspaper, Phone, Search, X } from "lucide-react";
+import { Home, Info, Package, Wrench, Handshake, Newspaper, Phone, Search, X, Warehouse, ShieldAlert } from "lucide-react";
 import { getProducts } from "../lib/getProducts.js";
 import { getSiteSettings } from "../lib/getSiteSettings.js";
 import styles from "./Navbar.module.css";
@@ -42,11 +42,32 @@ const LANGS = [
 // (Newspaper) — cerute de user. Rutele lor (app/services, app/events-news)
 // și traducerile (tx.nav.services / tx.nav.eventsNews, plus conținutul
 // static tx.services / tx.eventsNews) au fost adăugate în LangContext.jsx.
+//
+// SCHIMBAT (2026-09-28): "warehousing" și "pharmacovigilance" NU mai sunt
+// item-uri separate în header — la cererea userului, ele intră acum ca
+// `children` sub "services": pe desktop apare un dropdown la hover peste
+// "Services", pe mobil (meniul hamburger) se deschide/închide la click.
+//
+// SCHIMBAT (2026-09-28, update): la cererea userului, dropdown-ul de
+// "Services" nu mai arată doar 3 rânduri fixe (Services / Warehousing /
+// Pharmacovigilance) — acum listează TOATE cele 6 servicii din
+// tx.services.items (aceeași listă folosită pe /services și pe Home), ca
+// să se vadă toate din meniu. De-asta lista de mai jos nu mai e un array
+// static: e construită în componentă, din tx.services.items, la fiecare
+// randare (ca să respecte limba curentă). Cele care au pagină proprie
+// (Warehousing, Pharmacovigilance) duc acolo; restul duc spre /services
+// (item.href din LangContext decide asta, la fel ca la ServicesGrid).
+function getServiceItemIcon(item) {
+  if (item.href === "/warehousing") return Warehouse;
+  if (item.href === "/pharmacovigilance") return ShieldAlert;
+  return Wrench;
+}
+
 const NAV_ITEMS = [
   { href: "/", label: "home", Icon: Home },
   { href: "/about", label: "about", Icon: Info },
   // { href: "/products", label: "products", Icon: Package },
-  { href: "/services", label: "services", Icon: Wrench },
+  { href: "/services", label: "services", Icon: Wrench, hasServicesDropdown: true },
   { href: "/partners", label: "partners", Icon: Handshake },
   { href: "/events-news", label: "eventsNews", Icon: Newspaper },
   { href: "/contact", label: "contact", Icon: Phone },
@@ -61,6 +82,17 @@ export default function Navbar() {
   const pathname = usePathname();
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  // ADĂUGAT (2026-09-28): stare pentru dropdown-ul "Services" din meniul
+  // mobil (hamburger) — pe mobil nu există hover, deci se deschide/închide
+  // la click pe cuvântul "Services".
+  const [mobileServicesOpen, setMobileServicesOpen] = useState(false);
+  // ADĂUGAT (2026-09-28): dropdown-ul "Services" de pe DESKTOP nu mai
+  // depinde doar de CSS ":hover" — dacă dai click pe o opțiune chiar când
+  // mouse-ul stă peste listă, lista rămânea vizibilă până mutai mouse-ul
+  // (pagina se schimbă dedesubt, dar panoul rămâne deschis). Acum e
+  // controlat din JS (onMouseEnter/Leave) și se închide explicit la click
+  // pe orice opțiune din listă.
+  const [desktopServicesOpen, setDesktopServicesOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [allProducts, setAllProducts] = useState([]);
@@ -119,6 +151,8 @@ export default function Navbar() {
   useEffect(() => {
     setMenuOpen(false);
     setSearchOpen(false);
+    setMobileServicesOpen(false);
+    setDesktopServicesOpen(false);
   }, [pathname]);
 
   // ADĂUGAT (2026-09-27): meniul mobil (.mobileMenu) era randat "în flow"
@@ -141,6 +175,24 @@ export default function Navbar() {
 
   const isActive = (href) =>
     href === "/" ? pathname === "/" : pathname.startsWith(href);
+
+  // ADĂUGAT (2026-09-28): "Services" din header trebuie să rămână evidențiat
+  // (verde) și cât timp ești pe /warehousing sau /pharmacovigilance, nu doar
+  // pe /services — pentru că acum sunt "sub" el, în dropdown.
+  // SCHIMBAT (2026-09-28, update): lista de sub-linkuri nu mai e statică —
+  // verificăm activ pe toate href-urile din tx.services.items.
+  const serviceHrefs = (tx.services?.items || []).map(s => s.href || "/services");
+  const isItemActive = (item) =>
+    isActive(item.href) || (item.hasServicesDropdown && serviceHrefs.some(h => isActive(h)));
+
+  // ADĂUGAT (2026-09-28): la cererea userului, în dropdown-ul "Shërbimet",
+  // Magazinimi și Farmakovigjilenca (cele cu pagină proprie, `href`) apar
+  // primele — restul serviciilor (fără pagină proprie, deci spre /services)
+  // vin după. Ordinea pe /services și Home rămâne neschimbată — sortarea e
+  // făcută doar aici, pentru listă.
+  const dropdownServices = [...(tx.services?.items || [])].sort(
+    (a, b) => (a.href ? 0 : 1) - (b.href ? 0 : 1)
+  );
 
   const searchPlaceholder =
     lang === "al" ? "Kërko produkte..." :
@@ -175,11 +227,60 @@ export default function Navbar() {
           </Link>
 
           <nav className={styles.links}>
-            {NAV_ITEMS.map(({ href, label }) => (
-              <Link key={href} href={href} className={isActive(href) ? styles.active : ""}>
-                {tx.nav[label]}
-              </Link>
-            ))}
+            {NAV_ITEMS.map((item) => {
+              if (item.hasServicesDropdown) {
+                // "Services" cu dropdown — pe desktop se deschide la hover
+                // (onMouseEnter/Leave, nu CSS ":hover" pur) ca să-l putem
+                // închide explicit la click pe o opțiune, chiar dacă mouse-ul
+                // rămâne peste listă în momentul click-ului.
+                // SCHIMBAT (2026-09-28): listăm acum toate cele 6 servicii
+                // din tx.services.items, nu doar 3 fixe.
+                return (
+                  <div
+                    key={item.href}
+                    className={styles.navDropdown}
+                    onMouseEnter={() => setDesktopServicesOpen(true)}
+                    onMouseLeave={() => setDesktopServicesOpen(false)}
+                  >
+                    <Link href={item.href} className={isItemActive(item) ? styles.active : ""}>
+                      {tx.nav[item.label]}
+                    </Link>
+                    <div
+                      className={`${styles.navDropdownPanel} ${desktopServicesOpen ? styles.navDropdownPanelOpen : ""}`}
+                    >
+                      {dropdownServices.map((service, i) => {
+                        const ChildIcon = getServiceItemIcon(service);
+                        return (
+                          <Link
+                            key={`${service.href || "/services"}-${i}`}
+                            href={service.href || "/services"}
+                            className={styles.navDropdownLink}
+                            onClick={(e) => {
+                              // FIX (2026-09-28): CSS-ul mai ține panoul
+                              // deschis via ":focus-within" (pentru Tab de pe
+                              // tastatură) — click-ul dă focus link-ului, deci
+                              // trebuie să scoatem explicit focus-ul, altfel
+                              // panoul rămâne vizibil peste pagina nouă chiar
+                              // dacă starea din JS spune "închis".
+                              e.currentTarget.blur();
+                              setDesktopServicesOpen(false);
+                            }}
+                          >
+                            <ChildIcon size={16} strokeWidth={1.8} />
+                            <span>{service.title}</span>
+                          </Link>
+                        );
+                      })}
+                    </div>
+                  </div>
+                );
+              }
+              return (
+                <Link key={item.href} href={item.href} className={isActive(item.href) ? styles.active : ""}>
+                  {tx.nav[item.label]}
+                </Link>
+              );
+            })}
           </nav>
 
           <div className={styles.right}>
@@ -366,11 +467,48 @@ export default function Navbar() {
               </div>
             )}
 
-            {NAV_ITEMS.map(({ href, label }) => (
-              <Link key={href} href={href} onClick={() => setMenuOpen(false)}>
-                {tx.nav[label]}
-              </Link>
-            ))}
+            {NAV_ITEMS.map((item) => {
+              if (item.hasServicesDropdown) {
+                // "Services" din meniul mobil — click deschide/închide
+                // sub-lista (acum toate cele 6 servicii, nu doar 3); nu
+                // navighează direct, ca userul să vadă întâi opțiunile.
+                return (
+                  <div key={item.href} className={styles.mobileNavGroup}>
+                    <button
+                      type="button"
+                      className={styles.mobileNavToggle}
+                      onClick={() => setMobileServicesOpen(v => !v)}
+                    >
+                      {tx.nav[item.label]}
+                      <span className={styles.mobileNavChevron}>{mobileServicesOpen ? "−" : "+"}</span>
+                    </button>
+                    {mobileServicesOpen && (
+                      <div className={styles.mobileNavSubmenu}>
+                        {dropdownServices.map((service, i) => {
+                          const ChildIcon = getServiceItemIcon(service);
+                          return (
+                            <Link
+                              key={`${service.href || "/services"}-${i}`}
+                              href={service.href || "/services"}
+                              className={styles.mobileNavSubLink}
+                              onClick={() => { setMenuOpen(false); setMobileServicesOpen(false); }}
+                            >
+                              <ChildIcon size={15} strokeWidth={1.8} />
+                              <span>{service.title}</span>
+                            </Link>
+                          );
+                        })}
+                      </div>
+                    )}
+                  </div>
+                );
+              }
+              return (
+                <Link key={item.href} href={item.href} onClick={() => setMenuOpen(false)}>
+                  {tx.nav[item.label]}
+                </Link>
+              );
+            })}
 
             <div className={styles.mobileLangGroup}>
               {LANGS.map(({ code, label, Flag }) => (
@@ -394,16 +532,16 @@ export default function Navbar() {
 
       {/* ── Bottom Nav ── */}
       <nav className={styles.bottomNav}>
-        {NAV_ITEMS.map(({ href, label, Icon }) => (
+        {NAV_ITEMS.map((item) => (
           <Link
-            key={href}
-            href={href}
-            className={`${styles.bottomNavItem} ${isActive(href) ? styles.bottomNavActive : ""}`}
+            key={item.href}
+            href={item.href}
+            className={`${styles.bottomNavItem} ${isItemActive(item) ? styles.bottomNavActive : ""}`}
           >
             <span className={styles.bottomNavIcon}>
-              <Icon size={22} strokeWidth={1.8} />
+              <item.Icon size={22} strokeWidth={1.8} />
             </span>
-            <span className={styles.bottomNavLabel}>{tx.nav[label]}</span>
+            <span className={styles.bottomNavLabel}>{tx.nav[item.label]}</span>
           </Link>
         ))}
       </nav>

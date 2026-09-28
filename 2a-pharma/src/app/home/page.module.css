@@ -558,6 +558,66 @@
   margin: 18px auto 0;
 }
 
+/* ── CERTIFICATE BADGES (ISO x2 + GDP) ──
+   ADĂUGAT (2026-09-28): rând centrat de 3 iconițe clickabile, sub poza de
+   hero — click descarcă direct PDF-ul certificatului (atributul `download`
+   de pe <a>, în JSX).
+   ADĂUGAT (2026-09-28, update): fiecare iconiță are acum sub ea o
+   descriere (.certBadgeLabel) — de-asta iconița + textul sunt acum
+   grupate în .certBadgeItem (coloană), iar .certBadge rămâne doar
+   cutia pătrată a iconiței. */
+.certBadgesRow {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 36px;
+  background: #fff;
+  padding: 32px var(--section-px);
+  flex-wrap: wrap;
+}
+
+.certBadgeItem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  width: 120px;
+  text-decoration: none;
+}
+
+.certBadge {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 84px;
+  height: 84px;
+  background: #F8FAFC;
+  border: 1.5px solid #E8EDF5;
+  border-radius: 16px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.certBadgeItem:hover .certBadge {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 28px rgba(15,42,82,0.12);
+  border-color: rgba(30,143,217,0.35);
+}
+
+.certBadgeIcon {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  padding: 10px;
+}
+
+.certBadgeLabel {
+  font-size: 12.5px;
+  font-weight: 600;
+  color: #0F2A52;
+  text-align: center;
+  line-height: 1.35;
+}
+
 /* ── SERVICES (teaser) ──
    REVENIT (2026-09-27): grid de 4 carduri (cerc-iconiță sus, titlu
    dedesubt) — conform screenshot-ului trimis de user. Pagina /services
@@ -680,7 +740,20 @@
   line-height: 1.9;
 }
 
-/* ── EXPERTISE (static) ── */
+/* ── SPACER (albastru) ──
+   ADĂUGAT (2026-09-28): înlocuiește secțiunea "Expertise" (ștearsă la
+   cererea userului) — doar un spațiu, între "Our Mission" și "About the
+   Company". SCHIMBAT (2026-09-28, update): la cererea userului, height mai
+   mare (168px, față de 64px) și culoare albastru (#1E8FD9, aceeași nuanță
+   folosită deja în alte accente pe site) în loc de verde. */
+.homeGreenSpacer {
+  height: 168px;
+  background: #1E8FD9;
+}
+
+/* ── EXPERTISE (static) — nu mai e folosită pe Home (vezi .homeGreenSpacer
+   de mai sus), dar am lăsat regulile ca să nu stricăm nimic dacă se
+   refolosește vreodată conținutul altundeva. ── */
 .expertiseSection {
   background: #fff;
   padding: var(--section-py) var(--section-px);
@@ -804,6 +877,9 @@
 
 .figuresStatsRow {
   display: grid;
+  /* SCHIMBAT (2026-09-28): înapoi la 3 coloane — "10+ Vjet Përvojë" a fost
+     șters (redundant cu noul "Since 2012"), deci rămân tot 3 carduri
+     (500+, 24-48h, 2012). */
   grid-template-columns: repeat(3, 1fr);
   gap: 20px;
   max-width: 900px;

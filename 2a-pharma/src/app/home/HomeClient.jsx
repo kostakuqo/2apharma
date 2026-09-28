@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { useLang } from "../../context/LangContext.jsx";
 import { getProducts } from "../../lib/getProducts.js";
@@ -79,6 +79,53 @@ const ABOUT_COMPANY_ICON_IMAGES = [
 // direct în `home.figures.stats` din LangContext.jsx — la fel ca secțiunea
 // de statistici de pe pagina /about.
 
+// ADĂUGAT (2026-09-28): "count up" — numerele din "2A Pharma in Figures"
+// (10+, 500+, un an ca 2012 etc.) se animă de la 0 până la valoarea reală
+// când secțiunea intră în ecran la scroll (o singură dată). Funcționează
+// DOAR pentru valori simple "număr" sau "număr+" (ex: "10+", "500+",
+// "2012") — o valoare ca "24-48h" (interval, cu litere) NU se potrivește
+// tiparului de mai jos, deci rămâne afișată static, neanimată (corect,
+// altfel animația ar arăta ciudat pentru un interval).
+function CountUpNumber({ value }) {
+  const match = /^(\d+)(\+?)$/.exec(String(value).trim());
+  const target = match ? parseInt(match[1], 10) : null;
+  const suffix = match ? match[2] : "";
+  const [display, setDisplay] = useState(target !== null ? `0${suffix}` : value);
+  const ref = useRef(null);
+  const animatedRef = useRef(false);
+
+  useEffect(() => {
+    if (target === null) return;
+    const el = ref.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting && !animatedRef.current) {
+            animatedRef.current = true;
+            const duration = 1600;
+            const start = performance.now();
+            const step = (now) => {
+              const progress = Math.min((now - start) / duration, 1);
+              const current = Math.floor(progress * target);
+              setDisplay(`${current}${suffix}`);
+              if (progress < 1) requestAnimationFrame(step);
+              else setDisplay(`${target}${suffix}`);
+            };
+            requestAnimationFrame(step);
+            observer.disconnect();
+          }
+        });
+      },
+      { threshold: 0.4 }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, [target, suffix]);
+
+  return <span ref={ref}>{display}</span>;
+}
+
 export default function HomeClient() {
   const { lang, tx } = useLang();
   const [featured, setFeatured] = useState([]);
@@ -133,6 +180,53 @@ export default function HomeClient() {
           </div>
         </section>
 
+        {/* ── CERTIFICATE BADGES (ISO x2 + GDP) ──
+            ADĂUGAT (2026-09-28): sub poza mare de hero, centrat — 3 iconițe
+            clickabile care descarcă direct PDF-urile certificatelor.
+            Refolosim EXACT aceleași fișiere puse deja pentru pagina
+            /events-news (nu mai trebuie încărcate din nou).
+            ADĂUGAT (2026-09-28, update): fiecare iconiță are acum o
+            descriere scrisă dedesubt (trilingv), ca omul să știe ce
+            certificat descarcă. */}
+        <div className={styles.certBadgesRow}>
+          <a href="/documents/iso-certificate-1.pdf" download className={styles.certBadgeItem}>
+            <div className={styles.certBadge}>
+              <img src="/images/icons/cert-iso.png" alt="ISO" className={styles.certBadgeIcon} />
+            </div>
+            <span className={styles.certBadgeLabel}>
+              {lang === "al" ? "ISO 9001 : 2015 " : lang === "it" ? "ISO 9001 : 2015 " : "ISO 9001 : 2015"}
+            </span>
+          </a>
+          <a href="/documents/iso-certificate-2.pdf" download className={styles.certBadgeItem}>
+            <div className={styles.certBadge}>
+              <img src="/images/icons/cert-iso.png" alt="ISO" className={styles.certBadgeIcon} />
+            </div>
+            <span className={styles.certBadgeLabel}>
+              {lang === "al" ? "ISO 9001 : 2015 " : lang === "it" ? "ISO 9001 : 2015 " : "ISO 9001 : 2015"}
+            </span>
+          </a>
+          <a href="/documents/gdp-certificate.pdf" download className={styles.certBadgeItem}>
+            <div className={styles.certBadge}>
+              <img src="/images/icons/cert-gdp.png" alt="GDP" className={styles.certBadgeIcon} />
+            </div>
+            <span className={styles.certBadgeLabel}>
+              {lang === "al" ? "Certifikata GDP" : lang === "it" ? "Certificato GDP" : "GDP Certificate"}
+            </span>
+          </a>
+          {/* ADĂUGAT (2026-09-28): a 4-a iconiță — certificat AKBPM.
+              Pune fișierul icon la public/images/icons/cert-akbpm.png și
+              PDF-ul la public/documents/akbpm-certificate.pdf (sau schimbă
+              căile de mai jos cu numele reale ale fișierelor tale). */}
+          <a href="/documents/akbpm-certificate.pdf" download className={styles.certBadgeItem}>
+            <div className={styles.certBadge}>
+              <img src="/images/icons/cert-akbpm.png" alt="AKBPM" className={styles.certBadgeIcon} />
+            </div>
+            <span className={styles.certBadgeLabel}>
+              {lang === "al" ? "Certifikata AKBPM" : lang === "it" ? "Certificato AKBPM" : "AKBPM Certificate"}
+            </span>
+          </a>
+        </div>
+
         {/* ── SERVICES (teaser) ──
             SCHIMBAT (2026-09-28): la cererea userului, secțiunea de pe
             Home folosește acum EXACT aceeași componentă <ServicesGrid>
@@ -161,23 +255,15 @@ export default function HomeClient() {
           </div>
         </section>
 
-        {/* ── EXPERTISE / RANGE OF SERVICES (static) ── */}
-        <section className={styles.expertiseSection}>
-          <h2 className={styles.homeSectionTitle}>{home.expertise?.title}</h2>
-          <div className={styles.homeSectionUnderline} />
-          <div className={styles.expertiseGrid}>
-            {(home.expertise?.columns || []).map((col, i) => (
-              <div key={i} className={styles.expertiseCol}>
-                <h3>{col.title}</h3>
-                <ul>
-                  {col.items.map((item, j) => (
-                    <li key={j}>{item}</li>
-                  ))}
-                </ul>
-              </div>
-            ))}
-          </div>
-        </section>
+        {/* ── SPACER (verde) ──
+            ȘTERS (2026-09-28): secțiunea "Ekspertiza dhe Gama Jonë e
+            Shërbimeve" a fost eliminată la cererea userului (conținut
+            considerat irelevant). Am pus în locul ei un simplu spațiu cu
+            fundal verde, ca să rămână o separare vizuală între "Our
+            Mission" (deasupra) și "About the Company" (dedesubt) — fără
+            titlu, fără text. Dacă vrei să dispară complet spațiul (fără
+            fundal verde deloc), șterge tot acest <div>. */}
+        <div className={styles.homeGreenSpacer} />
 
         {/* ── ABOUT THE COMPANY (stats) ──
             SCHIMBAT (2026-09-28): la cererea userului, toată secțiunea
@@ -217,7 +303,9 @@ export default function HomeClient() {
           <div className={styles.figuresStatsRow}>
             {(home.figures?.stats || []).map((s, i) => (
               <div key={i} className={styles.figuresStatCard}>
-                <div className={styles.figuresCellNum}>{s.num}</div>
+                <div className={styles.figuresCellNum}>
+                  <CountUpNumber value={s.num} />
+                </div>
                 <div className={styles.figuresCellLabel}>{s.label}</div>
               </div>
             ))}

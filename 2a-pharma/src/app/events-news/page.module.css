@@ -286,6 +286,63 @@
   line-height: 1.7;
 }
 
+/* ─── FILE CHIPS — descărcare PDF (2026-09-28) ───
+   Pentru item-uri cu `files` (ex. certificatele ISO, ca PDF) — un "chip"
+   mic cu iconiță de document + numele fișierului + o iconiță de download;
+   click descarcă direct fișierul (atributul `download` de pe <a>). */
+.newsFileRow {
+  display: flex;
+  gap: 10px;
+  margin-top: 16px;
+  flex-wrap: wrap;
+}
+
+.newsFileChip {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 16px 8px 10px;
+  background: #F8FAFC;
+  border: 1.5px solid #E8EDF5;
+  border-radius: 12px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #0F2A52;
+  text-decoration: none;
+  cursor: pointer;
+  transition: border-color 0.2s ease, background 0.2s ease, transform 0.2s ease;
+}
+
+.newsFileChip svg:first-child {
+  color: #1E8FD9;
+  flex-shrink: 0;
+}
+
+/* MĂRIT (2026-09-28): logo-urile ISO/GDP erau prea mici (20px) ca să se
+   vadă clar — acum 40px, cu un fundal alb + un mic contur, ca logo-ul să
+   iasă în evidență și pe chip-ul gri-deschis. */
+.newsFileChipIcon {
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+  flex-shrink: 0;
+  background: #fff;
+  border-radius: 8px;
+  padding: 4px;
+  border: 1px solid #E8EDF5;
+}
+
+.newsFileChip:hover {
+  background: #EAF4FD;
+  border-color: rgba(30,143,217,0.4);
+  transform: translateY(-2px);
+}
+
+.newsFileChipDownloadIcon {
+  color: #94a3b8;
+  margin-left: 2px;
+}
+
 /* ─── EMPTY ─── */
 .emptyState {
   text-align: center;

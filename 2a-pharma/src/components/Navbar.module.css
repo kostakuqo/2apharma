@@ -112,6 +112,86 @@
   font-weight: 600;
 }
 
+/* ── Services dropdown (desktop) ──
+   ADĂUGAT (2026-09-28): "Services" e acum un link cu un mic meniu ascuns
+   dedesubt (.navDropdownPanel) — apare la :hover pe .navDropdown (întreg
+   blocul: linkul + panoul), la cererea userului. Warehousing și
+   Pharmacovigilance trăiesc doar aici, nu mai sunt link-uri separate în
+   header. */
+.navDropdown {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+/* "punte" invizibilă între link și panou, ca hover-ul să nu se piardă în
+   golul de câțiva pixeli dintre ele când muți mouse-ul în jos */
+.navDropdown::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  min-width: 200px;
+  height: 16px;
+}
+
+.navDropdownPanel {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translate(-50%, 6px);
+  margin-top: 16px;
+  background: #fff;
+  border-radius: 14px;
+  box-shadow: 0 14px 36px rgba(15, 42, 82, 0.16);
+  min-width: 230px;
+  padding: 8px;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 0.18s ease, transform 0.18s ease;
+  z-index: 200;
+}
+
+/* SCHIMBAT (2026-09-28): de la CSS ":hover" pur la o clasă controlată din
+   JS (.navDropdownPanelOpen) — altfel, dacă dădeai click pe o opțiune cât
+   timp mouse-ul stătea peste listă, lista rămânea vizibilă peste pagina
+   nouă până mutai mouse-ul. Acum se închide explicit la click (vezi
+   Navbar.jsx, onClick={() => setDesktopServicesOpen(false)}). Păstrăm și
+   :focus-within pentru navigare cu tastatura (Tab). */
+.navDropdownPanel.navDropdownPanelOpen,
+.navDropdown:focus-within .navDropdownPanel {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transform: translate(-50%, 0);
+}
+
+.navDropdownLink {
+  display: flex !important;
+  align-items: center;
+  gap: 10px;
+  padding: 11px 14px !important;
+  border-radius: 9px;
+  font-size: 14px !important;
+  font-weight: 500 !important;
+  color: var(--navy) !important;
+  border-bottom: none !important;
+  white-space: nowrap;
+}
+
+.navDropdownLink svg {
+  color: #1A8A3C;
+  flex-shrink: 0;
+}
+
+.navDropdownLink:hover {
+  background: rgba(26, 138, 60, 0.09);
+  color: var(--green) !important;
+}
+
 /* ── Right ── */
 .right {
   display: flex;
@@ -337,6 +417,62 @@
 }
 
 .mobileMenu a:hover {
+  color: var(--green);
+}
+
+/* ── Mobile "Services" dropdown group ──
+   ADĂUGAT (2026-09-28): în meniul hamburger, "Services" e un buton (nu un
+   link direct) — click deschide/închide lista cu Services/Warehousing/
+   Pharmacovigilance, la fel ca pe desktop dar cu click în loc de hover. */
+.mobileNavGroup {
+  border-bottom: 1px solid var(--gray-100);
+}
+
+.mobileNavToggle {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 13px 0;
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--navy);
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: var(--font-sans);
+}
+
+.mobileNavChevron {
+  font-size: 19px;
+  line-height: 1;
+  color: var(--gray-400);
+}
+
+.mobileNavSubmenu {
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 8px;
+}
+
+.mobileNavSubLink {
+  display: flex !important;
+  align-items: center;
+  gap: 10px;
+  padding: 11px 0 11px 14px !important;
+  font-size: 14px !important;
+  font-weight: 500 !important;
+  color: var(--navy);
+  text-decoration: none;
+  border-bottom: none !important;
+}
+
+.mobileNavSubLink svg {
+  color: #1A8A3C;
+  flex-shrink: 0;
+}
+
+.mobileNavSubLink:hover {
   color: var(--green);
 }
 

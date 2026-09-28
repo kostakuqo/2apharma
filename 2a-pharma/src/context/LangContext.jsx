@@ -6,7 +6,7 @@ export const translations = {
   al: {
     nav: {
       home: "Kryefaqja", about: "Rreth nesh",
-      products: "Produktet", services: "Shërbimet", partners: "Partnerët",
+      products: "Produktet", services: "Shërbimet", warehousing: "Magazinimi", pharmacovigilance: "Farmakovigjilenca", partners: "Partnerët",
       eventsNews: "Lajme & Evente", contact: "Kontakt"
     },
     hero: {
@@ -59,6 +59,11 @@ export const translations = {
         { title: "Shërbime Rregullatore për Barna", desc: "Ofrojmë mbështetje të plotë rregullatore — regjistrim, dokumentacion dhe përputhshmëri me kërkesat ligjore — për produktet që përfaqësojmë." },
         { title: "Marketing dhe Shitje", desc: "Ekipi ynë komercial promovon dhe shet produktet me një qasje të orientuar te klienti, ndërtuar mbi njohuri të thella të tregut shqiptar." },
         { title: "Dyqan Online", desc: "Porositni produktet tona direkt online, me katalog të përditësuar dhe dërgesë të shpejtë kudo në vend." },
+        // SHTUAR (2026-09-28): al 5-lea shërbim — spre deosebim nga celelalte
+        // 4 (care çelin /services), ky ka `href` propriu dhe hap direkt
+        // pagina e dedikuar /warehousing (vezi components/ServicesGrid.jsx).
+        { title: "Magazinimi", desc: "Ofrojmë shërbime të plota magazinimi dhe menaxhimi të stokut, me infrastrukturë moderne dhe respektim të standardeve ndërkombëtare të cilësisë.", href: "/warehousing" },
+        { title: "Farmakovigjilenca", desc: "Menaxhojmë sigurinë e produktit përmes mbledhjes, zbulimit, vlerësimit, monitorimit, raportimit dhe parandalimit të rasteve të efekteve anësore.", href: "/pharmacovigilance" },
       ],
       ctaTitle: "Keni nevojë për një shërbim specifik?",
       ctaSub: "Na tregoni për çfarë keni nevojë dhe ekipi ynë do t'ju kontaktojë brenda 24 orësh.",
@@ -72,7 +77,11 @@ export const translations = {
       gridTitle: "Të Fundit nga 2A Pharma",
       items: [
         { type: "event", date: "Shtator 2026", tag: "Eveniment", title: "Pjesëmarrje në Panairin Shëndetësor Kombëtar", excerpt: "2A Pharma prezantoi linjën e re të pajisjeve diagnostike në Panairin Shëndetësor Kombëtar në Tiranë." },
-        { type: "news", date: "Gusht 2026", tag: "Lajm", title: "Rinovimi i Certifikimit ISO", excerpt: "Kemi rinovuar me sukses certifikimin ISO për cilësi dhe standarde në furnizimin e pajisjeve mjekësore." },
+        { type: "news", date: "Gusht 2026", tag: "Lajm", title: "Rinovimi i Certifikimeve ISO dhe GDP", excerpt: "Kemi rinovuar me sukses certifikimet tona ISO dhe GDP (Praktika e Mirë e Shpërndarjes) për cilësi dhe standarde në furnizimin e pajisjeve mjekësore.", files: [
+          { name: "Certifikata ISO Nr. 1", url: "/documents/iso-certificate-1.pdf", icon: "/images/icons/cert-iso.png" },
+          { name: "Certifikata ISO Nr. 2", url: "/documents/iso-certificate-2.pdf", icon: "/images/icons/cert-iso.png" },
+          { name: "Certifikata GDP", url: "/documents/gdp-certificate.pdf", icon: "/images/icons/cert-gdp.png" },
+        ] },
         { type: "event", date: "Tetor 2026", tag: "Eveniment", title: "Simpoziumi Vjetor i Shoqatës Shqiptare të Distributorëve Farmaceutikë", excerpt: "2A Pharma mori pjesë si anëtare në simpoziumin vjetor organizuar nga Shoqata Shqiptare e Distributorëve Farmaceutikë, i dedikuar standardeve të reja në distribucionin e ilaceve." },
         { type: "news", date: "Korrik 2026", tag: "Lajm", title: "Partneritet i Ri me një Prodhues Evropian të Ilaçeve Mjekësore", excerpt: "Kemi nënshkruar një marrëveshje partneriteti me një prodhues të njohur evropian të ilaçeve mjekësore, duke zgjeruar gamën e produkteve farmaceutike që ofrojmë në treg." },
       ],
@@ -109,12 +118,15 @@ export const translations = {
       // trimis de user) — fiecare celulă are un `type`:
       // "icon" ({icon, label}), "stat" ({num, label}),
       // "text" ({main, sub}) sau "flag" (fără date, randează steagul).
+      // ADĂUGAT (2026-09-28): al 4-lea stat — "Since 2012" (userul a cerut
+      // count-up animat pentru numere; "2012" se potrivește tiparului
+      // "număr simplu" din CountUpNumber, deci se va anima și el).
       figures: {
         title: "2A Pharma në Shifra",
         stats: [
-          { num: "10+", label: "Vjet Përvojë" },
           { num: "500+", label: "Produkte në Stok" },
           { num: "24-48h", label: "Kohë Dërgese" },
+          { num: "2012", label: "Që nga" },
         ],
       },
     },
@@ -129,7 +141,7 @@ export const translations = {
   en: {
     nav: {
       home: "Home", about: "About",
-      products: "Products", services: "Services", partners: "Partners",
+      products: "Products", services: "Services", warehousing: "Warehousing", pharmacovigilance: "Pharmacovigilance", partners: "Partners",
       eventsNews: "News & Events", contact: "Contact"
     },
     hero: {
@@ -182,6 +194,8 @@ export const translations = {
         { title: "Medicine Regulatory Services", desc: "We provide full regulatory support — registration, documentation and compliance with legal requirements — for the products we represent." },
         { title: "Marketing and Sales", desc: "Our commercial team promotes and sells our products with a customer-focused approach, built on deep knowledge of the Albanian market." },
         { title: "Online Shop", desc: "Order our products directly online, with an up-to-date catalogue and fast delivery anywhere in the country." },
+        { title: "Warehousing", desc: "We provide full warehousing and stock management services, with modern infrastructure and compliance with international quality standards.", href: "/warehousing" },
+        { title: "Pharmacovigilance", desc: "We manage product safety via the collection, detection, assessment, monitoring, reporting and prevention of adverse effect cases.", href: "/pharmacovigilance" },
       ],
       ctaTitle: "Need a specific service?",
       ctaSub: "Tell us what you need and our team will contact you within 24 hours.",
@@ -195,7 +209,11 @@ export const translations = {
       gridTitle: "Latest from 2A Pharma",
       items: [
         { type: "event", date: "September 2026", tag: "Event", title: "Participation in the National Health Expo", excerpt: "2A Pharma presented its new line of diagnostic equipment at the National Health Expo in Tirana." },
-        { type: "news", date: "August 2026", tag: "News", title: "ISO Certification Renewed", excerpt: "We successfully renewed our ISO certification for quality and standards in medical equipment supply." },
+        { type: "news", date: "August 2026", tag: "News", title: "ISO and GDP Certifications Renewed", excerpt: "We successfully renewed our ISO and GDP (Good Distribution Practice) certifications for quality and standards in medical equipment supply.", files: [
+          { name: "ISO Certificate No. 1", url: "/documents/iso-certificate-1.pdf", icon: "/images/icons/cert-iso.png" },
+          { name: "ISO Certificate No. 2", url: "/documents/iso-certificate-2.pdf", icon: "/images/icons/cert-iso.png" },
+          { name: "GDP Certificate", url: "/documents/gdp-certificate.pdf", icon: "/images/icons/cert-gdp.png" },
+        ] },
         { type: "event", date: "October 2026", tag: "Event", title: "Annual Symposium of the Albanian Pharmaceutical Distributors Association", excerpt: "2A Pharma took part as a member in the annual symposium organized by the Albanian Pharmaceutical Distributors Association, focused on new standards in medicine distribution." },
         { type: "news", date: "July 2026", tag: "News", title: "New Partnership with a European Medicines Manufacturer", excerpt: "We signed a partnership agreement with a well-known European medicines manufacturer, expanding the range of pharmaceutical products we offer on the market." },
       ],
@@ -230,9 +248,9 @@ export const translations = {
       figures: {
         title: "2A Pharma in Figures",
         stats: [
-          { num: "10+", label: "Years of Experience" },
           { num: "500+", label: "Products in Stock" },
           { num: "24-48h", label: "Delivery Time" },
+          { num: "2012", label: "Since" },
         ],
       },
     },
@@ -247,7 +265,7 @@ export const translations = {
   it: {
     nav: {
       home: "Home", about: "Chi siamo",
-      products: "Prodotti", services: "Servizi", partners: "Partner",
+      products: "Prodotti", services: "Servizi", warehousing: "Magazzinaggio", pharmacovigilance: "Farmacovigilanza", partners: "Partner",
       eventsNews: "Notizie & Eventi", contact: "Contatto"
     },
     hero: {
@@ -300,6 +318,8 @@ export const translations = {
         { title: "Servizi Regolatori Farmaceutici", desc: "Offriamo supporto regolatorio completo — registrazione, documentazione e conformità normativa — per i prodotti che rappresentiamo." },
         { title: "Marketing e Vendite", desc: "Il nostro team commerciale promuove e vende i prodotti con un approccio orientato al cliente, basato su una conoscenza approfondita del mercato albanese." },
         { title: "Negozio Online", desc: "Ordinate i nostri prodotti direttamente online, con un catalogo aggiornato e consegna rapida in tutto il paese." },
+        { title: "Magazzinaggio", desc: "Offriamo servizi completi di magazzinaggio e gestione delle scorte, con infrastrutture moderne e conformità agli standard internazionali di qualità.", href: "/warehousing" },
+        { title: "Farmacovigilanza", desc: "Gestiamo la sicurezza del prodotto attraverso la raccolta, il rilevamento, la valutazione, il monitoraggio, la segnalazione e la prevenzione dei casi di effetti avversi.", href: "/pharmacovigilance" },
       ],
       ctaTitle: "Avete bisogno di un servizio specifico?",
       ctaSub: "Diteci di cosa avete bisogno e il nostro team vi contatterà entro 24 ore.",
@@ -313,7 +333,11 @@ export const translations = {
       gridTitle: "Le Ultime da 2A Pharma",
       items: [
         { type: "event", date: "Settembre 2026", tag: "Evento", title: "Partecipazione alla Fiera Nazionale della Salute", excerpt: "2A Pharma ha presentato la nuova linea di apparecchiature diagnostiche alla Fiera Nazionale della Salute a Tirana." },
-        { type: "news", date: "Agosto 2026", tag: "Notizia", title: "Rinnovata la Certificazione ISO", excerpt: "Abbiamo rinnovato con successo la certificazione ISO per la qualità e gli standard nella fornitura di apparecchiature mediche." },
+        { type: "news", date: "Agosto 2026", tag: "Notizia", title: "Rinnovate le Certificazioni ISO e GDP", excerpt: "Abbiamo rinnovato con successo le nostre certificazioni ISO e GDP (Good Distribution Practice) per la qualità e gli standard nella fornitura di apparecchiature mediche.", files: [
+          { name: "Certificato ISO N. 1", url: "/documents/iso-certificate-1.pdf", icon: "/images/icons/cert-iso.png" },
+          { name: "Certificato ISO N. 2", url: "/documents/iso-certificate-2.pdf", icon: "/images/icons/cert-iso.png" },
+          { name: "Certificato GDP", url: "/documents/gdp-certificate.pdf", icon: "/images/icons/cert-gdp.png" },
+        ] },
         { type: "event", date: "Ottobre 2026", tag: "Evento", title: "Simposio Annuale dell'Associazione Albanese dei Distributori Farmaceutici", excerpt: "2A Pharma ha partecipato come membro al simposio annuale organizzato dall'Associazione Albanese dei Distributori Farmaceutici, dedicato ai nuovi standard nella distribuzione dei farmaci." },
         { type: "news", date: "Luglio 2026", tag: "Notizia", title: "Nuova Partnership con un Produttore Europeo di Farmaci", excerpt: "Abbiamo firmato un accordo di partnership con un noto produttore europeo di farmaci, ampliando la gamma di prodotti farmaceutici offerti sul mercato." },
       ],
@@ -348,9 +372,9 @@ export const translations = {
       figures: {
         title: "2A Pharma in Cifre",
         stats: [
-          { num: "10+", label: "Anni di Esperienza" },
           { num: "500+", label: "Prodotti in Stock" },
           { num: "24-48h", label: "Tempo di Consegna" },
+          { num: "2012", label: "Dal" },
         ],
       },
     },

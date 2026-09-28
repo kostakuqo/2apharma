@@ -1,0 +1,252 @@
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ─── PAGE ─── */
+.page {
+  min-height: 60vh;
+  background: #fff;
+}
+
+/* ─── HERO HEADER — la fel ca pe /warehousing, /services, /about ─── */
+.pageHeader {
+  background: linear-gradient(135deg, #0A1F3D 0%, #0F2A52 60%, #1A3F7A 100%);
+  padding: 64px var(--section-px) 72px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 -16px 48px rgba(15, 42, 82, 0.18);
+  z-index: 1;
+}
+
+.pageHeader::before {
+  content: "";
+  position: absolute;
+  width: 500px;
+  height: 500px;
+  border-radius: 50%;
+  background: rgba(40,199,90,0.07);
+  filter: blur(100px);
+  top: -150px;
+  right: -80px;
+  pointer-events: none;
+}
+
+.pageHeaderInner {
+  position: relative;
+  z-index: 1;
+  max-width: 700px;
+  animation: fadeInUp 0.45s ease both;
+}
+
+.heroTag {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 5px 14px;
+  background: rgba(40,199,90,0.15);
+  border: 1px solid rgba(40,199,90,0.35);
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 700;
+  color: #7DD9A0;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 20px;
+}
+
+.pageTitle {
+  font-family: var(--font-serif);
+  font-size: 46px;
+  font-weight: 400;
+  color: #fff;
+  margin-bottom: 14px;
+  line-height: 1.15;
+  letter-spacing: -0.5px;
+}
+
+.pageSub {
+  font-size: 16px;
+  color: rgba(200,217,240,0.85);
+  line-height: 1.8;
+  max-width: 560px;
+}
+
+/* ─── GRID WRAP ─── */
+.gridWrap {
+  padding: 64px var(--section-px) 72px;
+  background: #F8FAFC;
+  display: flex;
+  flex-direction: column;
+  gap: 56px;
+  box-shadow: 0 -16px 48px rgba(15, 42, 82, 0.18);
+  position: relative;
+  z-index: 1;
+}
+
+/* ─── AVAILABLE 24/7/365: card + poză ─── */
+.availRow {
+  display: grid;
+  grid-template-columns: 0.85fr 1.15fr;
+  gap: 40px;
+  align-items: stretch;
+  max-width: 1100px;
+  margin: 0 auto;
+  width: 100%;
+  animation: fadeInUp 0.4s ease both;
+}
+
+.availCard {
+  background: #E9EEF6;
+  border-radius: 18px;
+  padding: 36px 34px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.availTitle {
+  font-family: var(--font-serif);
+  font-size: 24px;
+  font-weight: 400;
+  color: #0F2A52;
+  margin-bottom: 14px;
+}
+
+.availText {
+  font-size: 15px;
+  color: #475569;
+  line-height: 1.7;
+  margin-bottom: 22px;
+}
+
+.availText strong {
+  color: #0F2A52;
+}
+
+.availContactLine {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 15px;
+  font-weight: 600;
+  color: #0F2A52;
+  text-decoration: none;
+  margin-bottom: 10px;
+  transition: color 0.2s ease;
+}
+
+.availContactLine:hover {
+  color: #1E8FD9;
+}
+
+.availContactLine svg {
+  color: #1E8FD9;
+  flex-shrink: 0;
+}
+
+.availImageWrap {
+  border-radius: 18px;
+  overflow: hidden;
+  box-shadow: 0 12px 36px rgba(15,42,82,0.14);
+}
+
+.availImage {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* ─── PRODUCT SAFETY (text plain) ─── */
+.textSection {
+  max-width: 1100px;
+  margin: 0 auto;
+  width: 100%;
+  animation: fadeInUp 0.4s ease both;
+}
+
+.sectionTitle {
+  font-family: var(--font-serif);
+  font-size: 28px;
+  font-weight: 400;
+  color: #0F2A52;
+  margin-bottom: 14px;
+}
+
+.sectionText {
+  font-size: 15px;
+  color: #475569;
+  line-height: 1.85;
+  max-width: 820px;
+}
+
+.sectionText strong {
+  color: #0F2A52;
+}
+
+/* ─── RESPONSIBILITY CARD ─── */
+.card {
+  background: #E9EEF6;
+  border-radius: 18px;
+  padding: 40px 44px;
+  max-width: 1100px;
+  margin: 0 auto;
+  width: 100%;
+  animation: fadeInUp 0.4s ease both;
+}
+
+.cardTitle {
+  font-family: var(--font-serif);
+  font-size: 24px;
+  font-weight: 400;
+  color: #0F2A52;
+  margin-bottom: 16px;
+}
+
+.cardText {
+  font-size: 15px;
+  color: #475569;
+  line-height: 1.8;
+  margin-bottom: 16px;
+  max-width: 820px;
+}
+
+.cardText strong {
+  color: #0F2A52;
+}
+
+.cardLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 14px;
+  font-weight: 700;
+  color: #1E8FD9;
+  text-decoration: none;
+  margin-top: 8px;
+  transition: gap 0.2s ease, color 0.2s ease;
+}
+
+.cardLink:hover {
+  gap: 10px;
+  color: #0F2A52;
+}
+
+/* ─── RESPONSIVE ─── */
+@media (max-width: 900px) {
+  .availRow {
+    grid-template-columns: 1fr;
+  }
+  .availImageWrap { order: -1; max-height: 260px; }
+  .availImage { max-height: 260px; }
+  .card { padding: 32px 26px; }
+}
+
+@media (max-width: 540px) {
+  .pageHeader { padding: 50px var(--section-px) 60px; }
+  .pageTitle { font-size: 30px; }
+  .pageSub { font-size: 14px; }
+  .gridWrap { padding: 40px var(--section-px) 50px; gap: 40px; }
+  .availCard { padding: 28px 24px; }
+}

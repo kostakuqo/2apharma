@@ -1,5 +1,6 @@
 "use client";
 
+import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { useLang } from "../../context/LangContext.jsx";
 import styles from "./page.module.css";
@@ -23,11 +24,59 @@ const CARD_ICON_IMAGES = [
   "/images/about/icon-achievements.png",
 ];
 
+// SCHIMBAT (2026-09-28): la cererea userului, "10+ Vjet Eksperiencë" a fost
+// șters (redundant, avem deja anul înființării în text) și înlocuit cu
+// "Since 2012" — la fel ca pe Home. Rămân deci 3 carduri: 2012, 500+,
+// 24-48h.
 const STATS = [
-  { num: "10+", labelAl: "Vjet Eksperiencë", labelEn: "Years Experience", labelIt: "Anni di Esperienza" },
+  { num: "2012", labelAl: "Që nga", labelEn: "Since", labelIt: "Dal" },
   { num: "500+", labelAl: "Produkte në Stok", labelEn: "Products in Stock", labelIt: "Prodotti in Stock" },
   { num: "24-48h", labelAl: "Kohë Dorëzimi", labelEn: "Delivery Time", labelIt: "Tempo di Consegna" },
 ];
+
+// ADĂUGAT (2026-09-28): "count up" — la fel ca pe Home, numerele simple
+// ("2012", "500+") se animă de la 0 la valoarea reală când secțiunea intră
+// în ecran la scroll (o singură dată). "24-48h" (interval, cu litere) nu se
+// potrivește tiparului, deci rămâne static — corect, altfel ar arăta ciudat.
+function CountUpNumber({ value }) {
+  const match = /^(\d+)(\+?)$/.exec(String(value).trim());
+  const target = match ? parseInt(match[1], 10) : null;
+  const suffix = match ? match[2] : "";
+  const [display, setDisplay] = useState(target !== null ? `0${suffix}` : value);
+  const ref = useRef(null);
+  const animatedRef = useRef(false);
+
+  useEffect(() => {
+    if (target === null) return;
+    const el = ref.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting && !animatedRef.current) {
+            animatedRef.current = true;
+            const duration = 1600;
+            const start = performance.now();
+            const step = (now) => {
+              const progress = Math.min((now - start) / duration, 1);
+              const current = Math.floor(progress * target);
+              setDisplay(`${current}${suffix}`);
+              if (progress < 1) requestAnimationFrame(step);
+              else setDisplay(`${target}${suffix}`);
+            };
+            requestAnimationFrame(step);
+            observer.disconnect();
+          }
+        });
+      },
+      { threshold: 0.4 }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, [target, suffix]);
+
+  return <span ref={ref}>{display}</span>;
+}
 
 const CARDS = {
   al: [
@@ -145,7 +194,9 @@ export default function AboutClient() {
       <div className={styles.statsRow}>
         {STATS.map((s, i) => (
           <div key={i} className={styles.statCard}>
-            <div className={styles.statNum}>{s.num}</div>
+            <div className={styles.statNum}>
+              <CountUpNumber value={s.num} />
+            </div>
             <div className={styles.statLbl}>
               {lang === "al" ? s.labelAl : lang === "it" ? s.labelIt : s.labelEn}
             </div>
