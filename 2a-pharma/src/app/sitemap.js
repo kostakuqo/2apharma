@@ -1,84 +1,57 @@
 export const dynamic = "force-static";
 
-import fs from "node:fs";
-import path from "node:path";
-import { fileURLToPath } from "node:url";
 import { getProductsServer } from "../lib/getProductsServer.js";
 
-// SCHIMBAT (2026-09-28): site-ul e live pe domeniul propriu 2a-pharma.al
-// (deploy pe Vercel), nu pe GitHub Pages — sitemap-ul trebuie să genereze
-// linkuri către adresa reală, altfel Google indexează URL-uri greșite.
 const BASE_URL = "https://2a-pharma.al";
 
-// ADĂUGAT (2026-09-28), la cererea userului: nu mai listăm paginile statice
-// manual ("", "/about", "/products", ...) — le găsim SINGURE, citind
-// structura de foldere din app/ (adică din acest folder, unde stă chiar
-// fișierul sitemap.js). De acum, orice pagină nouă (orice folder cu un
-// page.js/page.jsx în el) intră AUTOMAT în sitemap, fără să mai trebuiască
-// s-o adaugi tu manual aici.
+// SCHIMBAT (2026-09-28): am renunțat la scanarea automată cu `fs`
+// (fs.readdirSync) — pe Vercel (serverless), citirea de foldere la runtime
+// poate eșua sau se poate comporta diferit față de mediul de build, ceea
+// ce a dus la eroarea "Could not fetch" în Google Search Console (Google
+// nu putea încărca deloc pagina sitemap.xml). Revenim la un array simplu,
+// scris de mână — mai puțin "magic", dar 100% sigur, indiferent de
+// platforma de hosting.
 //
-// Cum funcționează: fiindcă avem "force-static", codul ăsta rulează O
-// SINGURĂ DATĂ, la BUILD (npm run build), nu în browser — deci poate
-// folosi `fs` (citit de fișiere) în siguranță, la fel ca orice script Node.
-//
-// Ce e SĂRIT automat (nu ajunge în sitemap):
-//   - foldere de rută dinamică, gen "[id]" (produsele astea au deja logica
-//     lor separată mai jos, prin getProductsServer — sunt tratate diferit
-//     fiindcă vin din Firebase, nu sunt pagini statice fixe)
-//   - "route groups" gen "(marketing)" (paranteze) — Next.js le folosește
-//     doar pentru organizare, nu apar niciodată în URL
-//   - foldere/fișiere tehnice: api/, orice începe cu "_"
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
+// IMPORTANT: când adaugi o pagină nouă pe viitor (ca /warehousing,
+// /marketing etc.), trebuie s-o adaugi și AICI manual, ca să apară în
+// sitemap — spune-mi și ți-o adaug eu de fiecare dată.
+const STATIC_ROUTES = [
+  "",
+  "/about",
+  "/services",
+  "/products",
+  "/partners",
+  "/events-news",
+  "/contact",
+  "/warehousing",
+  "/pharmacovigilance",
+  "/marketing",
+  "/distribution",
+  "/regulatory",
+  "/online-shop",
+];
 
-function getStaticRoutes(dir, baseRoute = "") {
-  const entries = fs.readdirSync(dir, { withFileTypes: true });
-  let routes = [];
-
-  const hasPage = entries.some(
-    (e) => e.isFile() && /^page\.(js|jsx|ts|tsx)$/.test(e.name)
-  );
-  if (hasPage) routes.push(baseRoute === "" ? "/" : baseRoute);
-
-  for (const entry of entries) {
-    if (!entry.isDirectory()) continue;
-    if (entry.name.startsWith("[")) continue; // rută dinamică ("[id]") — o tratăm separat
-    if (entry.name.startsWith("(")) continue; // route group — nu apare în URL
-    if (entry.name.startsWith("_")) continue; // folder tehnic (ex: _components)
-    if (entry.name === "api") continue; // API routes, nu pagini
-
-    routes = routes.concat(
-      getStaticRoutes(path.join(dir, entry.name), `${baseRoute}/${entry.name}`)
-    );
-  }
-
-  return routes;
+// ADĂUGAT (2026-09-28): next.config.js are `trailingSlash: true` — deci
+// paginile REALE ale site-ului au "/" la final (ex: /about/, nu /about).
+// Sitemap-ul trebuie să dea exact aceleași URL-uri, altfel Google dă peste
+// un redirect inutil de fiecare dată când accesează un link din sitemap.
+function withTrailingSlash(url) {
+  return url.endsWith("/") ? url : `${url}/`;
 }
 
 export default async function sitemap() {
-  // SCHIMBAT (2026-09-28): rutele statice vin acum din scanarea automată a
-  // folderelor, nu dintr-un array scris de mână.
-  const staticRoutes = getStaticRoutes(__dirname).filter(
-    (route) => route !== "/products" // /products e deja acoperit mai jos, cu id-uri reale
-  );
-  // Ne asigurăm că "/products" (fără id) rămâne totuși în sitemap, dacă
-  // folderul lui există (are page.js) — separat de produsele individuale.
-  if (fs.existsSync(path.join(__dirname, "products", "page.js")) ||
-      fs.existsSync(path.join(__dirname, "products", "page.jsx"))) {
-    staticRoutes.push("/products");
-  }
-
-  const staticPages = staticRoutes.map((route) => ({
-    url: `${BASE_URL}${route === "/" ? "" : route}`,
+  const staticPages = STATIC_ROUTES.map((route) => ({
+    url: route === "" ? BASE_URL + "/" : withTrailingSlash(`${BASE_URL}${route}`),
     lastModified: new Date().toISOString(),
     changeFrequency: "weekly",
-    priority: route === "/" ? 1 : 0.8,
+    priority: route === "" ? 1 : 0.8,
   }));
 
   let productPages = [];
   try {
     const products = await getProductsServer();
     productPages = products.map((p) => ({
-      url: `${BASE_URL}/products/${p.id}`,
+      url: withTrailingSlash(`${BASE_URL}/products/${p.id}`),
       lastModified: p.updatedAt
         ? new Date(p.updatedAt.seconds ? p.updatedAt.seconds * 1000 : p.updatedAt).toISOString()
         : new Date().toISOString(),

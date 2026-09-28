@@ -4,7 +4,7 @@ import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useLang } from "../context/LangContext.jsx";
-import { Home, Info, Package, Wrench, Handshake, Newspaper, Phone, Search, X, Warehouse, ShieldAlert, TrendingUp, Truck, FileCheck2 } from "lucide-react";
+import { Home, Info, Package, Wrench, Handshake, Newspaper, Phone, Search, X, Warehouse, ShieldAlert, TrendingUp, Truck, FileCheck2, ShoppingCart } from "lucide-react";
 import { getProducts } from "../lib/getProducts.js";
 import { getSiteSettings } from "../lib/getSiteSettings.js";
 import styles from "./Navbar.module.css";
@@ -63,6 +63,7 @@ function getServiceItemIcon(item) {
   if (item.href === "/marketing") return TrendingUp;
   if (item.href === "/distribution") return Truck;
   if (item.href === "/regulatory") return FileCheck2;
+  if (item.href === "/online-shop") return ShoppingCart;
   return Wrench;
 }
 
