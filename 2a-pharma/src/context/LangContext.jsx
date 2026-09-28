@@ -55,8 +55,12 @@ export const translations = {
       gridTag: "Çfarë ofrojmë",
       gridTitle: "Shërbimet Tona Kryesore",
       items: [
-        { title: "Distribucion", desc: "Shpërndajmë ilace dhe produkte mjekësore në të gjithë Shqipërinë, me logjistikë të shpejtë dhe të besueshme drejt klinikave, spitaleve dhe farmacive." },
-        { title: "Shërbime Rregullatore për Barna", desc: "Ofrojmë mbështetje të plotë rregullatore — regjistrim, dokumentacion dhe përputhshmëri me kërkesat ligjore — për produktet që përfaqësojmë." },
+        // SHTUAR (2026-09-28): la fel ca celelalte, are acum `href` propriu
+        // — hap direkt pagina e dedikuar /distribution.
+        { title: "Distribucion", desc: "Shpërndajmë ilace dhe produkte mjekësore në të gjithë Shqipërinë, me logjistikë të shpejtë dhe të besueshme drejt klinikave, spitaleve dhe farmacive.", href: "/distribution" },
+        // SHTUAR (2026-09-28): la fel ca celelalte, are acum `href` propriu
+        // — hap direkt pagina e dedikuar /regulatory.
+        { title: "Shërbime Rregullatore për Barna", desc: "Ofrojmë mbështetje të plotë rregullatore — regjistrim, dokumentacion dhe përputhshmëri me kërkesat ligjore — për produktet që përfaqësojmë.", href: "/regulatory" },
         // SHTUAR (2026-09-28): la fel ca Magazinimi/Farmakovigjilenca, are
         // acum `href` propriu — hap direkt pagina e dedikuar /marketing.
         { title: "Marketing dhe Shitje", desc: "Ekipi ynë komercial promovon dhe shet produktet me një qasje të orientuar te klienti, ndërtuar mbi njohuri të thella të tregut shqiptar.", href: "/marketing" },
@@ -192,8 +196,8 @@ export const translations = {
       gridTag: "What we offer",
       gridTitle: "Our Core Services",
       items: [
-        { title: "Distribution", desc: "We distribute medical equipment and products across Albania, with fast, reliable logistics to clinics, hospitals and pharmacies." },
-        { title: "Medicine Regulatory Services", desc: "We provide full regulatory support — registration, documentation and compliance with legal requirements — for the products we represent." },
+        { title: "Distribution", desc: "We distribute medical equipment and products across Albania, with fast, reliable logistics to clinics, hospitals and pharmacies.", href: "/distribution" },
+        { title: "Medicine Regulatory Services", desc: "We provide full regulatory support — registration, documentation and compliance with legal requirements — for the products we represent.", href: "/regulatory" },
         { title: "Marketing and Sales", desc: "Our commercial team promotes and sells our products with a customer-focused approach, built on deep knowledge of the Albanian market.", href: "/marketing" },
         { title: "Online Shop", desc: "Order our products directly online, with an up-to-date catalogue and fast delivery anywhere in the country." },
         { title: "Warehousing", desc: "We provide full warehousing and stock management services, with modern infrastructure and compliance with international quality standards.", href: "/warehousing" },
@@ -316,8 +320,8 @@ export const translations = {
       gridTag: "Cosa offriamo",
       gridTitle: "I Nostri Servizi Principali",
       items: [
-        { title: "Distribuzione", desc: "Distribuiamo apparecchiature e prodotti medicali in tutta l'Albania, con una logistica rapida e affidabile verso cliniche, ospedali e farmacie." },
-        { title: "Servizi Regolatori Farmaceutici", desc: "Offriamo supporto regolatorio completo — registrazione, documentazione e conformità normativa — per i prodotti che rappresentiamo." },
+        { title: "Distribuzione", desc: "Distribuiamo apparecchiature e prodotti medicali in tutta l'Albania, con una logistica rapida e affidabile verso cliniche, ospedali e farmacie.", href: "/distribution" },
+        { title: "Servizi Regolatori Farmaceutici", desc: "Offriamo supporto regolatorio completo — registrazione, documentazione e conformità normativa — per i prodotti che rappresentiamo.", href: "/regulatory" },
         { title: "Marketing e Vendite", desc: "Il nostro team commerciale promuove e vende i prodotti con un approccio orientato al cliente, basato su una conoscenza approfondita del mercato albanese.", href: "/marketing" },
         { title: "Negozio Online", desc: "Ordinate i nostri prodotti direttamente online, con un catalogo aggiornato e consegna rapida in tutto il paese." },
         { title: "Magazzinaggio", desc: "Offriamo servizi completi di magazzinaggio e gestione delle scorte, con infrastrutture moderne e conformità agli standard internazionali di qualità.", href: "/warehousing" },
