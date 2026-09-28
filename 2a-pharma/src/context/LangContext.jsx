@@ -57,7 +57,9 @@ export const translations = {
       items: [
         { title: "Distribucion", desc: "Shpërndajmë ilace dhe produkte mjekësore në të gjithë Shqipërinë, me logjistikë të shpejtë dhe të besueshme drejt klinikave, spitaleve dhe farmacive." },
         { title: "Shërbime Rregullatore për Barna", desc: "Ofrojmë mbështetje të plotë rregullatore — regjistrim, dokumentacion dhe përputhshmëri me kërkesat ligjore — për produktet që përfaqësojmë." },
-        { title: "Marketing dhe Shitje", desc: "Ekipi ynë komercial promovon dhe shet produktet me një qasje të orientuar te klienti, ndërtuar mbi njohuri të thella të tregut shqiptar." },
+        // SHTUAR (2026-09-28): la fel ca Magazinimi/Farmakovigjilenca, are
+        // acum `href` propriu — hap direkt pagina e dedikuar /marketing.
+        { title: "Marketing dhe Shitje", desc: "Ekipi ynë komercial promovon dhe shet produktet me një qasje të orientuar te klienti, ndërtuar mbi njohuri të thella të tregut shqiptar.", href: "/marketing" },
         { title: "Dyqan Online", desc: "Porositni produktet tona direkt online, me katalog të përditësuar dhe dërgesë të shpejtë kudo në vend." },
         // SHTUAR (2026-09-28): al 5-lea shërbim — spre deosebim nga celelalte
         // 4 (care çelin /services), ky ka `href` propriu dhe hap direkt
@@ -192,7 +194,7 @@ export const translations = {
       items: [
         { title: "Distribution", desc: "We distribute medical equipment and products across Albania, with fast, reliable logistics to clinics, hospitals and pharmacies." },
         { title: "Medicine Regulatory Services", desc: "We provide full regulatory support — registration, documentation and compliance with legal requirements — for the products we represent." },
-        { title: "Marketing and Sales", desc: "Our commercial team promotes and sells our products with a customer-focused approach, built on deep knowledge of the Albanian market." },
+        { title: "Marketing and Sales", desc: "Our commercial team promotes and sells our products with a customer-focused approach, built on deep knowledge of the Albanian market.", href: "/marketing" },
         { title: "Online Shop", desc: "Order our products directly online, with an up-to-date catalogue and fast delivery anywhere in the country." },
         { title: "Warehousing", desc: "We provide full warehousing and stock management services, with modern infrastructure and compliance with international quality standards.", href: "/warehousing" },
         { title: "Pharmacovigilance", desc: "We manage product safety via the collection, detection, assessment, monitoring, reporting and prevention of adverse effect cases.", href: "/pharmacovigilance" },
@@ -316,7 +318,7 @@ export const translations = {
       items: [
         { title: "Distribuzione", desc: "Distribuiamo apparecchiature e prodotti medicali in tutta l'Albania, con una logistica rapida e affidabile verso cliniche, ospedali e farmacie." },
         { title: "Servizi Regolatori Farmaceutici", desc: "Offriamo supporto regolatorio completo — registrazione, documentazione e conformità normativa — per i prodotti che rappresentiamo." },
-        { title: "Marketing e Vendite", desc: "Il nostro team commerciale promuove e vende i prodotti con un approccio orientato al cliente, basato su una conoscenza approfondita del mercato albanese." },
+        { title: "Marketing e Vendite", desc: "Il nostro team commerciale promuove e vende i prodotti con un approccio orientato al cliente, basato su una conoscenza approfondita del mercato albanese.", href: "/marketing" },
         { title: "Negozio Online", desc: "Ordinate i nostri prodotti direttamente online, con un catalogo aggiornato e consegna rapida in tutto il paese." },
         { title: "Magazzinaggio", desc: "Offriamo servizi completi di magazzinaggio e gestione delle scorte, con infrastrutture moderne e conformità agli standard internazionali di qualità.", href: "/warehousing" },
         { title: "Farmacovigilanza", desc: "Gestiamo la sicurezza del prodotto attraverso la raccolta, il rilevamento, la valutazione, il monitoraggio, la segnalazione e la prevenzione dei casi di effetti avversi.", href: "/pharmacovigilance" },

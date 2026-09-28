@@ -4,7 +4,7 @@ import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useLang } from "../context/LangContext.jsx";
-import { Home, Info, Package, Wrench, Handshake, Newspaper, Phone, Search, X, Warehouse, ShieldAlert } from "lucide-react";
+import { Home, Info, Package, Wrench, Handshake, Newspaper, Phone, Search, X, Warehouse, ShieldAlert, TrendingUp } from "lucide-react";
 import { getProducts } from "../lib/getProducts.js";
 import { getSiteSettings } from "../lib/getSiteSettings.js";
 import styles from "./Navbar.module.css";
@@ -60,6 +60,7 @@ const LANGS = [
 function getServiceItemIcon(item) {
   if (item.href === "/warehousing") return Warehouse;
   if (item.href === "/pharmacovigilance") return ShieldAlert;
+  if (item.href === "/marketing") return TrendingUp;
   return Wrench;
 }
 
