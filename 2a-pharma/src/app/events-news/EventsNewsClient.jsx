@@ -7,7 +7,10 @@ import styles from "./page.module.css";
 
 // Conținut STATIC — nu vine din Firebase (confirmat cu userul). Fiecare
 // element din tx.eventsNews.items are un câmp `type`: "event" sau "news",
-// folosit doar pentru iconița afișată (Calendar / Newspaper).
+// folosit pentru iconița afișată (Calendar / Newspaper) ȘI, din 2026-09-28,
+// pentru un accent de culoare diferit pe fiecare card (verde pentru
+// eveniment, albastru pentru știre) + o linie verticală de "timeline" care
+// leagă vizual cardurile una de alta.
 export default function EventsNewsClient() {
   const { lang, tx } = useLang();
   const items = tx.eventsNews?.items || [];
@@ -47,25 +50,38 @@ export default function EventsNewsClient() {
           </div>
         ) : (
           <div className={styles.list}>
-            {items.map((item, i) => (
-              <div key={i} className={styles.newsCard}>
-                <div className={styles.newsIcon}>
-                  {item.type === "event" ? (
-                    <Calendar size={20} strokeWidth={1.8} />
-                  ) : (
-                    <Newspaper size={20} strokeWidth={1.8} />
-                  )}
-                </div>
-                <div className={styles.newsBody}>
-                  <div className={styles.newsMeta}>
-                    <span className={styles.newsDate}>{item.date}</span>
-                    <span className={styles.newsTag}>{item.tag}</span>
+            {items.map((item, i) => {
+              const isEvent = item.type === "event";
+              return (
+                <div
+                  key={i}
+                  className={`${styles.newsCard} ${isEvent ? styles.newsCardEvent : styles.newsCardNews}`}
+                >
+                  <div className={styles.newsRail}>
+                    <div className={styles.newsIcon}>
+                      {isEvent ? (
+                        <Calendar size={20} strokeWidth={1.8} />
+                      ) : (
+                        <Newspaper size={20} strokeWidth={1.8} />
+                      )}
+                    </div>
+                    {i < items.length - 1 && <div className={styles.newsRailLine} />}
                   </div>
-                  <div className={styles.newsTitle}>{item.title}</div>
-                  <div className={styles.newsDesc}>{item.excerpt}</div>
+                  <div className={styles.newsBody}>
+                    <div className={styles.newsMeta}>
+                      <span className={styles.newsDate}>{item.date}</span>
+                      <span
+                        className={`${styles.newsTag} ${isEvent ? styles.newsTagEvent : styles.newsTagNews}`}
+                      >
+                        {item.tag}
+                      </span>
+                    </div>
+                    <div className={styles.newsTitle}>{item.title}</div>
+                    <div className={styles.newsDesc}>{item.excerpt}</div>
+                  </div>
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         )}
       </div>

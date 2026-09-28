@@ -23,6 +23,11 @@
 .hero {
   display: block;
   width: 100%;
+  /* ADĂUGAT: plasă de siguranță — dacă .heroBgImage nu se încarcă (cale
+     greșită sau fișierul lipsește din public/images/), secțiunea nu se
+     prăbușește la 0px înălțime și titlul suprapus (.heroLeft, poziționat
+     absolut) rămâne vizibil. */
+  min-height: 420px;
   background: linear-gradient(135deg, #EAF7F0 0%, #EDF4FB 55%, #F1FAF4 100%);
   position: relative;
   overflow: hidden;
@@ -615,29 +620,48 @@
   line-height: 1.35;
 }
 
-/* ── OUR MISSION ── */
+/* ── OUR MISSION ──
+   REFĂCUT: JSX-ul (HomeClient.jsx) NU mai pune poza ca background-image —
+   folosește o imagine reală <img className={styles.missionBgImage}>, la
+   fel ca la .hero, ca poza să nu se taie niciodată (nici pe mobil). De
+   asta secțiunea are nevoie de o clasă .missionBgImage (lipsea complet
+   din acest fișier — asta cauza ambele bug-uri: pe desktop titlul/textul
+   dispărea pentru că .missionInner era position:relative în loc de
+   absolute peste imagine, iar pe mobil poza apărea nestilizată/mică
+   pentru că .missionBgImage nu exista deloc). */
 .missionSection {
   position: relative;
-  min-height: 420px;
-  display: flex;
-  align-items: center;
+  display: block;
+  width: 100%;
+  min-height: 420px; /* plasă de siguranță, la fel ca la .hero */
   background-color: #0F2A52;
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
   overflow: hidden;
+}
+
+.missionBgImage {
+  display: block;
+  width: 100%;
+  height: auto;
+  position: relative;
+  z-index: 0;
+  pointer-events: none;
 }
 
 .missionOverlay {
   position: absolute;
   inset: 0;
+  z-index: 1;
   background: linear-gradient(90deg, rgba(10,20,40,0.72) 0%, rgba(10,20,40,0.42) 60%, rgba(10,20,40,0.2) 100%);
   pointer-events: none;
 }
 
 .missionInner {
-  position: relative;
-  z-index: 1;
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   max-width: 620px;
   padding: 60px var(--section-px);
 }
@@ -694,15 +718,27 @@
   line-height: 1.5;
 }
 
-/* ── ABOUT THE COMPANY (stats) ── */
+/* ── ABOUT THE COMPANY (stats) ──
+   SCHIMBAT (2026-09-28): secțiunea e acum un <Link> (rendat ca <a>), deci
+   are nevoie de display:block + width:100% ca să arate identic ca înainte
+   (un <a> e inline by default) + cursor:pointer + o mică animație la
+   hover ca omul să-și dea seama că se poate da click. text-decoration și
+   color:inherit vin deja din reset-ul global (a { ... } din globals.css). */
 .aboutCompanySection {
   position: relative;
+  display: block;
+  width: 100%;
   padding: 80px var(--section-px);
   background-color: #0F2A52;
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
   overflow: hidden;
+  cursor: pointer;
+  transition: filter var(--t-fast);
+}
+.aboutCompanySection:hover {
+  filter: brightness(1.06);
 }
 
 .aboutCompanyOverlay {
@@ -824,17 +860,37 @@
 @media (max-width: 768px) {
   .hero { grid-template-columns: 1fr; }
   .heroRight { display: none; }
-  .heroTitle { font-size: 20px; }
+  .heroTitle {
+    font-size: 13px;
+    line-height: 1.3;
+    margin-bottom: 0;
+    text-shadow: 0 1px 4px rgba(255,255,255,0.6);
+  }
   .productsGrid { grid-template-columns: 1fr; }
   .featuresGrid { grid-template-columns: 1fr 1fr; }
   .heroStats { gap: 20px; }
   .homeSectionTitle, .homeSectionTitleLight { font-size: 26px; }
   .missionTitle { font-size: 30px; }
   .missionInner { max-width: 100%; }
-  /* SCHIMBAT (2026-09-27): pe mobil, padding-ul lateral e mai mic —
-     reducem fracția aplicată pe stânga, ca titlul să nu se lipească de
-     margine pe ecrane mici. */
-  .heroLeft { padding: 60px var(--section-px) 60px calc(var(--section-px) * 0.6); }
+  /* SCHIMBAT (2026-09-28): pe mobil, poza (1920x420) devine foarte scundă
+     la lățimea telefonului, dar .hero avea min-height:420px de la fix-ul
+     anterior — asta lăsa un gol mare, gol, sub poză, până se ajungea la
+     420px, iar linia albastră de sub secțiune apărea mult mai jos decât
+     poza. Scoatem min-height (secțiunea ia acum înălțimea reală a pozei,
+     deci linia de dedesubt vine imediat după ea). La cererea userului,
+     titlul rămâne SUPRAPUS peste poză (nu sub ea) — dar cum poza e acum
+     scundă pe telefon, titlul e mult mai mic și lipit în interior, stânga,
+     ca să încapă complet peste imagine, fără să iasă dedesubt. */
+  .hero { min-height: 0; }
+  .heroLeft {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    max-width: 62%;
+    padding: 10px 0 10px calc(var(--section-px) * 0.55);
+    justify-content: center;
+    align-items: flex-start;
+  }
 .partnersRow {
   display: grid;
   grid-template-columns: repeat(2, 1fr);

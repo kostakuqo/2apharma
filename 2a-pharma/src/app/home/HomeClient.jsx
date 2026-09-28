@@ -6,6 +6,7 @@ import { useLang } from "../../context/LangContext.jsx";
 import { getProducts } from "../../lib/getProducts.js";
 import ProductCard from "../../components/ProductCard.jsx";
 import Map from "../../components/Map.jsx";
+import ServicesGrid from "../../components/ServicesGrid.jsx";
 import styles from "./page.module.css";
 import { db } from "../../lib/firebase.js";
 import { collection, getDocs } from "firebase/firestore";
@@ -28,7 +29,7 @@ const STATS = [
 // NICIODATĂ cu `public/` sau cu numele proiectului (`2a-pharma/...`) în
 // față — acelea nu există ca URL-uri reale în browser. Și calea trebuie
 // mereu între ghilimele (e un string), nu scrisă goală ca mai sus.
-const HERO_IMAGE = "/images/heroimage.png";
+const HERO_IMAGE = "/images/heroimage.jpg";
 
 // ADĂUGATE (2026-09-27): 2 imagini de fundal noi, pentru secțiunile
 // "Our Mission" și "About the Company" adăugate mai jos pe Home — pune
@@ -61,17 +62,11 @@ const FEATURE_ICON_IMAGES = [
 // Company, Figures) — toate STATIC (conținut scris direct în translations,
 // nu Firebase), la fel ca paginile /services și /events-news.
 
-// SCHIMBAT (2026-09-27): Services au acum exact 4 elemente reale
-// (Distribution, Medicine regulatory services, Marketing and sales, Online
-// shop), identice pe /services și pe Home — nu mai e nevoie de un subset
-// de indexi, se randează direct tot `tx.services.items`. Imaginile sunt
-// poziționale, în aceeași ordine ca pe pagina /services.
-const HOME_SERVICE_ICON_IMAGES = [
-  "/images/icons/service-distribution.png",
-  "/images/icons/service-regulatory.png",
-  "/images/icons/service-marketing.png",
-  "/images/icons/service-online-shop.png",
-];
+// SCHIMBAT (2026-09-28): secțiunea de Services de pe Home randează acum
+// componenta partajată <ServicesGrid> (vezi components/ServicesGrid.jsx),
+// aceeași folosită pe pagina /services — conținut ȘI stil identice și
+// sincronizate automat, la cererea userului. Array-ul de imagini de mai
+// jos nu mai e necesar aici (a rămas doar în ServicesGrid.jsx).
 
 const ABOUT_COMPANY_ICON_IMAGES = [
   "/images/icons/about-products.png",
@@ -139,33 +134,26 @@ export default function HomeClient() {
         </section>
 
         {/* ── SERVICES (teaser) ──
-            REVENIT (2026-09-27): pe Home rămâne un grid de 4 carduri
-            (cerc-iconiță sus, titlu dedesubt, fără descriere) — conform
-            screenshot-ului trimis de user — DIFERIT de lista verticală cu
-            descrieri de pe pagina /services (acolo rămâne lista). */}
+            SCHIMBAT (2026-09-28): la cererea userului, secțiunea de pe
+            Home folosește acum EXACT aceeași componentă <ServicesGrid>
+            (cerc-iconiță + index numeric, titlu, liniuță de accent,
+            descriere) ca pagina /services — orice modificare de conținut
+            sau stil făcută acolo apare automat și aici. */}
         <section className={styles.homeServicesSection}>
           <h2 className={styles.homeSectionTitle}>{home.servicesTitle}</h2>
           <div className={styles.homeSectionUnderline} />
-          <div className={styles.homeServicesGrid}>
-            {homeServices.map((s, i) => {
-              const iconSrc = HOME_SERVICE_ICON_IMAGES[i % HOME_SERVICE_ICON_IMAGES.length];
-              return (
-                <div key={i} className={styles.homeServiceItem}>
-                  <div className={styles.homeServiceIconCircle}>
-                    <img src={iconSrc} alt="" className={styles.homeServiceIconImg} />
-                  </div>
-                  <div className={styles.homeServiceItemTitle}>{s.title}</div>
-                </div>
-              );
-            })}
+          <div style={{ marginTop: 44 }}>
+            <ServicesGrid services={homeServices} />
           </div>
         </section>
 
-        {/* ── OUR MISSION ── */}
-        <section
-          className={styles.missionSection}
-          style={{ backgroundImage: `url(${MISSION_IMAGE})` }}
-        >
+        {/* ── OUR MISSION ──
+            SCHIMBAT (2026-09-28): la cererea userului, poza nu mai e
+            background-image + cover (se tăia pe ecrane late de desktop) —
+            acum e o imagine <img> normală, la fel ca la hero, care se
+            vede complet, necropată, indiferent de lățimea ecranului. */}
+        <section className={styles.missionSection}>
+          <img className={styles.missionBgImage} src={MISSION_IMAGE} alt="" />
           <div className={styles.missionOverlay} />
           <div className={styles.missionInner}>
             <h2 className={styles.missionTitle}>{home.mission?.title}</h2>
@@ -191,8 +179,13 @@ export default function HomeClient() {
           </div>
         </section>
 
-        {/* ── ABOUT THE COMPANY (stats) ── */}
-        <section
+        {/* ── ABOUT THE COMPANY (stats) ──
+            SCHIMBAT (2026-09-28): la cererea userului, toată secțiunea
+            (fundal + titlu + cele 3 carduri) e acum un <Link> spre /about
+            — click oriunde în secțiune deschide pagina About, la fel cum
+            s-a făcut deja la ServiceGrid. */}
+        <Link
+          href="/about"
           className={styles.aboutCompanySection}
           style={{ backgroundImage: `url(${ABOUT_COMPANY_IMAGE})` }}
         >
@@ -215,7 +208,7 @@ export default function HomeClient() {
               })}
             </div>
           </div>
-        </section>
+        </Link>
 
         {/* ── FIGURES ── */}
         <section className={styles.figuresSection}>

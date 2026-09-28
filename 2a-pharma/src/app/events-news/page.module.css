@@ -135,13 +135,22 @@
   margin: 0 auto;
 }
 
-/* ─── NEWS / EVENT CARD ─── */
+/* ─── NEWS / EVENT CARD ───
+   REFĂCUT (2026-09-28): stil mai premium, la cererea userului —
+   - accent de culoare pe fiecare card, diferit după tip (verde = eveniment,
+     albastru = știre), printr-o bandă subțire în stânga (border-left) +
+     iconița colorată la fel;
+   - o "coloană" (.newsRail) în stânga cardului cu cercul-iconiță și o
+     linie verticală (.newsRailLine) care leagă vizual cardurile între ele,
+     ca un timeline cronologic;
+   - umbră/hover mai rafinate. */
 .newsCard {
   display: flex;
-  gap: 18px;
+  gap: 20px;
   background: #fff;
   border: 1.5px solid #E8EDF5;
-  border-radius: 18px;
+  border-left: 4px solid #E8EDF5;
+  border-radius: 16px;
   padding: 24px 26px;
   transition: transform 0.28s ease, border-color 0.28s ease, box-shadow 0.28s ease;
   animation: cardIn 0.45s ease both;
@@ -155,9 +164,45 @@
 .newsCard:nth-child(6) { animation-delay: 0.24s; }
 
 .newsCard:hover {
-  transform: translateY(-4px);
-  border-color: rgba(26,138,60,0.25);
-  box-shadow: 0 12px 32px rgba(15,42,82,0.1);
+  transform: translateY(-4px) translateX(2px);
+  box-shadow: 0 14px 36px rgba(15,42,82,0.12);
+}
+
+.newsCardEvent {
+  border-left-color: #28C75A;
+}
+.newsCardEvent:hover {
+  border-color: rgba(26,138,60,0.3);
+  border-left-color: #28C75A;
+}
+
+.newsCardNews {
+  border-left-color: #1E8FD9;
+}
+.newsCardNews:hover {
+  border-color: rgba(30,143,217,0.3);
+  border-left-color: #1E8FD9;
+}
+
+/* ── coloana din stânga: iconiță + linia de timeline ── */
+.newsRail {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.newsRailLine {
+  width: 2px;
+  flex: 1;
+  margin-top: 10px;
+  background: repeating-linear-gradient(
+    to bottom,
+    #E8EDF5 0,
+    #E8EDF5 4px,
+    transparent 4px,
+    transparent 8px
+  );
 }
 
 .newsIcon {
@@ -171,6 +216,18 @@
   justify-content: center;
   color: #1A8A3C;
   flex-shrink: 0;
+}
+
+.newsCardEvent .newsIcon {
+  background: linear-gradient(135deg, #E9FBF0, #F1FDF5);
+  border-color: rgba(40,199,90,0.35);
+  color: #1A8A3C;
+}
+
+.newsCardNews .newsIcon {
+  background: linear-gradient(135deg, #EAF4FD, #F1F8FE);
+  border-color: rgba(30,143,217,0.35);
+  color: #1E8FD9;
 }
 
 .newsBody {
@@ -203,6 +260,16 @@
   border-radius: 999px;
   text-transform: uppercase;
   letter-spacing: 0.05em;
+}
+
+.newsTagEvent {
+  color: #1A8A3C;
+  background: rgba(40,199,90,0.12);
+}
+
+.newsTagNews {
+  color: #1E6FA8;
+  background: rgba(30,143,217,0.12);
 }
 
 .newsTitle {
@@ -307,7 +374,10 @@
   .pageTitle { font-size: 30px; }
   .pageSub { font-size: 14px; }
   .gridWrap { padding: 40px var(--section-px) 50px; }
+  /* pe mobil renunțăm la linia de timeline (nu are loc/sens într-o coloană
+     îngustă) — rămâne doar iconița, deasupra textului cardului */
   .newsCard { flex-direction: column; }
+  .newsRailLine { display: none; }
   .trustBanner { padding: 50px var(--section-px); }
   .trustTitle { font-size: 26px; }
 }

@@ -1,0 +1,141 @@
+/* MUTAT (2026-09-28): grid-ul de carduri de Servicii, mutat din
+   app/services/page.module.css într-un CSS Module propriu, ca să fie
+   partajat de components/ServicesGrid.jsx (folosit pe /services ȘI pe
+   Home). Valorile sunt neschimbate față de varianta de pe /services. */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.servicesGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.serviceCard {
+  background: #fff;
+  border: 1px solid #E8EDF5;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 4px 24px rgba(15,42,82,0.06);
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+  animation: fadeInUp 0.4s ease both;
+}
+
+.serviceCard:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 36px rgba(15,42,82,0.12);
+  border-color: rgba(26,138,60,0.25);
+}
+
+/* ADĂUGAT (2026-09-28), REPOZIȚIONAT la cererea userului: poza stă acum
+   la mijlocul cardului (după titlu, înainte de descriere), ca un
+   dreptunghi rotunjit în interiorul cardului — nu mai e "edge-to-edge". */
+.serviceCardImage {
+  display: block;
+  width: 100%;
+  height: 160px;
+  object-fit: cover;
+  border-radius: 12px;
+  background: #F0F3F8; /* fallback vizibil dacă fișierul de imagine lipsește */
+  margin-bottom: 20px;
+}
+
+.serviceCardBody {
+  padding: 28px 30px 32px;
+}
+
+.serviceCardTop {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.serviceIconCircle {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: #F0FBF4;
+  border: 1px solid #DCF3E3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #1A8A3C;
+  flex-shrink: 0;
+  overflow: hidden;
+  transition: background 0.25s ease, border-color 0.25s ease;
+}
+
+.serviceCard:hover .serviceIconCircle {
+  background: #1A8A3C;
+  border-color: #1A8A3C;
+}
+
+/* Imagine (logo/pictogramă de la designer) în locul iconiței din cod —
+   object-fit: contain ca imaginea să nu fie tăiată/deformată, indiferent
+   de proporțiile fișierului primit. */
+.serviceIconImg {
+  width: 52%;
+  height: 52%;
+  object-fit: contain;
+}
+
+.serviceIndex {
+  font-family: var(--font-serif);
+  font-size: 34px;
+  font-weight: 400;
+  color: #E2E9F2;
+  line-height: 1;
+}
+
+.serviceRowTitle {
+  font-size: 19px;
+  font-weight: 700;
+  color: #0F2A52;
+  margin: 0 0 12px;
+  line-height: 1.3;
+}
+
+.serviceAccent {
+  width: 36px;
+  height: 3px;
+  background: var(--green);
+  border-radius: 2px;
+  margin-bottom: 16px;
+}
+
+.serviceRowDesc {
+  font-size: 14.5px;
+  color: #64748b;
+  line-height: 1.8;
+  margin: 0;
+}
+
+/* ─── EMPTY ─── */
+.emptyState {
+  text-align: center;
+  padding: 80px 20px;
+  color: #94a3b8;
+  font-size: 15px;
+  animation: fadeInUp 0.3s ease both;
+}
+
+.emptyIcon {
+  font-size: 48px;
+  margin-bottom: 16px;
+  opacity: 0.5;
+}
+
+@media (max-width: 900px) {
+  .servicesGrid { grid-template-columns: 1fr; max-width: 560px; }
+}
+
+@media (max-width: 640px) {
+  .servicesGrid { gap: 18px; }
+  .serviceCardImage { height: 130px; }
+  .serviceCardBody { padding: 22px 24px 26px; }
+}

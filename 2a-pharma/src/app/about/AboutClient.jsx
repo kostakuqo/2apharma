@@ -4,6 +4,14 @@ import Link from "next/link";
 import { useLang } from "../../context/LangContext.jsx";
 import styles from "./page.module.css";
 
+// ADĂUGAT (2026-09-28), la cererea userului: poză de fundal pe hero-ul
+// paginii /about — pune fișierul tău real la această cale (sau schimbă
+// calea de mai jos cu numele fișierului tău). Gradientul navy→verde
+// rămâne ca overlay SEMI-TRANSPARENT peste poză (vezi .heroOverlay din
+// CSS), ca titlul alb să rămână lizibil. Dacă fișierul lipsește, hero-ul
+// rămâne cu gradientul plin, ca înainte — nu dă eroare.
+const HERO_IMAGE = "/images/about-hero.jpg";
+
 // ADĂUGAT (2026-09-27): iconițele Misioni/Vizioni/Vlerat/Arritjet au trecut
 // de la lucide-react (SVG generice) la imagini proprii — pune fișierele tale
 // reale la aceste 4 căi, în ordinea Misioni → Vizioni → Vlerat → Arritjet.
@@ -109,7 +117,11 @@ export default function AboutClient() {
     <div className={styles.page}>
 
       {/* ══ HERO ══ */}
-      <div className={styles.hero}>
+      <div
+        className={styles.hero}
+        style={{ backgroundImage: `url(${HERO_IMAGE})` }}
+      >
+        <div className={styles.heroOverlay} />
         <div className={styles.heroInner}>
           <div className={styles.heroLabel}>
             ✦ {tx.about?.label || "About"}

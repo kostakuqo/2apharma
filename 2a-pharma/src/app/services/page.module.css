@@ -75,124 +75,17 @@
 }
 
 /* ─── GRID DE CARDURI ───
-   ÎNLOCUIT (2026-09-27): lista verticală cu rânduri a devenit un grid de
-   carduri pe 2 coloane — cerc-iconiță + index numeric sus, titlu, liniuță
-   de accent verde, descriere. Fundal alb, umbră discretă, ridicare la
-   hover, la fel ca restul cardurilor de pe site. */
-.servicesGrid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 24px;
-  max-width: 1000px;
-  margin: 0 auto;
+   MUTAT (2026-09-28): cardurile efective (cerc-iconiță + index, titlu,
+   liniuță de accent, descriere) au fost mutate în componenta partajată
+   components/ServicesGrid.jsx + ServicesGrid.module.css, folosită și pe
+   Home — aici rămâne doar padding-ul specific paginii /services din jurul
+   grid-ului (pe Home padding-ul vine din .homeServicesSection). */
+.gridWrap {
   padding: 64px var(--section-px) 80px;
-}
-
-.serviceCard {
-  background: #fff;
-  border: 1px solid #E8EDF5;
-  border-radius: 20px;
-  padding: 32px 30px;
-  box-shadow: 0 4px 24px rgba(15,42,82,0.06);
-  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
-  animation: fadeInUp 0.4s ease both;
-}
-
-.serviceCard:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 16px 36px rgba(15,42,82,0.12);
-  border-color: rgba(26,138,60,0.25);
-}
-
-.serviceCardTop {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 20px;
-}
-
-.serviceIconCircle {
-  width: 64px;
-  height: 64px;
-  border-radius: 50%;
-  background: #F0FBF4;
-  border: 1px solid #DCF3E3;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #1A8A3C;
-  flex-shrink: 0;
-  overflow: hidden;
-  transition: background 0.25s ease, border-color 0.25s ease;
-}
-
-.serviceCard:hover .serviceIconCircle {
-  background: #1A8A3C;
-  border-color: #1A8A3C;
-}
-
-/* Imagine (logo/pictogramă de la designer) în locul iconiței din cod —
-   object-fit: contain ca imaginea să nu fie tăiată/deformată, indiferent
-   de proporțiile fișierului primit. */
-.serviceIconImg {
-  width: 52%;
-  height: 52%;
-  object-fit: contain;
-}
-
-.serviceIndex {
-  font-family: var(--font-serif);
-  font-size: 34px;
-  font-weight: 400;
-  color: #E2E9F2;
-  line-height: 1;
-}
-
-.serviceRowTitle {
-  font-size: 19px;
-  font-weight: 700;
-  color: #0F2A52;
-  margin: 0 0 12px;
-  line-height: 1.3;
-}
-
-.serviceAccent {
-  width: 36px;
-  height: 3px;
-  background: var(--green);
-  border-radius: 2px;
-  margin-bottom: 16px;
-}
-
-.serviceRowDesc {
-  font-size: 14.5px;
-  color: #64748b;
-  line-height: 1.8;
-  margin: 0;
-}
-
-/* ─── EMPTY ─── */
-.emptyState {
-  text-align: center;
-  padding: 80px 20px;
-  color: #94a3b8;
-  font-size: 15px;
-  animation: fadeInUp 0.3s ease both;
-}
-
-.emptyIcon {
-  font-size: 48px;
-  margin-bottom: 16px;
-  opacity: 0.5;
-}
-
-@media (max-width: 900px) {
-  .servicesGrid { grid-template-columns: 1fr; max-width: 560px; }
 }
 
 @media (max-width: 640px) {
   .imageHero { min-height: 260px; }
   .imageHeroTitle { font-size: 34px; }
-  .servicesGrid { padding: 48px var(--section-px) 64px; gap: 18px; }
-  .serviceCard { padding: 26px 24px; }
+  .gridWrap { padding: 48px var(--section-px) 64px; }
 }

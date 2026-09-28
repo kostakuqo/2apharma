@@ -73,6 +73,8 @@ export const translations = {
       items: [
         { type: "event", date: "Shtator 2026", tag: "Eveniment", title: "Pjesëmarrje në Panairin Shëndetësor Kombëtar", excerpt: "2A Pharma prezantoi linjën e re të pajisjeve diagnostike në Panairin Shëndetësor Kombëtar në Tiranë." },
         { type: "news", date: "Gusht 2026", tag: "Lajm", title: "Rinovimi i Certifikimit ISO", excerpt: "Kemi rinovuar me sukses certifikimin ISO për cilësi dhe standarde në furnizimin e pajisjeve mjekësore." },
+        { type: "event", date: "Tetor 2026", tag: "Eveniment", title: "Simpoziumi Vjetor i Shoqatës Shqiptare të Distributorëve Farmaceutikë", excerpt: "2A Pharma mori pjesë si anëtare në simpoziumin vjetor organizuar nga Shoqata Shqiptare e Distributorëve Farmaceutikë, i dedikuar standardeve të reja në distribucionin e ilaceve." },
+        { type: "news", date: "Korrik 2026", tag: "Lajm", title: "Partneritet i Ri me një Prodhues Evropian të Ilaçeve Mjekësore", excerpt: "Kemi nënshkruar një marrëveshje partneriteti me një prodhues të njohur evropian të ilaçeve mjekësore, duke zgjeruar gamën e produkteve farmaceutike që ofrojmë në treg." },
       ],
       ctaTitle: "Dëshironi të merrni lajmet tona të para?",
       ctaSub: "Kontaktoni ekipin tonë dhe do t'ju mbajmë të informuar për çdo risi apo eveniment.",
@@ -194,6 +196,8 @@ export const translations = {
       items: [
         { type: "event", date: "September 2026", tag: "Event", title: "Participation in the National Health Expo", excerpt: "2A Pharma presented its new line of diagnostic equipment at the National Health Expo in Tirana." },
         { type: "news", date: "August 2026", tag: "News", title: "ISO Certification Renewed", excerpt: "We successfully renewed our ISO certification for quality and standards in medical equipment supply." },
+        { type: "event", date: "October 2026", tag: "Event", title: "Annual Symposium of the Albanian Pharmaceutical Distributors Association", excerpt: "2A Pharma took part as a member in the annual symposium organized by the Albanian Pharmaceutical Distributors Association, focused on new standards in medicine distribution." },
+        { type: "news", date: "July 2026", tag: "News", title: "New Partnership with a European Medicines Manufacturer", excerpt: "We signed a partnership agreement with a well-known European medicines manufacturer, expanding the range of pharmaceutical products we offer on the market." },
       ],
       ctaTitle: "Want to be the first to know?",
       ctaSub: "Contact our team and we'll keep you posted on every update and event.",
@@ -211,8 +215,8 @@ export const translations = {
         columns: [
           { title: "TECHNICAL SERVICES", items: ["Installation & commissioning", "Preventive maintenance", "Emergency repairs", "Calibration & testing", "Spare parts supply"] },
           { title: "SALES & CONSULTANCY", items: ["Equipment consultancy", "Needs assessment", "Custom solutions", "Flexible financing options"] },
-          // { title: "TRAINING & SUPPORT", items: ["On-site staff training", "User manuals & guides", "Ongoing technical support", "Remote diagnostics"] },
-          // { title: "QUALITY & COMPLIANCE", items: ["Certified products only", "Local regulatory compliance", "CE documentation", "Warranty management"] },
+          { title: "TRAINING & SUPPORT", items: ["On-site staff training", "User manuals & guides", "Ongoing technical support", "Remote diagnostics"] },
+          { title: "QUALITY & COMPLIANCE", items: ["Certified products only", "Local regulatory compliance", "CE documentation", "Warranty management"] },
         ],
       },
       aboutCompany: {
@@ -310,6 +314,8 @@ export const translations = {
       items: [
         { type: "event", date: "Settembre 2026", tag: "Evento", title: "Partecipazione alla Fiera Nazionale della Salute", excerpt: "2A Pharma ha presentato la nuova linea di apparecchiature diagnostiche alla Fiera Nazionale della Salute a Tirana." },
         { type: "news", date: "Agosto 2026", tag: "Notizia", title: "Rinnovata la Certificazione ISO", excerpt: "Abbiamo rinnovato con successo la certificazione ISO per la qualità e gli standard nella fornitura di apparecchiature mediche." },
+        { type: "event", date: "Ottobre 2026", tag: "Evento", title: "Simposio Annuale dell'Associazione Albanese dei Distributori Farmaceutici", excerpt: "2A Pharma ha partecipato come membro al simposio annuale organizzato dall'Associazione Albanese dei Distributori Farmaceutici, dedicato ai nuovi standard nella distribuzione dei farmaci." },
+        { type: "news", date: "Luglio 2026", tag: "Notizia", title: "Nuova Partnership con un Produttore Europeo di Farmaci", excerpt: "Abbiamo firmato un accordo di partnership con un noto produttore europeo di farmaci, ampliando la gamma di prodotti farmaceutici offerti sul mercato." },
       ],
       ctaTitle: "Volete essere i primi a saperlo?",
       ctaSub: "Contattate il nostro team e vi terremo aggiornati su ogni novità ed evento.",

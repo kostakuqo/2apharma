@@ -1,12 +1,16 @@
 "use client";
 
 import { useLang } from "../../context/LangContext.jsx";
+import ServicesGrid from "../../components/ServicesGrid.jsx";
 import styles from "./page.module.css";
 
-// Conținut STATIC — nu vine din Firebase (confirmat cu userul). Iconițele
-// se mapează pozițional pe `tx.services.items`, ca la FEATURE_ICONS din
-// HomeClient.jsx — dacă adaugi/ștergi un serviciu în translations, doar
-// adaugă/șterge și o imagine în array-ul de mai jos, în aceeași ordine.
+// Conținut STATIC — nu vine din Firebase (confirmat cu userul).
+//
+// SCHIMBAT (2026-09-28): grid-ul de carduri (cerc-iconiță + index, titlu,
+// liniuță de accent, descriere) a fost mutat în componenta partajată
+// components/ServicesGrid.jsx, folosită acum și pe secțiunea "Services"
+// de pe Home — un singur loc de adevăr pentru conținut ȘI stil, la
+// cererea userului.
 //
 // LAYOUT (2026-09-27): REDESENAT, la cererea userului, dintr-o listă
 // verticală simplă (rând cu cerc-iconiță în stânga + text) într-un grid de
@@ -21,18 +25,6 @@ import styles from "./page.module.css";
 // fișierul lipsește, secțiunea rămâne cu un fundal navy/verde în gradient —
 // nu dă eroare, dar arată gol până adaugi imaginea.
 const HERO_IMAGE = "/images/services-hero.jpg";
-
-// SCHIMBAT (2026-09-27): iconițele din cod (lucide-react) au fost
-// înlocuite cu imagini reale — designerul le creează separat (logo-uri /
-// pictograme proprii). Pune fișierele la căile de mai jos (sau schimbă
-// căile cu numele reale ale fișierelor primite). Dacă un fișier lipsește,
-// cercul rămâne gol — nu dă eroare.
-const SERVICE_ICON_IMAGES = [
-  "/images/icons/service-distribution.png",
-  "/images/icons/service-regulatory.png",
-  "/images/icons/service-marketing.png",
-  "/images/icons/service-online-shop.png",
-];
 
 const LABELS = {
   al: { tag: "Çfarë Ofrojmë", sub: "Zgjidhje të plota për çdo hallkë të furnizimit me ilace dhe pajisje mjekësore." },
@@ -62,35 +54,18 @@ export default function ServicesClient() {
         </div>
       </div>
 
-      {services.length === 0 ? (
-        <div className={styles.emptyState}>
-          <div className={styles.emptyIcon}>🛠️</div>
-          {lang === "al"
-            ? "Nuk ka shërbime të listuara."
-            : lang === "it"
-              ? "Nessun servizio elencato."
-              : "No services listed."}
-        </div>
-      ) : (
-        <div className={styles.servicesGrid}>
-          {services.map((s, i) => {
-            const iconSrc = SERVICE_ICON_IMAGES[i % SERVICE_ICON_IMAGES.length];
-            return (
-              <div key={i} className={styles.serviceCard}>
-                <div className={styles.serviceCardTop}>
-                  <div className={styles.serviceIconCircle}>
-                    <img src={iconSrc} alt="" className={styles.serviceIconImg} />
-                  </div>
-                  <span className={styles.serviceIndex}>{String(i + 1).padStart(2, "0")}</span>
-                </div>
-                <h3 className={styles.serviceRowTitle}>{s.title}</h3>
-                <div className={styles.serviceAccent} />
-                <p className={styles.serviceRowDesc}>{s.desc}</p>
-              </div>
-            );
-          })}
-        </div>
-      )}
+      <div className={styles.gridWrap}>
+        <ServicesGrid
+          services={services}
+          emptyLabel={
+            lang === "al"
+              ? "Nuk ka shërbime të listuara."
+              : lang === "it"
+                ? "Nessun servizio elencato."
+                : "No services listed."
+          }
+        />
+      </div>
     </div>
   );
 }

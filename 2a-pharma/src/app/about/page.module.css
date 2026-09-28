@@ -13,13 +13,34 @@
   background: #fff;
 }
 
-/* ─── HERO ─── */
+/* ─── HERO ───
+   SCHIMBAT (2026-09-28), la cererea userului: hero-ul are acum și o poză
+   de fundal (vezi HERO_IMAGE din AboutClient.jsx), pusă cu background-image
+   + cover pe .hero. Gradientul navy→verde de dinainte NU a dispărut — a
+   devenit un overlay SEMI-TRANSPARENT (.heroOverlay, mai jos) peste poză,
+   ca titlul alb și textul să rămână lizibile. Dacă poza lipsește,
+   background-color de mai jos păstrează un fundal navy plin, la fel ca
+   înainte. */
 .hero {
-  background: linear-gradient(135deg, #0A1F3D 0%, #0F2A52 60%, #1A3F7A 100%);
+  background-color: #0F2A52;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
   padding: 80px var(--section-px) 100px;
   position: relative;
   overflow: hidden;
   box-shadow: 0 12px 24px -12px rgba(10,20,40,0.35);
+}
+
+/* SCHIMBAT (2026-09-28), la cererea userului: overlay-ul e acum mai
+   închis exact acolo unde stă textul (stânga) și mai transparent spre
+   dreapta, ca poza să rămână vizibilă, dar textul să aibă destul
+   contrast ca să se citească ușor peste o poză aglomerată. */
+.heroOverlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(100deg, rgba(8,18,36,0.94) 0%, rgba(10,26,51,0.9) 35%, rgba(15,42,82,0.72) 65%, rgba(26,63,122,0.5) 100%);
+  pointer-events: none;
 }
 
 .hero::before {
@@ -79,6 +100,7 @@
   line-height: 1.12;
   margin-bottom: 20px;
   letter-spacing: -0.5px;
+  text-shadow: 0 2px 10px rgba(0,0,0,0.35);
 }
 
 .heroTitle span { color: #28C75A; }
@@ -95,16 +117,18 @@
 
 .heroStoryP {
   font-size: 15px;
-  color: rgba(200,217,240,0.8);
+  color: rgba(255,255,255,0.92);
   line-height: 1.85;
   margin: 0;
+  text-shadow: 0 1px 6px rgba(0,0,0,0.3);
 }
 
 .heroSub {
   font-size: 17px;
-  color: rgba(200,217,240,0.85);
+  color: rgba(255,255,255,0.95);
   line-height: 1.8;
   max-width: 580px;
+  text-shadow: 0 1px 6px rgba(0,0,0,0.3);
 }
 
 .statsRow {
@@ -459,7 +483,12 @@
 }
 
 @media (max-width: 600px) {
-  .hero { padding: 60px var(--section-px) 70px; }
+  /* ADĂUGAT (2026-09-28), la cererea userului: pe telefon, "cover" tăia
+     poza (umplea cutia, dar cropa stânga-dreapta/sus-jos). Cu "contain"
+     poza se vede ÎNTREAGĂ, necropată — restul spațiului rămâne cu
+     background-color navy (definit pe .hero), care se potrivește cu
+     gradientul overlay de deasupra, deci nu se observă ca "gol". */
+  .hero { background-size: contain; background-position: top center; padding: 60px var(--section-px) 70px; }
   .heroTitle { font-size: 30px; }
   .heroSub { font-size: 15px; }
   .heroStory { margin-top: 22px; padding-top: 22px; gap: 14px; }
