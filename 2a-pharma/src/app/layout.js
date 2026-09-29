@@ -56,7 +56,7 @@ export const metadata = {
       "Pharmaceutical distribution and healthcare solutions in Albania — GDP-certified products.",
     url: SITE_URL,
     siteName: "2A Pharma",
-    images: [{ url: "/og-image.jpg", width: 1200, height: 630 }],
+    images: [{ url: "/og-image.png", width: 1200, height: 630 }],
     locale: "sq_AL",
     type: "website",
   },
@@ -67,7 +67,7 @@ export const metadata = {
     title: "2A Pharma | Pharma Distribution Company",
     description:
       "Pharmaceutical distribution and healthcare solutions in Albania — GDP-certified products.",
-    images: ["/og-image.jpg"],
+    images: ["/og-image.png"],
   },
 };
 
