@@ -19,6 +19,7 @@ const SERVICES_LINKS = [
   { href: "/pharmacovigilance", al: "Farmakovigjilenca", en: "Pharmacovigilance", it: "Farmacovigilanza" },
   { href: "/marketing", al: "Marketingu", en: "Marketing", it: "Marketing" },
   { href: "/regulatory", al: "Çështje Rregullatore", en: "Regulatory Affairs", it: "Affari Regolatori" },
+  { href: "/quality-compliance", al: "Cilësia & Pajtueshmëria / GDP", en: "Quality & Compliance / GDP", it: "Qualità & Conformità / GDP" },
   { href: "/contact", al: "Shërbimi ndaj Klientit", en: "Customer Care", it: "Assistenza Clienti" },
 ];
 
