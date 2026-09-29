@@ -478,3 +478,21 @@
   .trustBanner { padding: 50px var(--section-px); }
   .trustTitle { font-size: 26px; }
 }
+@media (max-width: 540px) {
+  .imageHeroSub { font-size: 14px; }
+  .gridWrap { padding: 40px var(--section-px) 50px; }
+  .newsCard { flex-direction: column; }
+  .newsRailLine { display: none; }
+  .trustBanner { padding: 50px var(--section-px); }
+  .trustTitle { font-size: 26px; }
+
+  /* ADĂUGAT: pe telefon, toate chip-urile de certificat au aceeași
+     lățime (100% din rând), indiferent de lungimea numelui — nu se mai
+     "strâng" pe conținut. */
+  .newsFileRow {
+    flex-direction: column;
+  }
+  .newsFileChip {
+    width: 100%;
+  }
+}
