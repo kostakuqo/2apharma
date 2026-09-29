@@ -43,10 +43,15 @@ export default function Footer() {
         <div className={styles.brand}>
           {/* SCHIMBAT (2026-09-29): înainte, când logo-ul era setat ca
               "image" din admin, se afișa DOAR poza — tagline-ul de mai jos
-              ("Distribucion Farmaceutik & Zgjidhje Shëndetësore") nu mai
-              apărea deloc. Acum poza (dacă există) se afișează, dar
+              nu mai apărea deloc. Acum poza (dacă există) se afișează, dar
               tagline-ul rămâne mereu vizibil lângă ea, indiferent de tipul
-              de logo setat din admin. */}
+              de logo setat din admin.
+
+              SCHIMBAT (2026-09-29, update): tagline-ul era scris fix
+              ("hardcodat") direct aici, mereu în albaneză, indiferent de
+              limba selectată din navbar. Acum vine tradus din
+              tx.footer.tagline (LangContext.jsx) — se schimbă automat
+              cu limba (AL/EN/IT). */}
           {logo.logoType === "image" && logo.logoImageUrl ? (
             <img
               src={logo.logoImageUrl}
@@ -62,7 +67,7 @@ export default function Footer() {
                 <span>{logo.logoMark || "2A"}</span> {logo.logoText || "Pharma"}
               </div>
             )}
-            <div className={styles.logoSub}>Distribucion Farmaceutik &amp; Zgjidhje Shëndetësore</div>
+            <div className={styles.logoSub}>{tx.footer?.tagline}</div>
           </div>
         </div>
 

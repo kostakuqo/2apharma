@@ -55,26 +55,12 @@ export const translations = {
       gridTag: "Çfarë ofrojmë",
       gridTitle: "Shërbimet Tona Kryesore",
       items: [
-        // SHTUAR (2026-09-28): la fel ca celelalte, are acum `href` propriu
-        // — hap direkt pagina e dedikuar /distribution.
         { title: "Distribucion", desc: "Shpërndajmë ilace dhe produkte farmaceutike në të gjithë Shqipërinë, me logjistikë të shpejtë dhe të besueshme drejt klinikave, spitaleve dhe farmacive.", href: "/distribution" },
-        // SHTUAR (2026-09-28): la fel ca celelalte, are acum `href` propriu
-        // — hap direkt pagina e dedikuar /regulatory.
         { title: "Shërbime Rregullatore për Barna", desc: "Ofrojmë mbështetje të plotë rregullatore — regjistrim, dokumentacion dhe përputhshmëri me kërkesat ligjore — për produktet që përfaqësojmë.", href: "/regulatory" },
-        // SHTUAR (2026-09-28): la fel ca Magazinimi/Farmakovigjilenca, are
-        // acum `href` propriu — hap direkt pagina e dedikuar /marketing.
         { title: "Marketing dhe Shitje", desc: "Ekipi ynë komercial promovon dhe shet produktet me një qasje të orientuar te klienti, ndërtuar mbi njohuri të thella të tregut shqiptar.", href: "/marketing" },
-        // SHTUAR (2026-09-28): la fel ca celelalte, are acum `href` propriu
-        // — hap direkt pagina e dedikuar /online-shop.
         { title: "Dyqan Online", desc: "Porositni produktet tona direkt online, me katalog të përditësuar dhe dërgesë të shpejtë kudo në vend.", href: "/online-shop" },
-        // SHTUAR (2026-09-28): al 5-lea shërbim — spre deosebim nga celelalte
-        // 4 (care çelin /services), ky ka `href` propriu dhe hap direkt
-        // pagina e dedikuar /warehousing (vezi components/ServicesGrid.jsx).
         { title: "Magazinimi", desc: "Ofrojmë shërbime të plota magazinimi dhe menaxhimi të stokut, me infrastrukturë moderne dhe respektim të standardeve ndërkombëtare të cilësisë.", href: "/warehousing" },
         { title: "Farmakovigjilenca", desc: "Menaxhojmë sigurinë e produktit përmes mbledhjes, zbulimit, vlerësimit, monitorimit, raportimit dhe parandalimit të rasteve të efekteve anësore.", href: "/pharmacovigilance" },
-        // SHTUAR (2026-09-29): shërbimi i 7-të — hap direkt pagina e
-        // dedikuar /quality-compliance (organigrama GDP, Responsible
-        // Person, quarantine/release, FEFO, CAPA, etj.).
         { title: "Cilësia & Pajtueshmëria / GDP", desc: "Zbatojmë standardet GDP dhe ISO 9001:2015 në çdo hap — nga magazinimi te shpërndarja — për të garantuar cilësinë dhe sigurinë e produkteve.", href: "/quality-compliance" },
       ],
       ctaTitle: "Keni nevojë për një shërbim specifik?",
@@ -125,14 +111,6 @@ export const translations = {
           { num: "10+", label: "Vjet Përvojë" },
         ],
       },
-      // SCHIMBAT (2026-09-27): reproiectat ca "tabel" de 4 coloane × 3
-      // rânduri me linii verticale de separare (design de referință
-      // trimis de user) — fiecare celulă are un `type`:
-      // "icon" ({icon, label}), "stat" ({num, label}),
-      // "text" ({main, sub}) sau "flag" (fără date, randează steagul).
-      // ADĂUGAT (2026-09-28): al 4-lea stat — "Since 2012" (userul a cerut
-      // count-up animat pentru numere; "2012" se potrivește tiparului
-      // "număr simplu" din CountUpNumber, deci se va anima și el).
       figures: {
         title: "2A Pharma në Shifra",
         stats: [
@@ -143,8 +121,13 @@ export const translations = {
       },
     },
     // ── STATIK — footer (2026-09-27) ──
+    // SHTUAR (2026-09-29): `tagline` — teksti nën logo në footer
+    // ("Distribucion Farmaceutik & Zgjidhje Shëndetësore"). Ishte shkruar
+    // fiks në Footer.jsx (gjithmonë shqip, pavarësisht gjuhës), tani vjen
+    // i përkthyer që këtu.
     footer: {
       copySuffix: "2A Pharma. Të gjitha të drejtat e rezervuara.",
+      tagline: "Distribucion Farmaceutik & Zgjidhje Shëndetësore",
       privacy: "Politika e Privatësisë",
       terms: "Kushtet e Përdorimit",
       sitemap: "Harta e Faqes",
@@ -268,8 +251,13 @@ export const translations = {
       },
     },
     // ── STATIC — footer (2026-09-27) ──
+    // ADDED (2026-09-29): `tagline` — the text under the logo in the
+    // footer ("Pharmaceutical Distribution & Healthcare Solutions"). It
+    // used to be hardcoded in Footer.jsx (always Albanian regardless of
+    // the selected language) — now it comes translated from here.
     footer: {
       copySuffix: "2A Pharma. All rights reserved.",
+      tagline: "Pharmaceutical Distribution & Healthcare Solutions",
       privacy: "Privacy Policy",
       terms: "Terms of Service",
       sitemap: "Sitemap",
@@ -393,8 +381,13 @@ export const translations = {
       },
     },
     // ── STATICA — footer (2026-09-27) ──
+    // AGGIUNTO (2026-09-29): `tagline` — il testo sotto il logo nel
+    // footer ("Distribuzione Farmaceutica & Soluzioni Sanitarie"). Prima
+    // era scritto fisso in Footer.jsx (sempre in albanese, indipendente
+    // dalla lingua selezionata) — ora arriva tradotto da qui.
     footer: {
       copySuffix: "2A Pharma. Tutti i diritti riservati.",
+      tagline: "Distribuzione Farmaceutica & Soluzioni Sanitarie",
       privacy: "Informativa sulla Privacy",
       terms: "Termini di Servizio",
       sitemap: "Mappa del Sito",
