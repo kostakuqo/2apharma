@@ -161,7 +161,7 @@ export const translations = {
       title1: "Your",
       title2: "Pharmaceutical",
       title3: "Distributor",
-      sub: "Your trusted supplier of medications and pharmaceutical products. Certified products for clinics, hospitals and pharmacies.",
+      sub: "Your trusted supplier of medicines and pharmaceutical products. Certified products for clinics, hospitals and pharmacies.",
       btnProducts: "View Products",
       btnContact: "Contact Us",
     },
@@ -193,7 +193,7 @@ export const translations = {
     },
     about: {
       label: "About Us", title: "Who We Are",
-      sub: "A leading company in the supply and distribution of medications and pharmaceutical products in Albania.",
+      sub: "A leading company in the supply and distribution of medicines and pharmaceutical products in Albania.",
     },
     // ── STATIC — Services page (/services) ──
     services: {
@@ -239,7 +239,7 @@ export const translations = {
       servicesTitle: "Services",
       mission: {
         title: "Our Mission",
-        text: "To provide high-quality medications and pharmaceutical products to patients and healthcare institutions across Albania, contributing to the improvement of healthcare.",
+        text: "To provide high-quality medicines and pharmaceutical products to patients and healthcare institutions across Albania, contributing to the improvement of healthcare.",
       },
       expertise: {
         title: "Our Expertise & Range of Services",

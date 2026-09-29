@@ -11,7 +11,7 @@ export const metadata = {
     template: "%s | 2A Pharma",
   },
   description:
-    "Your trusted supplier of medicines and medical equipment. Certified products for clinics, hospitals, and pharmacies in Albania.",
+    "Your trusted supplier of medicines and pharmaceutical products in Albania. Certified products for clinics, hospitals, and pharmacies in Albania.",
   // ADDED (2026-09-29): SEO keywords — not very impactful for modern Google
   // ranking anymore, but some smaller search engines (Bing, etc.) still use
   // them, and there's no downside to including them.
@@ -53,7 +53,7 @@ export const metadata = {
   openGraph: {
     title: "2A Pharma | Pharma Distribution Company",
     description:
-      "Your trusted supplier of medicines and medical equipment. Certified products for clinics, hospitals, and pharmacies in Albania.",
+      "Your trusted supplier of medicines and pharmaceutical products in Albania. Certified products for clinics, hospitals, and pharmacies in Albania.",
     url: SITE_URL,
     siteName: "2A Pharma",
     images: [{ url: "/og-image.png", width: 1200, height: 630 }],
@@ -66,7 +66,7 @@ export const metadata = {
     card: "summary_large_image",
     title: "2A Pharma | Pharma Distribution Company",
     description:
-      "Your trusted supplier of medicines and medical equipment. Certified products for clinics, hospitals, and pharmacies in Albania.",
+      "Your trusted supplier of medicines and pharmaceutical products in Albania. Certified products for clinics, hospitals, and pharmacies in Albania.",
     images: ["/og-image.png"],
   },
 };
