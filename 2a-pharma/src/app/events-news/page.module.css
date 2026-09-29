@@ -315,8 +315,8 @@
    vadă clar — acum 40px, cu un fundal alb + un mic contur, ca logo-ul să
    iasă în evidență și pe chip-ul gri-deschis. */
 .newsFileChipIcon {
-  width: 40px;
-  height: 40px;
+  width: 80px;
+  height: 80px;
   object-fit: contain;
   flex-shrink: 0;
   background: #fff;

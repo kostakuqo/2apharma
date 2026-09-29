@@ -75,10 +75,18 @@ export const translations = {
       gridTitle: "Të Fundit nga 2A Pharma",
       items: [
         { type: "event", date: "Shtator 2026", tag: "Eveniment", title: "Pjesëmarrje në Panairin Shëndetësor Kombëtar", excerpt: "2A Pharma prezantoi gamën e re të produkteve farmaceutike në Panairin Shëndetësor Kombëtar në Tiranë." },
+        // SHTUAR (2026-09-29): certifikata GDP dhe AKBPM u shtuan si `files`
+        // shtesë (krahas 2 ISO-ve ekzistuese). Të dyja kanë `disabled: true`
+        // — chip-i shfaqet me ikonën e tij, por NUK është më link (shih
+        // EventsNewsClient.jsx) — pra nuk çon më te 404 / "Failed to load
+        // PDF document" te click. Kur PDF-i real të jetë gati, hiq DOAR
+        // `, disabled: true` nga rreshti përkatës — pa asnjë ndryshim tjetër
+        // kodi.
         { type: "news", date: "Gusht 2026", tag: "Lajm", title: "Rinovimi i Certifikimeve ISO dhe GDP", excerpt: "Kemi rinovuar me sukses certifikimet tona ISO dhe GDP (Praktika e Mirë e Shpërndarjes) për cilësi dhe standarde në furnizimin e barnave.", files: [
           { name: "Certifikata ISO Nr. 1", url: "/documents/iso-certificate-1.pdf", icon: "/images/icons/cert-iso.png" },
           { name: "Certifikata ISO Nr. 2", url: "/documents/iso-certificate-2.pdf", icon: "/images/icons/cert-iso.png" },
-          { name: "Certifikata GDP", url: "/documents/gdp-certificate.pdf", icon: "/images/icons/cert-gdp.png" },
+          { name: "Certifikata GDP", url: "/documents/gdp-certificate.pdf", icon: "/images/icons/cert-gdp.png", disabled: true },
+          { name: "Certifikata AKBPM", url: "/documents/akbpm-certificate.pdf", icon: "/images/icons/cert-akbpm.png", disabled: true },
         ] },
         { type: "event", date: "Tetor 2026", tag: "Eveniment", title: "Simpoziumi Vjetor i Shoqatës Shqiptare të Distributorëve Farmaceutikë", excerpt: "2A Pharma mori pjesë si anëtare në simpoziumin vjetor organizuar nga Shoqata Shqiptare e Distributorëve Farmaceutikë, i dedikuar standardeve të reja në distribucionin e ilaceve." },
         { type: "news", date: "Korrik 2026", tag: "Lajm", title: "Partneritet i Ri me një Prodhues Evropian të Ilaçeve", excerpt: "Kemi nënshkruar një marrëveshje partneriteti me një prodhues të njohur evropian të ilaçeve, duke zgjeruar gamën e produkteve farmaceutike që ofrojmë në treg." },
@@ -121,10 +129,6 @@ export const translations = {
       },
     },
     // ── STATIK — footer (2026-09-27) ──
-    // SHTUAR (2026-09-29): `tagline` — teksti nën logo në footer
-    // ("Distribucion Farmaceutik & Zgjidhje Shëndetësore"). Ishte shkruar
-    // fiks në Footer.jsx (gjithmonë shqip, pavarësisht gjuhës), tani vjen
-    // i përkthyer që këtu.
     footer: {
       copySuffix: "2A Pharma. Të gjitha të drejtat e rezervuara.",
       tagline: "Distribucion Farmaceutik & Zgjidhje Shëndetësore",
@@ -205,10 +209,18 @@ export const translations = {
       gridTitle: "Latest from 2A Pharma",
       items: [
         { type: "event", date: "September 2026", tag: "Event", title: "Participation in the National Health Expo", excerpt: "2A Pharma presented its new range of pharmaceutical products at the National Health Expo in Tirana." },
+        // ADDED (2026-09-29): GDP and AKBPM certificates added as extra
+        // `files` (alongside the existing 2 ISO ones). Both have
+        // `disabled: true` — the chip still shows with its icon, but it's
+        // no longer a link (see EventsNewsClient.jsx), so it no longer
+        // leads to a 404 / "Failed to load PDF document" on click. Once
+        // the real PDF is ready, just remove `, disabled: true` from that
+        // line — no other code change needed.
         { type: "news", date: "August 2026", tag: "News", title: "ISO and GDP Certifications Renewed", excerpt: "We successfully renewed our ISO and GDP (Good Distribution Practice) certifications for quality and standards in medicines supply.", files: [
           { name: "ISO Certificate No. 1", url: "/documents/iso-certificate-1.pdf", icon: "/images/icons/cert-iso.png" },
           { name: "ISO Certificate No. 2", url: "/documents/iso-certificate-2.pdf", icon: "/images/icons/cert-iso.png" },
-          { name: "GDP Certificate", url: "/documents/gdp-certificate.pdf", icon: "/images/icons/cert-gdp.png" },
+          { name: "GDP Certificate", url: "/documents/gdp-certificate.pdf", icon: "/images/icons/cert-gdp.png", disabled: true },
+          { name: "AKBPM Certificate", url: "/documents/akbpm-certificate.pdf", icon: "/images/icons/cert-akbpm.png", disabled: true },
         ] },
         { type: "event", date: "October 2026", tag: "Event", title: "Annual Symposium of the Albanian Pharmaceutical Distributors Association", excerpt: "2A Pharma took part as a member in the annual symposium organized by the Albanian Pharmaceutical Distributors Association, focused on new standards in medicine distribution." },
         { type: "news", date: "July 2026", tag: "News", title: "New Partnership with a European Medicines Manufacturer", excerpt: "We signed a partnership agreement with a well-known European medicines manufacturer, expanding the range of pharmaceutical products we offer on the market." },
@@ -251,10 +263,6 @@ export const translations = {
       },
     },
     // ── STATIC — footer (2026-09-27) ──
-    // ADDED (2026-09-29): `tagline` — the text under the logo in the
-    // footer ("Pharmaceutical Distribution & Healthcare Solutions"). It
-    // used to be hardcoded in Footer.jsx (always Albanian regardless of
-    // the selected language) — now it comes translated from here.
     footer: {
       copySuffix: "2A Pharma. All rights reserved.",
       tagline: "Pharmaceutical Distribution & Healthcare Solutions",
@@ -335,10 +343,18 @@ export const translations = {
       gridTitle: "Le Ultime da 2A Pharma",
       items: [
         { type: "event", date: "Settembre 2026", tag: "Evento", title: "Partecipazione alla Fiera Nazionale della Salute", excerpt: "2A Pharma ha presentato la nuova gamma di prodotti farmaceutici alla Fiera Nazionale della Salute a Tirana." },
+        // AGGIUNTO (2026-09-29): certificati GDP e AKBPM aggiunti come
+        // `files` extra (oltre ai 2 ISO già esistenti). Entrambi hanno
+        // `disabled: true` — il chip mostra comunque la sua icona, ma non
+        // è più un link (vedi EventsNewsClient.jsx), quindi non porta più
+        // a un 404 / "Failed to load PDF document" al click. Quando il
+        // PDF reale sarà pronto, basta rimuovere `, disabled: true` da
+        // quella riga — nessun'altra modifica al codice.
         { type: "news", date: "Agosto 2026", tag: "Notizia", title: "Rinnovate le Certificazioni ISO e GDP", excerpt: "Abbiamo rinnovato con successo le nostre certificazioni ISO e GDP (Good Distribution Practice) per la qualità e gli standard nella fornitura di farmaci.", files: [
           { name: "Certificato ISO N. 1", url: "/documents/iso-certificate-1.pdf", icon: "/images/icons/cert-iso.png" },
           { name: "Certificato ISO N. 2", url: "/documents/iso-certificate-2.pdf", icon: "/images/icons/cert-iso.png" },
-          { name: "Certificato GDP", url: "/documents/gdp-certificate.pdf", icon: "/images/icons/cert-gdp.png" },
+          { name: "Certificato GDP", url: "/documents/gdp-certificate.pdf", icon: "/images/icons/cert-gdp.png", disabled: true },
+          { name: "Certificato AKBPM", url: "/documents/akbpm-certificate.pdf", icon: "/images/icons/cert-akbpm.png", disabled: true },
         ] },
         { type: "event", date: "Ottobre 2026", tag: "Evento", title: "Simposio Annuale dell'Associazione Albanese dei Distributori Farmaceutici", excerpt: "2A Pharma ha partecipato come membro al simposio annuale organizzato dall'Associazione Albanese dei Distributori Farmaceutici, dedicato ai nuovi standard nella distribuzione dei farmaci." },
         { type: "news", date: "Luglio 2026", tag: "Notizia", title: "Nuova Partnership con un Produttore Europeo di Farmaci", excerpt: "Abbiamo firmato un accordo di partnership con un noto produttore europeo di farmaci, ampliando la gamma di prodotti farmaceutici offerti sul mercato." },
@@ -381,10 +397,6 @@ export const translations = {
       },
     },
     // ── STATICA — footer (2026-09-27) ──
-    // AGGIUNTO (2026-09-29): `tagline` — il testo sotto il logo nel
-    // footer ("Distribuzione Farmaceutica & Soluzioni Sanitarie"). Prima
-    // era scritto fisso in Footer.jsx (sempre in albanese, indipendente
-    // dalla lingua selezionata) — ora arriva tradotto da qui.
     footer: {
       copySuffix: "2A Pharma. Tutti i diritti riservati.",
       tagline: "Distribuzione Farmaceutica & Soluzioni Sanitarie",

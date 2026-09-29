@@ -19,15 +19,22 @@ const HERO_IMAGE = "/images/events-news-hero.jpg";
 // leagă vizual cardurile una de alta.
 //
 // SCHIMBAT (2026-09-28): un item poate avea acum și un câmp opțional
-// `files: [{ name, url }]` — de exemplu cele 2 certificate ISO, ca PDF-uri
-// (nu poze). Dacă există, sub descriere apar niște "chip"-uri cu iconiță de
-// PDF + numele certificatului; click descarcă fișierul direct (atributul
-// `download` de pe <a> — browserul salvează fișierul, nu îl deschide într-un
-// tab nou). Un item fără `files` arată exact ca înainte.
+// `files: [{ name, url, icon }]` — ex. certificatele ISO/GDP/AKBPM, ca
+// PDF-uri (nu poze). Dacă există, sub descriere apar niște "chip"-uri cu
+// iconiță de PDF + numele certificatului.
 //
-// SCHIMBAT (2026-09-29): vechiul .pageHeader (gradient plat) a fost
-// înlocuit cu hero pe bază de imagine reală + overlay, la fel ca pe
-// /services și /partners.
+// SCHIMBAT (2026-09-29): link-ul deschide PDF-ul într-un tab nou
+// (target="_blank"), nu îl mai descarcă direct.
+//
+// ADĂUGAT (2026-09-29): un fișier poate avea acum și `disabled: true` —
+// pentru certificate care încă nu sunt disponibile (ex. GDP/AKBPM, cât
+// timp userul nu a încărcat încă PDF-ul real). La cererea userului,
+// chip-ul arată identic cu cele active (aceeași iconiță, text, stil) —
+// SINGURA diferență e că devine un <div> în loc de <a>, deci la click nu
+// se întâmplă absolut nimic (nu navighează, nu dă 404 / "Failed to load
+// PDF document"). Când PDF-ul real e gata, se scoate doar `disabled: true`
+// din LangContext.jsx și chip-ul redevine link normal — fără nicio altă
+// modificare de cod/stil.
 export default function EventsNewsClient() {
   const { lang, tx } = useLang();
   const items = tx.eventsNews?.items || [];
@@ -102,40 +109,54 @@ export default function EventsNewsClient() {
 
                     {item.files && item.files.length > 0 && (
                       <div className={styles.newsFileRow}>
-                        {item.files.map((f, j) => (
-                          <a
-                            key={j}
-                            href={f.url}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className={styles.newsFileChip}
-                          >
-                            {/* SCHIMBAT (2026-09-28): dacă fișierul are un `icon`
-                                (logo-ul real ISO/GDP, imagine), îl arătăm pe
-                                acela — altfel rămâne iconița generică de
-                                document, ca fallback. */}
-                            {f.icon ? (
-                              <img src={f.icon} alt="" className={styles.newsFileChipIcon} />
-                            ) : (
-                              <FileText size={16} strokeWidth={1.8} />
-                            )}
-                            {/* SCHIMBAT (2026-09-29): link-ul acum DESCHIDE
-                                PDF-ul într-un tab nou (target="_blank"),
-                                nu îl mai descarcă direct — de-asta textul e
-                                acum "Shiko/View/Vedi" (deschide), nu
-                                "Shkarko/Download/Scarica". */}
-                            <span className={styles.newsFileChipText}>
-                              <span className={styles.newsFileChipName}>{f.name}</span>
-                              <span className={styles.newsFileChipMeta}>
-                                PDF ·{" "}
-                                {lang === "al" ? "Shiko" : lang === "it" ? "Vedi" : "View"}
+                        {item.files.map((f, j) => {
+                          const content = (
+                            <>
+                              {f.icon ? (
+                                <img src={f.icon} alt="" className={styles.newsFileChipIcon} />
+                              ) : (
+                                <FileText size={16} strokeWidth={1.8} />
+                              )}
+                              <span className={styles.newsFileChipText}>
+                                <span className={styles.newsFileChipName}>{f.name}</span>
+                                <span className={styles.newsFileChipMeta}>
+                                  PDF ·{" "}
+                                  {lang === "al" ? "Shiko" : lang === "it" ? "Vedi" : "View"}
+                                </span>
                               </span>
-                            </span>
-                            <span className={styles.newsFileChipDownloadDot}>
-                              <Download size={13} strokeWidth={2.5} />
-                            </span>
-                          </a>
-                        ))}
+                              <span className={styles.newsFileChipDownloadDot}>
+                                <Download size={13} strokeWidth={2.5} />
+                              </span>
+                            </>
+                          );
+
+                          // ADĂUGAT (2026-09-29): dacă certificatul nu e încă
+                          // disponibil (`disabled: true`), randăm un <div>
+                          // identic vizual cu chip-ul normal (aceeași clasă,
+                          // fără stil diferit) — dar NU un <a>, deci nu
+                          // navighează nicăieri. La click nu se întâmplă
+                          // absolut nimic, nu mai poate da eroare de PDF
+                          // lipsă / 404.
+                          if (f.disabled) {
+                            return (
+                              <div key={j} className={styles.newsFileChip}>
+                                {content}
+                              </div>
+                            );
+                          }
+
+                          return (
+                            <a
+                              key={j}
+                              href={f.url}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className={styles.newsFileChip}
+                            >
+                              {content}
+                            </a>
+                          );
+                        })}
                       </div>
                     )}
                   </div>
