@@ -405,7 +405,7 @@ export const translations = {
 const LangContext = createContext(null);
 
 export function LangProvider({ children }) {
-  const [lang, setLang] = useState("al");
+  const [lang, setLang] = useState("en");
   const toggle = (code) => setLang(code);
   return (
     <LangContext.Provider value={{ lang, setLang, toggle, tx: translations[lang] }}>
