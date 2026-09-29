@@ -106,7 +106,8 @@ export default function EventsNewsClient() {
                           <a
                             key={j}
                             href={f.url}
-                            download
+                            target="_blank"
+                            rel="noopener noreferrer"
                             className={styles.newsFileChip}
                           >
                             {/* SCHIMBAT (2026-09-28): dacă fișierul are un `icon`
@@ -118,15 +119,16 @@ export default function EventsNewsClient() {
                             ) : (
                               <FileText size={16} strokeWidth={1.8} />
                             )}
-                            {/* SCHIMBAT: numele fișierului + un rând mic
-                                "PDF · Shkarko/Download/Scarica" dedesubt —
-                                ca să fie clar, fără dubiu, că e un document
-                                descărcabil, nu doar o poză/logo. */}
+                            {/* SCHIMBAT (2026-09-29): link-ul acum DESCHIDE
+                                PDF-ul într-un tab nou (target="_blank"),
+                                nu îl mai descarcă direct — de-asta textul e
+                                acum "Shiko/View/Vedi" (deschide), nu
+                                "Shkarko/Download/Scarica". */}
                             <span className={styles.newsFileChipText}>
                               <span className={styles.newsFileChipName}>{f.name}</span>
                               <span className={styles.newsFileChipMeta}>
                                 PDF ·{" "}
-                                {lang === "al" ? "Shkarko" : lang === "it" ? "Scarica" : "Download"}
+                                {lang === "al" ? "Shiko" : lang === "it" ? "Vedi" : "View"}
                               </span>
                             </span>
                             <span className={styles.newsFileChipDownloadDot}>
