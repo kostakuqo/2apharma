@@ -78,21 +78,7 @@ const NAV_ITEMS = [
   { href: "/contact", label: "contact", Icon: Phone },
 ];
 
-// SCHIMBAT (2026-09-29): înainte, valoarea implicită (cât timp se încarcă
-// setarea din Firebase, via getSiteSettings()) era logo-ul TEXT ("2A" +
-// "Pharma"), iar abia după ce venea răspunsul din Firebase logo-ul real
-// (poza) îl înlocuia — exact "flash"-ul de care te-ai plâns (apare 2A,
-// apoi apare iconița). Acum valoarea implicită e deja poza logo-ului real
-// (fișier local, din public/images/logo-2a-pharma.png), deci din primul
-// cadru se vede logo-ul corect. Dacă administratorul setează alt logo din
-// admin, acesta va înlocui poza asta imediat ce se încarcă (fără regres —
-// doar dacă chiar vrei alt logo, setat din admin).
-const DEFAULT_LOGO = {
-  logoType: "image",
-  logoMark: "2A",
-  logoText: "Pharma",
-  logoImageUrl: "/images/logo-2a-pharma.png",
-};
+const DEFAULT_LOGO = { logoType: "text", logoMark: "2A", logoText: "Pharma", logoImageUrl: "" };
 
 export default function Navbar() {
   const { lang, toggle, tx } = useLang();
