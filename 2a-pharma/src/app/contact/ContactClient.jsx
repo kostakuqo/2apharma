@@ -188,7 +188,7 @@ export default function ContactClient() {
                 <div className={styles.infoTitle}>
                   {lang === "al" ? "Adresa" : lang === "it" ? "Indirizzo" : "Address"}
                 </div>
-                <div className={styles.infoText}>Tiranë, Shqipëri</div>
+                <div className={styles.infoText}>Rruga Vidhe Gjata 16, Tiranë 1000, Albania</div>
                 <div className={styles.infoLink}>
                   {locating
                     ? (lang === "al" ? "Duke gjetur vendndodhjen..." : "Getting location...")
