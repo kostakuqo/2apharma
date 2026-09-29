@@ -8,6 +8,20 @@ import styles from "./Footer.module.css";
 
 const DEFAULT_LOGO = { logoType: "text", logoMark: "2A", logoText: "Pharma", logoImageUrl: "" };
 
+// ADĂUGAT (2026-09-29): coloana nouă "Services" din footer — link-uri
+// directe către /services și paginile individuale de servicii. Etichetele
+// sunt ținute aici (nu în LangContext.jsx) pentru simplitate, la fel ca
+// restul textelor din Footer (ex. "Company", "Contact").
+const SERVICES_LINKS = [
+  { href: "/services", al: "Të gjitha Shërbimet", en: "All Services", it: "Tutti i Servizi" },
+  { href: "/warehousing", al: "Magazinimi", en: "Warehousing", it: "Magazzinaggio" },
+  { href: "/distribution", al: "Distribucioni", en: "Distribution", it: "Distribuzione" },
+  { href: "/pharmacovigilance", al: "Farmakovigjilenca", en: "Pharmacovigilance", it: "Farmacovigilanza" },
+  { href: "/marketing", al: "Marketingu", en: "Marketing", it: "Marketing" },
+  { href: "/regulatory", al: "Çështje Rregullatore", en: "Regulatory Affairs", it: "Affari Regolatori" },
+  { href: "/contact", al: "Shërbimi ndaj Klientit", en: "Customer Care", it: "Assistenza Clienti" },
+];
+
 export default function Footer() {
   const { lang, tx } = useLang();
   const [logo, setLogo] = useState(DEFAULT_LOGO);
@@ -26,6 +40,12 @@ export default function Footer() {
       <div className={styles.top}>
 
         <div className={styles.brand}>
+          {/* SCHIMBAT (2026-09-29): înainte, când logo-ul era setat ca
+              "image" din admin, se afișa DOAR poza — tagline-ul de mai jos
+              ("Distribucion Farmaceutik & Zgjidhje Shëndetësore") nu mai
+              apărea deloc. Acum poza (dacă există) se afișează, dar
+              tagline-ul rămâne mereu vizibil lângă ea, indiferent de tipul
+              de logo setat din admin. */}
           {logo.logoType === "image" && logo.logoImageUrl ? (
             <img
               src={logo.logoImageUrl}
@@ -33,16 +53,16 @@ export default function Footer() {
               style={{ height: "44px", width: "auto", objectFit: "contain" }}
             />
           ) : (
-            <>
-              <div className={styles.logoMark}>{logo.logoMark || "2A"}</div>
-              <div>
-                <div className={styles.logoText}>
-                  <span>{logo.logoMark || "2A"}</span> {logo.logoText || "Pharma"}
-                </div>
-                <div className={styles.logoSub}>Pajisje Mjekësore</div>
-              </div>
-            </>
+            <div className={styles.logoMark}>{logo.logoMark || "2A"}</div>
           )}
+          <div>
+            {(logo.logoType !== "image" || !logo.logoImageUrl) && (
+              <div className={styles.logoText}>
+                <span>{logo.logoMark || "2A"}</span> {logo.logoText || "Pharma"}
+              </div>
+            )}
+            <div className={styles.logoSub}>Distribucion Farmaceutik &amp; Zgjidhje Shëndetësore</div>
+          </div>
         </div>
 
         <div className={styles.cols}>
@@ -53,6 +73,19 @@ export default function Footer() {
             <Link href="/products">Consumables</Link>
             <Link href="/products">Mobility</Link>
           </div> */}
+
+          {/* ADĂUGAT (2026-09-29): coloana "Services" — click pe orice link
+              duce direct la pagina respectivă. */}
+          <div className={styles.col}>
+            <div className={styles.colTitle}>
+              {lang === "al" ? "Shërbimet" : lang === "it" ? "Servizi" : "Services"}
+            </div>
+            {SERVICES_LINKS.map((item) => (
+              <Link key={item.href} href={item.href}>
+                {item[lang] || item.en}
+              </Link>
+            ))}
+          </div>
 
           <div className={styles.col}>
             <div className={styles.colTitle}>Company</div>

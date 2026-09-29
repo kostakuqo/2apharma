@@ -7,17 +7,34 @@
   flex-wrap: wrap;
 }
 
-.brand { display: flex; align-items: center; gap: 12px; }
+.brand { display: flex; align-items: center; gap: 14px; }
 
 .logoMark {
   width: 44px; height: 44px; background: var(--green);
   border-radius: var(--r-md); display: flex; align-items: center;
   justify-content: center; color: #fff; font-weight: 700; font-size: 15px;
+  flex-shrink: 0;
 }
 
 .logoText { font-size: 17px; font-weight: 600; color: #fff; }
 .logoText span { color: #28C75A; }
-.logoSub { font-size: 11px; color: #6E87A8; margin-top: 2px; }
+
+/* SCHIMBAT (2026-09-29): tagline-ul ("Distribucion Farmaceutik & Zgjidhje
+   Shëndetësore") era prea mic (11px) și prea estompat (#6E87A8 pe fundal
+   gradient) — abia se citea, arăta ca o eroare de aliniere. Acum e mai
+   mare, mai deschis la culoare (contrast bun pe orice punct al
+   gradientului) și cu litere spațiate ușor, ca un subtitlu de brand real,
+   nu ca un detaliu uitat. max-width îl ține pe 1-2 rânduri controlate
+   lângă logo, nu întins pe toată lățimea. */
+.logoSub {
+  font-size: 13px;
+  font-weight: 500;
+  color: rgba(255,255,255,0.82);
+  letter-spacing: 0.01em;
+  line-height: 1.4;
+  margin-top: 3px;
+  max-width: 260px;
+}
 
 .cols { display: flex; gap: 52px; flex-wrap: wrap; }
 

@@ -191,9 +191,9 @@ export default function DistributionClient() {
         </div>
 
         {/* ── Diagrama GDP ── */}
-        <div className={styles.diagramCard}>
+        {/* <div className={styles.diagramCard}>
           <img src={GDP_DIAGRAM_IMAGE} alt="GDP" className={styles.diagramImage} />
-        </div>
+        </div> */}
 
         {/* ── Text de închidere ── */}
         <div className={styles.card} style={{ maxWidth: 1100 }}>
