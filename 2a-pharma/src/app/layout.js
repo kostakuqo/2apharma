@@ -53,7 +53,7 @@ export const metadata = {
   openGraph: {
     title: "2A Pharma | Pharma Distribution Company",
     description:
-      "Pharmaceutical distribution and healthcare solutions in Albania — GDP-certified products.",
+      "Your trusted supplier of professional medicines and medical equipment. Certified products for clinics, hospitals, and pharmacies in Albania.",
     url: SITE_URL,
     siteName: "2A Pharma",
     images: [{ url: "/og-image.png", width: 1200, height: 630 }],
@@ -66,7 +66,7 @@ export const metadata = {
     card: "summary_large_image",
     title: "2A Pharma | Pharma Distribution Company",
     description:
-      "Pharmaceutical distribution and healthcare solutions in Albania — GDP-certified products.",
+      "Your trusted supplier of professional medicines and medical equipment. Certified products for clinics, hospitals, and pharmacies in Albania.",
     images: ["/og-image.png"],
   },
 };
