@@ -8,79 +8,72 @@
   background: #fff;
 }
 
-
-.pageHeader {
-  background: linear-gradient(135deg, #0A1F3D 0%, #0F2A52 60%, #1A3F7A 100%);
-  padding: 64px var(--section-px) 72px;
+/* ─── HERO CU IMAGINE + TITLU SUPRAPUS ───
+   SCHIMBAT (2026-09-29): înlocuit vechiul .pageHeader (gradient plat) cu
+   hero pe bază de imagine reală + overlay gradient navy→verde, la fel ca
+   pe /services, /partners și /events-news. */
+.imageHero {
   position: relative;
+  min-height: 340px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #0F2A52; /* fallback dacă imaginea lipsește */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
   overflow: hidden;
 }
 
-.pageHeader::before {
-  content: "";
+.imageHeroOverlay {
   position: absolute;
-  width: 500px;
-  height: 500px;
-  border-radius: 50%;
-  background: rgba(40,199,90,0.07);
-  filter: blur(100px);
-  top: -150px;
-  right: -80px;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(10,20,40,0.82) 0%, rgba(15,42,82,0.65) 55%, rgba(26,138,60,0.55) 100%);
   pointer-events: none;
 }
 
-.pageHeader::after {
-  content: "";
-  position: absolute;
-  width: 300px;
-  height: 300px;
-  border-radius: 50%;
-  background: rgba(26,63,122,0.5);
-  filter: blur(60px);
-  bottom: -80px;
-  left: -40px;
-  pointer-events: none;
-}
-
-.pageHeaderInner {
+.imageHeroInner {
   position: relative;
   z-index: 1;
-  max-width: 700px;
+  max-width: 640px;
+  padding: 0 var(--section-px);
+  text-align: center;
   animation: fadeInUp 0.45s ease both;
 }
 
-.heroTag {
+.imageHeroTag {
   display: inline-flex;
   align-items: center;
   gap: 7px;
-  padding: 5px 14px;
+  padding: 6px 14px;
   background: rgba(40,199,90,0.15);
   border: 1px solid rgba(40,199,90,0.35);
   border-radius: 999px;
-  font-size: 18px;
+  font-size: 13px;
   font-weight: 700;
   color: #7DD9A0;
   text-transform: uppercase;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.08em;
   margin-bottom: 20px;
 }
 
-.pageTitle {
+.imageHeroTitle {
   font-family: var(--font-serif);
-  font-size: 52px;
+  font-size: 48px;
   font-weight: 400;
   color: #fff;
-  margin-bottom: 14px;
-  line-height: 1.1;
   letter-spacing: -0.5px;
+  margin: 0 0 14px;
+  line-height: 1.1;
 }
 
-.pageTitle span { color: #28C75A; }
+.imageHeroTitle span { color: #28C75A; }
 
-.pageSub {
+.imageHeroSub {
   font-size: 16px;
-  color: rgba(200,217,240,0.85);
-  line-height: 1.8;
+  color: rgba(220,232,250,0.88);
+  line-height: 1.7;
+  margin: 0 auto;
   max-width: 500px;
 }
 
@@ -297,14 +290,16 @@
 
 @media (max-width: 900px) {
   .grid { grid-template-columns: 1fr; }
-  .pageTitle { font-size: 38px; }
+  .imageHeroTitle { font-size: 38px; }
+}
+
+@media (max-width: 640px) {
+  .imageHero { min-height: 260px; }
 }
 
 @media (max-width: 600px) {
-  .pageHeader { padding: 50px var(--section-px) 60px; }
-  .heroTag { font-size: 13px; }
-  .pageTitle { font-size: 30px; }
-  .pageSub { font-size: 14px; }
+  .imageHeroTitle { font-size: 30px; }
+  .imageHeroSub { font-size: 14px; }
   .contentWrap { padding: 36px var(--section-px); }
   .formCard { padding: 24px; gap: 16px; }
   .mapWrap { padding: 0 var(--section-px) 40px; }

@@ -1,8 +1,9 @@
 import RegulatoryClient from "./RegulatoryClient.jsx";
 
 export const metadata = {
-  title: "Shërbime Rregullatore për Barna | 2A Pharma",
-  description: "Mbështetje e specializuar për partnerët farmaceutikë në proceset rregullatore dhe menaxhimin e portofolit të barnave në tregun shqiptar.",
+  title: "Pharmaceutical Regulatory Services | 2A Pharma",
+  description: "Specialized support for pharmaceutical partners in regulatory processes and medicine portfolio management in the Albanian market.",
+  alternates: { canonical: "https://2a-pharma.al/regulatory/" },
 };
 
 export default function RegulatoryPage() {

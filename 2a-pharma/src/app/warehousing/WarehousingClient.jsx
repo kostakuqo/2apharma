@@ -46,6 +46,13 @@ const CONTENT = {
       "Dhomë e ftohtë: 2°–8°C",
       "Ilaçe të kontrolluara dhe të rrezikshme (Narkotike & Psikotrope)",
       "Ruajtje mostrash mjekësore dhe materialesh promocionale",
+      "Monitorim i vazhdueshëm i temperaturës",
+      "Sisteme alarmi dhe menaxhim i devijimeve të temperaturës",
+      "Kalibrim periodik i sensorëve dhe pajisjeve të monitorimit",
+      "Regjistrim dhe ruajtje elektronike e të dhënave të temperaturës",
+      "Përdorim i regjistruesve elektronikë të temperaturës",
+      "Kuti dhe mjete transporti të validuara për temperaturë të kontrolluar",
+      "Gjurmueshmëri dhe dokumentim i plotë i kushteve të temperaturës gjatë ruajtjes dhe transportit",
     ],
     servicesTitle: "Shërbimet e Magazinimit",
     services: [
@@ -63,7 +70,7 @@ const CONTENT = {
       "Shpejtësi e lartë dhe gjurmueshmëri",
       "Mbështetje për shërbimin ndaj klientit",
       "Mbështetje e plotë nga një ekip profesionist IT",
-      
+
     ],
     ctaTitle: "Keni nevojë për shërbime magazinimi?",
     ctaSub: "Na tregoni për çfarë keni nevojë dhe ekipi ynë do t'ju kontaktojë brenda 24 orësh.",
@@ -89,7 +96,7 @@ const CONTENT = {
     proceduresTitle: "Warehousing Procedures",
     proceduresIntro: (
       <>
-        
+
         <strong>Quality management system ISO 9001:2015</strong>, we offer all storage
         categories based on EU standards:
       </>
@@ -99,6 +106,13 @@ const CONTENT = {
       "Cold room storage: 2°–8°C",
       "Controlled drugs & hazardous drugs (Narcotic & Psychotropic drugs)",
       "Medical samples & promotional material storage",
+      "Continuous temperature monitoring",
+      "Alarm systems and temperature excursion management",
+      "Periodic calibration of sensors and monitoring equipment",
+      "Electronic recording and storage of temperature data",
+      "Use of electronic temperature data loggers",
+      "Validated containers and transport vehicles for controlled temperature",
+      "Full traceability and documentation of temperature conditions during storage and transport",
     ],
     servicesTitle: "Warehousing Services",
     services: [
@@ -116,7 +130,7 @@ const CONTENT = {
       "High speed and traceability",
       "Customer service support",
       "Full support by a professional IT team",
-      
+
     ],
     ctaTitle: "Need warehousing services?",
     ctaSub: "Tell us what you need and our team will contact you within 24 hours.",
@@ -142,7 +156,7 @@ const CONTENT = {
     proceduresTitle: "Procedure di Magazzinaggio",
     proceduresIntro: (
       <>
-       
+
         <strong>Sistema di gestione della qualità ISO 9001:2015</strong>, offriamo tutte
         le categorie di stoccaggio secondo gli standard UE:
       </>
@@ -152,6 +166,13 @@ const CONTENT = {
       "Cella frigorifera: 2°–8°C",
       "Farmaci controllati e pericolosi (Narcotici & Psicotropi)",
       "Stoccaggio di campioni medici e materiale promozionale",
+      "Monitoraggio continuo della temperatura",
+      "Sistemi di allarme e gestione delle deviazioni di temperatura",
+      "Calibrazione periodica dei sensori e delle apparecchiature di monitoraggio",
+      "Registrazione e conservazione elettronica dei dati di temperatura",
+      "Utilizzo di data logger elettronici della temperatura",
+      "Contenitori e mezzi di trasporto validati per temperatura controllata",
+      "Tracciabilità e documentazione complete delle condizioni di temperatura durante lo stoccaggio e il trasporto",
     ],
     servicesTitle: "Servizi di Magazzinaggio",
     services: [
@@ -169,7 +190,7 @@ const CONTENT = {
       "Alta velocità e tracciabilità",
       "Assistenza clienti",
       "Supporto completo da un team IT professionale",
-      
+
     ],
     ctaTitle: "Avete bisogno di servizi di magazzinaggio?",
     ctaSub: "Diteci di cosa avete bisogno e il nostro team vi contatterà entro 24 ore.",
@@ -200,7 +221,7 @@ export default function WarehousingClient() {
           </div>
         </div>
 
-        {/* ── Warehousing Procedures ── */}
+        {/* ── Warehousing Procedures (aici apar 15°–25°C / 2°–8°C) ── */}
         <div className={styles.card}>
           <h2 className={styles.cardTitle}>{c.proceduresTitle}</h2>
           <p className={styles.cardIntro}>{c.proceduresIntro}</p>

@@ -7,6 +7,7 @@ import { getProducts } from "../../lib/getProducts.js";
 import ProductCard from "../../components/ProductCard.jsx";
 import Map from "../../components/Map.jsx";
 import ServicesGrid from "../../components/ServicesGrid.jsx";
+import { Download } from "lucide-react";
 import styles from "./page.module.css";
 import { db } from "../../lib/firebase.js";
 import { collection, getDocs } from "firebase/firestore";
@@ -192,25 +193,43 @@ export default function HomeClient() {
           <a href="/documents/iso-certificate-1.pdf" download className={styles.certBadgeItem}>
             <div className={styles.certBadge}>
               <img src="/images/icons/cert-iso.png" alt="ISO" className={styles.certBadgeIcon} />
+              <span className={styles.certBadgeDownloadDot}>
+                <Download size={12} strokeWidth={2.5} />
+              </span>
             </div>
             <span className={styles.certBadgeLabel}>
               {lang === "al" ? "ISO 9001 : 2015 " : lang === "it" ? "ISO 9001 : 2015 " : "ISO 9001 : 2015"}
+            </span>
+            <span className={styles.certBadgeHint}>
+              {lang === "al" ? "Shkarko PDF" : lang === "it" ? "Scarica PDF" : "Download PDF"}
             </span>
           </a>
           <a href="/documents/iso-certificate-2.pdf" download className={styles.certBadgeItem}>
             <div className={styles.certBadge}>
               <img src="/images/icons/cert-iso.png" alt="ISO" className={styles.certBadgeIcon} />
+              <span className={styles.certBadgeDownloadDot}>
+                <Download size={12} strokeWidth={2.5} />
+              </span>
             </div>
             <span className={styles.certBadgeLabel}>
               {lang === "al" ? "ISO 9001 : 2015 " : lang === "it" ? "ISO 9001 : 2015 " : "ISO 9001 : 2015"}
+            </span>
+            <span className={styles.certBadgeHint}>
+              {lang === "al" ? "Shkarko PDF" : lang === "it" ? "Scarica PDF" : "Download PDF"}
             </span>
           </a>
           <a href="/documents/gdp-certificate.pdf" download className={styles.certBadgeItem}>
             <div className={styles.certBadge}>
               <img src="/images/icons/cert-gdp.png" alt="GDP" className={styles.certBadgeIcon} />
+              <span className={styles.certBadgeDownloadDot}>
+                <Download size={12} strokeWidth={2.5} />
+              </span>
             </div>
             <span className={styles.certBadgeLabel}>
               {lang === "al" ? "Certifikata GDP" : lang === "it" ? "Certificato GDP" : "GDP Certificate"}
+            </span>
+            <span className={styles.certBadgeHint}>
+              {lang === "al" ? "Shkarko PDF" : lang === "it" ? "Scarica PDF" : "Download PDF"}
             </span>
           </a>
           {/* ADĂUGAT (2026-09-28): a 4-a iconiță — certificat AKBPM.
@@ -220,9 +239,15 @@ export default function HomeClient() {
           <a href="/documents/akbpm-certificate.pdf" download className={styles.certBadgeItem}>
             <div className={styles.certBadge}>
               <img src="/images/icons/cert-akbpm.png" alt="AKBPM" className={styles.certBadgeIcon} />
+              <span className={styles.certBadgeDownloadDot}>
+                <Download size={12} strokeWidth={2.5} />
+              </span>
             </div>
             <span className={styles.certBadgeLabel}>
               {lang === "al" ? "Certifikata AKBPM" : lang === "it" ? "Certificato AKBPM" : "AKBPM Certificate"}
+            </span>
+            <span className={styles.certBadgeHint}>
+              {lang === "al" ? "Shkarko PDF" : lang === "it" ? "Scarica PDF" : "Download PDF"}
             </span>
           </a>
         </div>

@@ -586,6 +586,7 @@
 }
 
 .certBadge {
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -610,12 +611,52 @@
   padding: 10px;
 }
 
+/* ADĂUGAT: bulină de download suprapusă în colțul din dreapta-jos al
+   iconiței — ca omul să înțeleagă imediat, vizual, că e un document care
+   se descarcă la click, nu doar o poză decorativă. */
+.certBadgeDownloadDot {
+  position: absolute;
+  bottom: -6px;
+  right: -6px;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: #1E8FD9;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 8px rgba(15,42,82,0.28);
+  border: 2px solid #fff;
+  transition: transform 0.2s ease, background 0.2s ease;
+}
+
+.certBadgeItem:hover .certBadgeDownloadDot {
+  background: #28C75A;
+  transform: scale(1.12);
+}
+
 .certBadgeLabel {
   font-size: 12.5px;
   font-weight: 600;
   color: #0F2A52;
   text-align: center;
   line-height: 1.35;
+}
+
+/* ADĂUGAT: linie mică, sub eticheta certificatului — spune explicit
+   "Shkarko PDF / Download PDF / Scarica PDF", ca să nu rămână loc de
+   ambiguitate că iconița e doar decorativă. */
+.certBadgeHint {
+  font-size: 10.5px;
+  font-weight: 700;
+  color: #94a3b8;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.certBadgeItem:hover .certBadgeHint {
+  color: #1E8FD9;
 }
 
 /* ── SERVICES (teaser) ──

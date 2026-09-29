@@ -7,6 +7,12 @@ import { collection, getDocs } from "firebase/firestore";
 import { useLang } from "../../context/LangContext.jsx";
 import styles from "./page.module.css";
 
+// IMAGINEA HERO: pune fișierul tău la această cale (sau schimbă calea de
+// mai jos cu numele real al fișierului tău). Dimensiune recomandată:
+// 1920x640px, JPG optimizat. Dacă fișierul lipsește, secțiunea rămâne cu
+// un fundal navy în gradient (fallback din CSS) — nu dă eroare.
+const HERO_IMAGE = "/images/partners-hero.jpg";
+
 const TRUST = {
   al: {
     title: "Deshiron të bëhesh partner ynë?",
@@ -60,15 +66,19 @@ export default function PartnersClient() {
 
   return (
     <div className={styles.page}>
-      <div className={styles.pageHeader}>
-        <div className={styles.pageHeaderInner}>
-          <div className={styles.heroTag}>✦ {tx.partners?.label || "Partners"}</div>
-          <h1 className={styles.pageTitle}>
+      <div
+        className={styles.imageHero}
+        style={{ backgroundImage: `url(${HERO_IMAGE})` }}
+      >
+        <div className={styles.imageHeroOverlay} />
+        <div className={styles.imageHeroInner}>
+          <div className={styles.imageHeroTag}>✦ {tx.partners?.label || "Partners"}</div>
+          <h1 className={styles.imageHeroTitle}>
             {lang === "al" ? <>Partnerët <span>Tanë</span></> :
               lang === "it" ? <>I Nostri <span>Partner</span></> :
                 <>Our <span>Partners</span></>}
           </h1>
-          <p className={styles.pageSub}>
+          <p className={styles.imageHeroSub}>
             {lang === "al"
               ? "Bashkëpunojmë me organizatat kryesore shëndetësore në Shqipëri."
               : lang === "it"
@@ -174,7 +184,6 @@ export default function PartnersClient() {
                   <div className={styles.partnerName}>
                     {p.name}
                   </div>
-
 
                 </div>
 

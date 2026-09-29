@@ -14,81 +14,74 @@
   background: #fff;
 }
 
-/* ─── HERO HEADER ─── */
-.pageHeader {
-  background: linear-gradient(135deg, #0A1F3D 0%, #0F2A52 60%, #1A3F7A 100%);
-  padding: 64px var(--section-px) 72px;
+/* ─── HERO CU IMAGINE + TITLU SUPRAPUS ───
+   SCHIMBAT (2026-09-29): înlocuit vechiul .pageHeader (gradient plat) cu
+   hero pe bază de imagine reală + overlay gradient navy→verde, la fel ca
+   pe /services și /partners — cu tag mic, titlu și subtitlu suprapuse. */
+.imageHero {
   position: relative;
+  min-height: 340px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #0F2A52; /* fallback dacă imaginea lipsește */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
   overflow: hidden;
   box-shadow: 0 -16px 48px rgba(15, 42, 82, 0.18);
   z-index: 1;
 }
 
-.pageHeader::before {
-  content: "";
+.imageHeroOverlay {
   position: absolute;
-  width: 500px;
-  height: 500px;
-  border-radius: 50%;
-  background: rgba(40,199,90,0.07);
-  filter: blur(100px);
-  top: -150px;
-  right: -80px;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(10,20,40,0.82) 0%, rgba(15,42,82,0.65) 55%, rgba(26,138,60,0.55) 100%);
   pointer-events: none;
 }
 
-.pageHeader::after {
-  content: "";
-  position: absolute;
-  width: 300px;
-  height: 300px;
-  border-radius: 50%;
-  background: rgba(26,63,122,0.5);
-  filter: blur(60px);
-  bottom: -80px;
-  left: -40px;
-  pointer-events: none;
-}
-
-.pageHeaderInner {
+.imageHeroInner {
   position: relative;
   z-index: 1;
-  max-width: 700px;
+  max-width: 640px;
+  padding: 0 var(--section-px);
+  text-align: center;
   animation: fadeInUp 0.45s ease both;
 }
 
-.heroTag {
+.imageHeroTag {
   display: inline-flex;
   align-items: center;
   gap: 7px;
-  padding: 5px 14px;
+  padding: 6px 14px;
   background: rgba(40,199,90,0.15);
   border: 1px solid rgba(40,199,90,0.35);
   border-radius: 999px;
-  font-size: 16px;
+  font-size: 13px;
   font-weight: 700;
   color: #7DD9A0;
   text-transform: uppercase;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.08em;
   margin-bottom: 20px;
 }
 
-.pageTitle {
+.imageHeroTitle {
   font-family: var(--font-serif);
-  font-size: 52px;
+  font-size: 48px;
   font-weight: 400;
   color: #fff;
-  margin-bottom: 14px;
-  line-height: 1.1;
   letter-spacing: -0.5px;
+  margin: 0 0 14px;
+  line-height: 1.1;
 }
 
-.pageTitle span { color: #28C75A; }
+.imageHeroTitle span { color: #28C75A; }
 
-.pageSub {
+.imageHeroSub {
   font-size: 16px;
-  color: rgba(200,217,240,0.85);
-  line-height: 1.8;
+  color: rgba(220,232,250,0.88);
+  line-height: 1.7;
+  margin: 0 auto;
   max-width: 500px;
 }
 
@@ -300,17 +293,17 @@
 .newsFileChip {
   display: inline-flex;
   align-items: center;
-  gap: 10px;
-  padding: 8px 16px 8px 10px;
+  gap: 12px;
+  padding: 10px 14px 10px 10px;
   background: #F8FAFC;
   border: 1.5px solid #E8EDF5;
-  border-radius: 12px;
+  border-radius: 14px;
   font-size: 13px;
   font-weight: 600;
   color: #0F2A52;
   text-decoration: none;
   cursor: pointer;
-  transition: border-color 0.2s ease, background 0.2s ease, transform 0.2s ease;
+  transition: border-color 0.2s ease, background 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .newsFileChip svg:first-child {
@@ -332,15 +325,59 @@
   border: 1px solid #E8EDF5;
 }
 
+/* ADĂUGAT: nume fișier + rând mic "PDF · Shkarko/Download/Scarica" dedesubt
+   — text pe 2 rânduri în loc de un singur <span>, ca să fie clar, fără
+   dubiu, că fiecare chip e un document descărcabil. */
+.newsFileChipText {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.newsFileChipName {
+  color: #0F2A52;
+  white-space: nowrap;
+}
+
+.newsFileChipMeta {
+  font-size: 10.5px;
+  font-weight: 700;
+  color: #94a3b8;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.newsFileChip:hover .newsFileChipMeta {
+  color: #1E8FD9;
+}
+
 .newsFileChip:hover {
   background: #EAF4FD;
   border-color: rgba(30,143,217,0.4);
   transform: translateY(-2px);
+  box-shadow: 0 8px 22px rgba(15,42,82,0.1);
 }
 
-.newsFileChipDownloadIcon {
-  color: #94a3b8;
-  margin-left: 2px;
+/* ÎNLOCUIT: era o simplă iconiță de download lângă text — acum e o bulină
+   colorată (la fel ca pe Home), consistentă vizual în tot site-ul, care
+   marchează clar acțiunea de download. */
+.newsFileChipDownloadDot {
+  flex-shrink: 0;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: #1E8FD9;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s ease, background 0.2s ease;
+}
+
+.newsFileChip:hover .newsFileChipDownloadDot {
+  background: #28C75A;
+  transform: scale(1.1);
 }
 
 /* ─── EMPTY ─── */
@@ -426,10 +463,13 @@
   box-shadow: 0 8px 28px rgba(40,199,90,0.35);
 }
 
+@media (max-width: 640px) {
+  .imageHero { min-height: 260px; }
+  .imageHeroTitle { font-size: 30px; }
+}
+
 @media (max-width: 540px) {
-  .pageHeader { padding: 50px var(--section-px) 60px; }
-  .pageTitle { font-size: 30px; }
-  .pageSub { font-size: 14px; }
+  .imageHeroSub { font-size: 14px; }
   .gridWrap { padding: 40px var(--section-px) 50px; }
   /* pe mobil renunțăm la linia de timeline (nu are loc/sens într-o coloană
      îngustă) — rămâne doar iconița, deasupra textului cardului */

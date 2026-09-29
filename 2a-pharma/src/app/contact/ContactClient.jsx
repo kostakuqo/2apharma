@@ -8,6 +8,12 @@ import Map from "../../components/Map.jsx";
 import { collection, addDoc, serverTimestamp } from "firebase/firestore";
 import styles from "./page.module.css";
 
+// IMAGINEA HERO: pune fișierul tău la această cale (sau schimbă calea de
+// mai jos cu numele real al fișierului tău). Dimensiune recomandată:
+// 1920x640px, JPG optimizat. Dacă fișierul lipsește, secțiunea rămâne cu
+// un fundal navy în gradient (fallback din CSS) — nu dă eroare.
+const HERO_IMAGE = "/images/contact-hero.jpg";
+
 const FORM_TITLES = {
   al: "Dërgoni një mesazh",
   en: "Send us a message",
@@ -65,15 +71,19 @@ export default function ContactClient() {
 
   return (
     <div className={styles.page}>
-      <div className={styles.pageHeader}>
-        <div className={styles.pageHeaderInner}>
-          <div className={styles.heroTag}>✦ {c.label}</div>
-          <h1 className={styles.pageTitle}>
+      <div
+        className={styles.imageHero}
+        style={{ backgroundImage: `url(${HERO_IMAGE})` }}
+      >
+        <div className={styles.imageHeroOverlay} />
+        <div className={styles.imageHeroInner}>
+          <div className={styles.imageHeroTag}>✦ {c.label}</div>
+          <h1 className={styles.imageHeroTitle}>
             {lang === "al" ? <>Na <span>Kontaktoni</span></> :
               lang === "it" ? <><span>Contattaci</span></> :
                 <>Get in <span>Touch</span></>}
           </h1>
-          <p className={styles.pageSub}>{c.sub}</p>
+          <p className={styles.imageHeroSub}>{c.sub}</p>
         </div>
       </div>
       <div className={styles.contentWrap}>

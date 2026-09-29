@@ -5,6 +5,12 @@ import { useLang } from "../../context/LangContext.jsx";
 import { Calendar, Newspaper, FileText, Download } from "lucide-react";
 import styles from "./page.module.css";
 
+// IMAGINEA HERO: pune fișierul tău la această cale (sau schimbă calea de
+// mai jos cu numele real al fișierului tău). Dimensiune recomandată:
+// 1920x640px, JPG optimizat. Dacă fișierul lipsește, secțiunea rămâne cu
+// un fundal navy în gradient (fallback din CSS) — nu dă eroare.
+const HERO_IMAGE = "/images/events-news-hero.jpg";
+
 // Conținut STATIC — nu vine din Firebase (confirmat cu userul). Fiecare
 // element din tx.eventsNews.items are un câmp `type`: "event" sau "news",
 // folosit pentru iconița afișată (Calendar / Newspaper) ȘI, din 2026-09-28,
@@ -18,16 +24,24 @@ import styles from "./page.module.css";
 // PDF + numele certificatului; click descarcă fișierul direct (atributul
 // `download` de pe <a> — browserul salvează fișierul, nu îl deschide într-un
 // tab nou). Un item fără `files` arată exact ca înainte.
+//
+// SCHIMBAT (2026-09-29): vechiul .pageHeader (gradient plat) a fost
+// înlocuit cu hero pe bază de imagine reală + overlay, la fel ca pe
+// /services și /partners.
 export default function EventsNewsClient() {
   const { lang, tx } = useLang();
   const items = tx.eventsNews?.items || [];
 
   return (
     <div className={styles.page}>
-      <div className={styles.pageHeader}>
-        <div className={styles.pageHeaderInner}>
-          <div className={styles.heroTag}>✦ {tx.eventsNews?.label || "News"}</div>
-          <h1 className={styles.pageTitle}>
+      <div
+        className={styles.imageHero}
+        style={{ backgroundImage: `url(${HERO_IMAGE})` }}
+      >
+        <div className={styles.imageHeroOverlay} />
+        <div className={styles.imageHeroInner}>
+          <div className={styles.imageHeroTag}>✦ {tx.eventsNews?.label || "News"}</div>
+          <h1 className={styles.imageHeroTitle}>
             {lang === "al" ? (
               <>Lajme <span>&amp; Evente</span></>
             ) : lang === "it" ? (
@@ -36,7 +50,7 @@ export default function EventsNewsClient() {
               <>News <span>&amp; Events</span></>
             )}
           </h1>
-          <p className={styles.pageSub}>{tx.eventsNews?.sub}</p>
+          <p className={styles.imageHeroSub}>{tx.eventsNews?.sub}</p>
         </div>
       </div>
 
@@ -104,8 +118,20 @@ export default function EventsNewsClient() {
                             ) : (
                               <FileText size={16} strokeWidth={1.8} />
                             )}
-                            <span>{f.name}</span>
-                            <Download size={14} strokeWidth={2} className={styles.newsFileChipDownloadIcon} />
+                            {/* SCHIMBAT: numele fișierului + un rând mic
+                                "PDF · Shkarko/Download/Scarica" dedesubt —
+                                ca să fie clar, fără dubiu, că e un document
+                                descărcabil, nu doar o poză/logo. */}
+                            <span className={styles.newsFileChipText}>
+                              <span className={styles.newsFileChipName}>{f.name}</span>
+                              <span className={styles.newsFileChipMeta}>
+                                PDF ·{" "}
+                                {lang === "al" ? "Shkarko" : lang === "it" ? "Scarica" : "Download"}
+                              </span>
+                            </span>
+                            <span className={styles.newsFileChipDownloadDot}>
+                              <Download size={13} strokeWidth={2.5} />
+                            </span>
                           </a>
                         ))}
                       </div>

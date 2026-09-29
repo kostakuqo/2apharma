@@ -10,17 +10,17 @@ export const translations = {
       eventsNews: "Lajme & Evente", contact: "Kontakt"
     },
     hero: {
-      badge: "Pajisje Mjekësore të Certifikuara",
+      badge: "Produkte Farmaceutike të Certifikuara",
       title1: "Distributori",
       title2: "juaj",
       title3: "Farmaceutik",
-      sub: "Furnizuesi juaj i besueshëm i pajisjeve mjekësore profesionale. Produkte të certifikuara për klinika, spitale dhe farmaci.",
+      sub: "Furnizuesi juaj i besueshëm i barnave dhe produkteve farmaceutike. Produkte të certifikuara për klinika, spitale dhe farmaci.",
       btnProducts: "Shiko Produktet",
       btnContact: "Na Kontaktoni",
     },
     products: {
       label: "Produktet Tona",
-      title: "Pajisje Mjekësore",
+      title: "",
       sub: "Zgjidhje profesionale për çdo nevojë mjekësore.",
       viewAll: "Shiko të gjitha",
       details: "Detaje",
@@ -29,7 +29,7 @@ export const translations = {
       label: "Pse Ne",
       title: "Avantazhet Tona",
       items: [
-        { title: "Produkte të Certifikuara", desc: "Të gjitha pajisjet kanë certifikata ndërkombëtare të cilësisë dhe sigurisë." },
+        { title: "Produkte të Certifikuara", desc: "Të gjitha produktet kanë certifikata ndërkombëtare të cilësisë dhe sigurisë." },
         { title: "Dërgim i Shpejtë", desc: "Dërgojmë në të gjithë Shqipërinë brenda 24-48 orësh." },
         { title: "Mbështetje 24/7", desc: "Ekipi ynë është gjithmonë i disponueshëm për ju." },
         { title: "Garanci & Servis", desc: "Ofrojmë garanci dhe shërbim pas shitjes për të gjitha produktet." },
@@ -46,18 +46,18 @@ export const translations = {
     },
     about: {
       label: "Rreth Nesh", title: "Kush Jemi Ne",
-      sub: "Kompani lider në furnizimin e ilaceve spitalore dhe pajisjeve mjekësore profesionale në Shqipëri.",
+      sub: "Kompani lider në furnizimin dhe distribucionin e barnave dhe produkteve farmaceutike në Shqipëri.",
     },
     // ── STATIK — pagina Shërbimet (/services) ──
     services: {
       label: "Shërbimet",
-      sub: "Përveç shitjes, ofrojmë mbështetje të plotë teknike gjatë gjithë ciklit jetësor të pajisjes suaj mjekësore.",
+      sub: "Përveç shitjes, ofrojmë mbështetje të plotë gjatë gjithë procesit të furnizimit me barna dhe produkte farmaceutike.",
       gridTag: "Çfarë ofrojmë",
       gridTitle: "Shërbimet Tona Kryesore",
       items: [
         // SHTUAR (2026-09-28): la fel ca celelalte, are acum `href` propriu
         // — hap direkt pagina e dedikuar /distribution.
-        { title: "Distribucion", desc: "Shpërndajmë ilace dhe produkte mjekësore në të gjithë Shqipërinë, me logjistikë të shpejtë dhe të besueshme drejt klinikave, spitaleve dhe farmacive.", href: "/distribution" },
+        { title: "Distribucion", desc: "Shpërndajmë ilace dhe produkte farmaceutike në të gjithë Shqipërinë, me logjistikë të shpejtë dhe të besueshme drejt klinikave, spitaleve dhe farmacive.", href: "/distribution" },
         // SHTUAR (2026-09-28): la fel ca celelalte, are acum `href` propriu
         // — hap direkt pagina e dedikuar /regulatory.
         { title: "Shërbime Rregullatore për Barna", desc: "Ofrojmë mbështetje të plotë rregullatore — regjistrim, dokumentacion dhe përputhshmëri me kërkesat ligjore — për produktet që përfaqësojmë.", href: "/regulatory" },
@@ -72,6 +72,10 @@ export const translations = {
         // pagina e dedikuar /warehousing (vezi components/ServicesGrid.jsx).
         { title: "Magazinimi", desc: "Ofrojmë shërbime të plota magazinimi dhe menaxhimi të stokut, me infrastrukturë moderne dhe respektim të standardeve ndërkombëtare të cilësisë.", href: "/warehousing" },
         { title: "Farmakovigjilenca", desc: "Menaxhojmë sigurinë e produktit përmes mbledhjes, zbulimit, vlerësimit, monitorimit, raportimit dhe parandalimit të rasteve të efekteve anësore.", href: "/pharmacovigilance" },
+        // SHTUAR (2026-09-29): shërbimi i 7-të — hap direkt pagina e
+        // dedikuar /quality-compliance (organigrama GDP, Responsible
+        // Person, quarantine/release, FEFO, CAPA, etj.).
+        { title: "Cilësia & Pajtueshmëria / GDP", desc: "Zbatojmë standardet GDP dhe ISO 9001:2015 në çdo hap — nga magazinimi te shpërndarja — për të garantuar cilësinë dhe sigurinë e produkteve.", href: "/quality-compliance" },
       ],
       ctaTitle: "Keni nevojë për një shërbim specifik?",
       ctaSub: "Na tregoni për çfarë keni nevojë dhe ekipi ynë do t'ju kontaktojë brenda 24 orësh.",
@@ -84,14 +88,14 @@ export const translations = {
       gridTag: "Aktualitet",
       gridTitle: "Të Fundit nga 2A Pharma",
       items: [
-        { type: "event", date: "Shtator 2026", tag: "Eveniment", title: "Pjesëmarrje në Panairin Shëndetësor Kombëtar", excerpt: "2A Pharma prezantoi linjën e re të pajisjeve diagnostike në Panairin Shëndetësor Kombëtar në Tiranë." },
-        { type: "news", date: "Gusht 2026", tag: "Lajm", title: "Rinovimi i Certifikimeve ISO dhe GDP", excerpt: "Kemi rinovuar me sukses certifikimet tona ISO dhe GDP (Praktika e Mirë e Shpërndarjes) për cilësi dhe standarde në furnizimin e pajisjeve mjekësore.", files: [
+        { type: "event", date: "Shtator 2026", tag: "Eveniment", title: "Pjesëmarrje në Panairin Shëndetësor Kombëtar", excerpt: "2A Pharma prezantoi gamën e re të produkteve farmaceutike në Panairin Shëndetësor Kombëtar në Tiranë." },
+        { type: "news", date: "Gusht 2026", tag: "Lajm", title: "Rinovimi i Certifikimeve ISO dhe GDP", excerpt: "Kemi rinovuar me sukses certifikimet tona ISO dhe GDP (Praktika e Mirë e Shpërndarjes) për cilësi dhe standarde në furnizimin e barnave.", files: [
           { name: "Certifikata ISO Nr. 1", url: "/documents/iso-certificate-1.pdf", icon: "/images/icons/cert-iso.png" },
           { name: "Certifikata ISO Nr. 2", url: "/documents/iso-certificate-2.pdf", icon: "/images/icons/cert-iso.png" },
           { name: "Certifikata GDP", url: "/documents/gdp-certificate.pdf", icon: "/images/icons/cert-gdp.png" },
         ] },
         { type: "event", date: "Tetor 2026", tag: "Eveniment", title: "Simpoziumi Vjetor i Shoqatës Shqiptare të Distributorëve Farmaceutikë", excerpt: "2A Pharma mori pjesë si anëtare në simpoziumin vjetor organizuar nga Shoqata Shqiptare e Distributorëve Farmaceutikë, i dedikuar standardeve të reja në distribucionin e ilaceve." },
-        { type: "news", date: "Korrik 2026", tag: "Lajm", title: "Partneritet i Ri me një Prodhues Evropian të Ilaçeve Mjekësore", excerpt: "Kemi nënshkruar një marrëveshje partneriteti me një prodhues të njohur evropian të ilaçeve mjekësore, duke zgjeruar gamën e produkteve farmaceutike që ofrojmë në treg." },
+        { type: "news", date: "Korrik 2026", tag: "Lajm", title: "Partneritet i Ri me një Prodhues Evropian të Ilaçeve", excerpt: "Kemi nënshkruar një marrëveshje partneriteti me një prodhues të njohur evropian të ilaçeve, duke zgjeruar gamën e produkteve farmaceutike që ofrojmë në treg." },
       ],
       ctaTitle: "Dëshironi të merrni lajmet tona të para?",
       ctaSub: "Kontaktoni ekipin tonë dhe do t'ju mbajmë të informuar për çdo risi apo eveniment.",
@@ -102,7 +106,7 @@ export const translations = {
       servicesTitle: "Shërbimet",
       mission: {
         title: "Misioni Ynë",
-        text: "Të ofrojmë ilace dhe pajisje mjekësore të cilësisë së lartë për pacientet dhe institucionet shëndetësore në Shqipëri, duke kontribuar në përmirësimin e kujdesit shëndetësor.",
+        text: "Të ofrojmë barna dhe produkte farmaceutike të cilësisë së lartë për pacientet dhe institucionet shëndetësore në Shqipëri, duke kontribuar në përmirësimin e kujdesit shëndetësor.",
       },
       expertise: {
         title: "Ekspertiza dhe Gama Jonë e Shërbimeve",
@@ -153,17 +157,17 @@ export const translations = {
       eventsNews: "News & Events", contact: "Contact"
     },
     hero: {
-      badge: "Certified Medical Equipment",
+      badge: "Certified Pharmaceutical Products",
       title1: "Your",
       title2: "Pharmaceutical",
       title3: "Distributor",
-      sub: "Your trusted supplier of professional medical equipment. Certified products for clinics, hospitals and pharmacies.",
+      sub: "Your trusted supplier of medications and pharmaceutical products. Certified products for clinics, hospitals and pharmacies.",
       btnProducts: "View Products",
       btnContact: "Contact Us",
     },
     products: {
       label: "Our Products",
-      title: "Medical Equipment",
+      title: "Pharmaceutical Products",
       sub: "Professional solutions for every medical need.",
       viewAll: "View all",
       details: "Details",
@@ -172,7 +176,7 @@ export const translations = {
       label: "Why Us",
       title: "Our Advantages",
       items: [
-        { title: "Certified Products", desc: "All devices have international quality and safety certificates." },
+        { title: "Certified Products", desc: "All products have international quality and safety certificates." },
         { title: "Fast Delivery", desc: "We deliver across Albania within 24-48 hours." },
         { title: "24/7 Support", desc: "Our team is always available for you." },
         { title: "Warranty & Service", desc: "We offer warranty and after-sales service for all products." },
@@ -189,21 +193,22 @@ export const translations = {
     },
     about: {
       label: "About Us", title: "Who We Are",
-      sub: "A leading company in the supply of hospital drugs and professional medical equipment in Albania.",
+      sub: "A leading company in the supply and distribution of medications and pharmaceutical products in Albania.",
     },
     // ── STATIC — Services page (/services) ──
     services: {
       label: "Services",
-      sub: "Beyond sales, we provide full technical support throughout your medical equipment's entire lifecycle.",
+      sub: "Beyond sales, we provide full support throughout the entire pharmaceutical supply process.",
       gridTag: "What we offer",
       gridTitle: "Our Core Services",
       items: [
-        { title: "Distribution", desc: "We distribute medical equipment and products across Albania, with fast, reliable logistics to clinics, hospitals and pharmacies.", href: "/distribution" },
+        { title: "Distribution", desc: "We distribute medicines and pharmaceutical products across Albania, with fast, reliable logistics to clinics, hospitals and pharmacies.", href: "/distribution" },
         { title: "Medicine Regulatory Services", desc: "We provide full regulatory support — registration, documentation and compliance with legal requirements — for the products we represent.", href: "/regulatory" },
         { title: "Marketing and Sales", desc: "Our commercial team promotes and sells our products with a customer-focused approach, built on deep knowledge of the Albanian market.", href: "/marketing" },
         { title: "Online Shop", desc: "Order our products directly online, with an up-to-date catalogue and fast delivery anywhere in the country.", href: "/online-shop" },
         { title: "Warehousing", desc: "We provide full warehousing and stock management services, with modern infrastructure and compliance with international quality standards.", href: "/warehousing" },
         { title: "Pharmacovigilance", desc: "We manage product safety via the collection, detection, assessment, monitoring, reporting and prevention of adverse effect cases.", href: "/pharmacovigilance" },
+        { title: "Quality & Compliance / GDP", desc: "We apply GDP and ISO 9001:2015 standards at every step — from warehousing to distribution — to guarantee product quality and safety.", href: "/quality-compliance" },
       ],
       ctaTitle: "Need a specific service?",
       ctaSub: "Tell us what you need and our team will contact you within 24 hours.",
@@ -216,8 +221,8 @@ export const translations = {
       gridTag: "Latest",
       gridTitle: "Latest from 2A Pharma",
       items: [
-        { type: "event", date: "September 2026", tag: "Event", title: "Participation in the National Health Expo", excerpt: "2A Pharma presented its new line of diagnostic equipment at the National Health Expo in Tirana." },
-        { type: "news", date: "August 2026", tag: "News", title: "ISO and GDP Certifications Renewed", excerpt: "We successfully renewed our ISO and GDP (Good Distribution Practice) certifications for quality and standards in medical equipment supply.", files: [
+        { type: "event", date: "September 2026", tag: "Event", title: "Participation in the National Health Expo", excerpt: "2A Pharma presented its new range of pharmaceutical products at the National Health Expo in Tirana." },
+        { type: "news", date: "August 2026", tag: "News", title: "ISO and GDP Certifications Renewed", excerpt: "We successfully renewed our ISO and GDP (Good Distribution Practice) certifications for quality and standards in medicines supply.", files: [
           { name: "ISO Certificate No. 1", url: "/documents/iso-certificate-1.pdf", icon: "/images/icons/cert-iso.png" },
           { name: "ISO Certificate No. 2", url: "/documents/iso-certificate-2.pdf", icon: "/images/icons/cert-iso.png" },
           { name: "GDP Certificate", url: "/documents/gdp-certificate.pdf", icon: "/images/icons/cert-gdp.png" },
@@ -234,7 +239,7 @@ export const translations = {
       servicesTitle: "Services",
       mission: {
         title: "Our Mission",
-        text: "To provide high-quality medications and medical equipment to patients and healthcare institutions across Albania, contributing to the improvement of healthcare.",
+        text: "To provide high-quality medications and pharmaceutical products to patients and healthcare institutions across Albania, contributing to the improvement of healthcare.",
       },
       expertise: {
         title: "Our Expertise & Range of Services",
@@ -277,17 +282,17 @@ export const translations = {
       eventsNews: "Notizie & Eventi", contact: "Contatto"
     },
     hero: {
-      badge: "Apparecchiature Mediche Certificate",
+      badge: "Prodotti Farmaceutici Certificati",
       title1: "Il Vostro",
       title2: "Distributore",
       title3: "Farmaceutico",
-      sub: "Il tuo fornitore affidabile di apparecchiature mediche professionali. Prodotti certificati per cliniche, ospedali e farmacie.",
+      sub: "Il tuo fornitore affidabile di farmaci e prodotti farmaceutici. Prodotti certificati per cliniche, ospedali e farmacie.",
       btnProducts: "Vedi Prodotti",
       btnContact: "Contattaci",
     },
     products: {
       label: "I Nostri Prodotti",
-      title: "Apparecchiature Mediche",
+      title: "Prodotti Farmaceutici",
       sub: "Soluzioni professionali per ogni esigenza medica.",
       viewAll: "Vedi tutti",
       details: "Dettagli",
@@ -296,7 +301,7 @@ export const translations = {
       label: "Perché Noi",
       title: "I Nostri Vantaggi",
       items: [
-        { title: "Prodotti Certificati", desc: "Tutti i dispositivi hanno certificati internazionali di qualità e sicurezza." },
+        { title: "Prodotti Certificati", desc: "Tutti i prodotti hanno certificati internazionali di qualità e sicurezza." },
         { title: "Consegna Rapida", desc: "Consegniamo in tutta l'Albania entro 24-48 ore." },
         { title: "Supporto 24/7", desc: "Il nostro team è sempre disponibile per voi." },
         { title: "Garanzia e Servizio", desc: "Offriamo garanzia e assistenza post-vendita per tutti i prodotti." },
@@ -313,21 +318,22 @@ export const translations = {
     },
     about: {
       label: "Chi Siamo", title: "Chi Siamo",
-      sub: "Azienda leader nella fornitura di farmaci ospedalieri e apparecchiature mediche professionali in Albania",
+      sub: "Azienda leader nella fornitura e distribuzione di farmaci e prodotti farmaceutici in Albania",
     },
     // ── STATICA — pagina Servizi (/services) ──
     services: {
       label: "Servizi",
-      sub: "Oltre alla vendita, offriamo supporto tecnico completo per tutto il ciclo di vita della vostra apparecchiatura medica.",
+      sub: "Oltre alla vendita, offriamo supporto completo per tutto il processo di fornitura farmaceutica.",
       gridTag: "Cosa offriamo",
       gridTitle: "I Nostri Servizi Principali",
       items: [
-        { title: "Distribuzione", desc: "Distribuiamo apparecchiature e prodotti medicali in tutta l'Albania, con una logistica rapida e affidabile verso cliniche, ospedali e farmacie.", href: "/distribution" },
+        { title: "Distribuzione", desc: "Distribuiamo farmaci e prodotti farmaceutici in tutta l'Albania, con una logistica rapida e affidabile verso cliniche, ospedali e farmacie.", href: "/distribution" },
         { title: "Servizi Regolatori Farmaceutici", desc: "Offriamo supporto regolatorio completo — registrazione, documentazione e conformità normativa — per i prodotti che rappresentiamo.", href: "/regulatory" },
         { title: "Marketing e Vendite", desc: "Il nostro team commerciale promuove e vende i prodotti con un approccio orientato al cliente, basato su una conoscenza approfondita del mercato albanese.", href: "/marketing" },
         { title: "Negozio Online", desc: "Ordinate i nostri prodotti direttamente online, con un catalogo aggiornato e consegna rapida in tutto il paese.", href: "/online-shop" },
         { title: "Magazzinaggio", desc: "Offriamo servizi completi di magazzinaggio e gestione delle scorte, con infrastrutture moderne e conformità agli standard internazionali di qualità.", href: "/warehousing" },
         { title: "Farmacovigilanza", desc: "Gestiamo la sicurezza del prodotto attraverso la raccolta, il rilevamento, la valutazione, il monitoraggio, la segnalazione e la prevenzione dei casi di effetti avversi.", href: "/pharmacovigilance" },
+        { title: "Qualità & Conformità / GDP", desc: "Applichiamo gli standard GDP e ISO 9001:2015 in ogni fase — dallo stoccaggio alla distribuzione — per garantire la qualità e la sicurezza dei prodotti.", href: "/quality-compliance" },
       ],
       ctaTitle: "Avete bisogno di un servizio specifico?",
       ctaSub: "Diteci di cosa avete bisogno e il nostro team vi contatterà entro 24 ore.",
@@ -340,8 +346,8 @@ export const translations = {
       gridTag: "Ultime notizie",
       gridTitle: "Le Ultime da 2A Pharma",
       items: [
-        { type: "event", date: "Settembre 2026", tag: "Evento", title: "Partecipazione alla Fiera Nazionale della Salute", excerpt: "2A Pharma ha presentato la nuova linea di apparecchiature diagnostiche alla Fiera Nazionale della Salute a Tirana." },
-        { type: "news", date: "Agosto 2026", tag: "Notizia", title: "Rinnovate le Certificazioni ISO e GDP", excerpt: "Abbiamo rinnovato con successo le nostre certificazioni ISO e GDP (Good Distribution Practice) per la qualità e gli standard nella fornitura di apparecchiature mediche.", files: [
+        { type: "event", date: "Settembre 2026", tag: "Evento", title: "Partecipazione alla Fiera Nazionale della Salute", excerpt: "2A Pharma ha presentato la nuova gamma di prodotti farmaceutici alla Fiera Nazionale della Salute a Tirana." },
+        { type: "news", date: "Agosto 2026", tag: "Notizia", title: "Rinnovate le Certificazioni ISO e GDP", excerpt: "Abbiamo rinnovato con successo le nostre certificazioni ISO e GDP (Good Distribution Practice) per la qualità e gli standard nella fornitura di farmaci.", files: [
           { name: "Certificato ISO N. 1", url: "/documents/iso-certificate-1.pdf", icon: "/images/icons/cert-iso.png" },
           { name: "Certificato ISO N. 2", url: "/documents/iso-certificate-2.pdf", icon: "/images/icons/cert-iso.png" },
           { name: "Certificato GDP", url: "/documents/gdp-certificate.pdf", icon: "/images/icons/cert-gdp.png" },
@@ -358,7 +364,7 @@ export const translations = {
       servicesTitle: "Servizi",
       mission: {
         title: "La Nostra Missione",
-        text: "Fornire farmaci e apparecchiature mediche di alta qualità a pazienti e istituzioni sanitarie in tutta l'Albania, contribuendo al miglioramento dell'assistenza sanitaria.",
+        text: "Fornire farmaci e prodotti farmaceutici di alta qualità a pazienti e istituzioni sanitarie in tutta l'Albania, contribuendo al miglioramento dell'assistenza sanitaria.",
       },
       expertise: {
         title: "La Nostra Competenza e Gamma di Servizi",
