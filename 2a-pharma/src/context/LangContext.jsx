@@ -2,6 +2,10 @@
 
 import { createContext, useContext, useState } from "react";
 
+// Iconița comună pentru cele 6 certificate noi (Nr. 3–8). Schimbi calea aici
+// și se schimbă la toate.
+const CERT_ICON = "/images/icons/cert-new.png";
+
 export const translations = {
   al: {
     nav: {
@@ -87,6 +91,12 @@ export const translations = {
           { name: "Certifikata ISO Nr. 2", url: "/documents/iso-certificate-2.pdf", icon: "/images/icons/cert-iso.png" },
           { name: "Certifikata GDP", url: "/documents/gdp-certificate.pdf", icon: "/images/icons/cert-gdp.png", disabled: true },
           { name: "Certifikata AKBPM", url: "/documents/akbpm-certificate.pdf", icon: "/images/icons/cert-akbpm.png", disabled: true },
+          { name: "Certifikata nr. 130-9001/23", url: "/documents/cert-130-9001-23-al.pdf", icon: CERT_ICON },
+          { name: "Certificate No. 130-9001/23", url: "/documents/cert-130-9001-23-en.pdf", icon: CERT_ICON },
+          { name: "Certifikata nr. 055-45001/23 SCR", url: "/documents/cert-055-45001-23-scr-al.pdf", icon: CERT_ICON },
+          { name: "Certificate No. 055-45001/23 SCR", url: "/documents/cert-055-45001-23-scr-en.pdf", icon: CERT_ICON },
+          { name: "Certifikata nr. 060-14001/23", url: "/documents/cert-060-14001-23-al.pdf", icon: CERT_ICON },
+          { name: "Certificate No. 060-14001/23", url: "/documents/cert-060-14001-23-en.pdf", icon: CERT_ICON },
         ] },
         { type: "event", date: "Tetor 2026", tag: "Eveniment", title: "Simpoziumi Vjetor i Shoqatës Shqiptare të Distributorëve Farmaceutikë", excerpt: "2A Pharma mori pjesë si anëtare në simpoziumin vjetor organizuar nga Shoqata Shqiptare e Distributorëve Farmaceutikë, i dedikuar standardeve të reja në distribucionin e ilaceve." },
         { type: "news", date: "Korrik 2026", tag: "Lajm", title: "Partneritet i Ri me një Prodhues Evropian të Ilaçeve", excerpt: "Kemi nënshkruar një marrëveshje partneriteti me një prodhues të njohur evropian të ilaçeve, duke zgjeruar gamën e produkteve farmaceutike që ofrojmë në treg." },
@@ -221,6 +231,12 @@ export const translations = {
           { name: "ISO Certificate No. 2", url: "/documents/iso-certificate-2.pdf", icon: "/images/icons/cert-iso.png" },
           { name: "GDP Certificate", url: "/documents/gdp-certificate.pdf", icon: "/images/icons/cert-gdp.png", disabled: true },
           { name: "AKBPM Certificate", url: "/documents/akbpm-certificate.pdf", icon: "/images/icons/cert-akbpm.png", disabled: true },
+          { name: "Certifikata nr. 130-9001/23", url: "/documents/cert-130-9001-23-al.pdf", icon: CERT_ICON },
+          { name: "Certificate No. 130-9001/23", url: "/documents/cert-130-9001-23-en.pdf", icon: CERT_ICON },
+          { name: "Certifikata nr. 055-45001/23 SCR", url: "/documents/cert-055-45001-23-scr-al.pdf", icon: CERT_ICON },
+          { name: "Certificate No. 055-45001/23 SCR", url: "/documents/cert-055-45001-23-scr-en.pdf", icon: CERT_ICON },
+          { name: "Certifikata nr. 060-14001/23", url: "/documents/cert-060-14001-23-al.pdf", icon: CERT_ICON },
+          { name: "Certificate No. 060-14001/23", url: "/documents/cert-060-14001-23-en.pdf", icon: CERT_ICON },
         ] },
         { type: "event", date: "October 2026", tag: "Event", title: "Annual Symposium of the Albanian Pharmaceutical Distributors Association", excerpt: "2A Pharma took part as a member in the annual symposium organized by the Albanian Pharmaceutical Distributors Association, focused on new standards in medicine distribution." },
         { type: "news", date: "July 2026", tag: "News", title: "New Partnership with a European Medicines Manufacturer", excerpt: "We signed a partnership agreement with a well-known European medicines manufacturer, expanding the range of pharmaceutical products we offer on the market." },
@@ -355,6 +371,12 @@ export const translations = {
           { name: "Certificato ISO N. 2", url: "/documents/iso-certificate-2.pdf", icon: "/images/icons/cert-iso.png" },
           { name: "Certificato GDP", url: "/documents/gdp-certificate.pdf", icon: "/images/icons/cert-gdp.png", disabled: true },
           { name: "Certificato AKBPM", url: "/documents/akbpm-certificate.pdf", icon: "/images/icons/cert-akbpm.png", disabled: true },
+          { name: "Certifikata nr. 130-9001/23", url: "/documents/cert-130-9001-23-al.pdf", icon: CERT_ICON },
+          { name: "Certificate No. 130-9001/23", url: "/documents/cert-130-9001-23-en.pdf", icon: CERT_ICON },
+          { name: "Certifikata nr. 055-45001/23 SCR", url: "/documents/cert-055-45001-23-scr-al.pdf", icon: CERT_ICON },
+          { name: "Certificate No. 055-45001/23 SCR", url: "/documents/cert-055-45001-23-scr-en.pdf", icon: CERT_ICON },
+          { name: "Certifikata nr. 060-14001/23", url: "/documents/cert-060-14001-23-al.pdf", icon: CERT_ICON },
+          { name: "Certificate No. 060-14001/23", url: "/documents/cert-060-14001-23-en.pdf", icon: CERT_ICON },
         ] },
         { type: "event", date: "Ottobre 2026", tag: "Evento", title: "Simposio Annuale dell'Associazione Albanese dei Distributori Farmaceutici", excerpt: "2A Pharma ha partecipato come membro al simposio annuale organizzato dall'Associazione Albanese dei Distributori Farmaceutici, dedicato ai nuovi standard nella distribuzione dei farmaci." },
         { type: "news", date: "Luglio 2026", tag: "Notizia", title: "Nuova Partnership con un Produttore Europeo di Farmaci", excerpt: "Abbiamo firmato un accordo di partnership con un noto produttore europeo di farmaci, ampliando la gamma di prodotti farmaceutici offerti sul mercato." },

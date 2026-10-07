@@ -284,16 +284,21 @@
    mic cu iconiță de document + numele fișierului + o iconiță de download;
    click descarcă direct fișierul (atributul `download` de pe <a>). */
 .newsFileRow {
-  display: flex;
-  gap: 10px;
+  /* REFĂCUT (2026-10-07): grilă cu coloane egale — toate chip-urile au
+     aceeași lățime și se aliniază curat (2 pe rând pe desktop, 1 pe telefon),
+     în loc de lățimi diferite după lungimea numelui. */
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
   margin-top: 16px;
-  flex-wrap: wrap;
 }
 
 .newsFileChip {
-  display: inline-flex;
+  display: flex;
   align-items: center;
   gap: 12px;
+  min-width: 0;
+  box-sizing: border-box;
   padding: 10px 14px 10px 10px;
   background: #F8FAFC;
   border: 1.5px solid #E8EDF5;
@@ -333,11 +338,16 @@
   flex-direction: column;
   gap: 2px;
   min-width: 0;
+  flex: 1 1 auto;
 }
 
 .newsFileChipName {
   color: #0F2A52;
-  white-space: nowrap;
+  /* numele lung (ex. „Certifikata nr. 055-45001/23 SCR") trece pe rândul
+     următor în loc să iasă din chip și să se suprapună cu bulina */
+  white-space: normal;
+  overflow-wrap: anywhere;
+  line-height: 1.3;
 }
 
 .newsFileChipMeta {
@@ -364,6 +374,7 @@
    marchează clar acțiunea de download. */
 .newsFileChipDownloadDot {
   flex-shrink: 0;
+  margin-left: auto;
   width: 26px;
   height: 26px;
   border-radius: 50%;
@@ -463,6 +474,11 @@
   box-shadow: 0 8px 28px rgba(40,199,90,0.35);
 }
 
+@media (max-width: 760px) {
+  /* sub ~760px chip-urile trec pe o singură coloană (câte unul pe rând) */
+  .newsFileRow { grid-template-columns: minmax(0, 1fr); }
+}
+
 @media (max-width: 640px) {
   .imageHero { min-height: 260px; }
   .imageHeroTitle { font-size: 30px; }
@@ -473,26 +489,15 @@
   .gridWrap { padding: 40px var(--section-px) 50px; }
   /* pe mobil renunțăm la linia de timeline (nu are loc/sens într-o coloană
      îngustă) — rămâne doar iconița, deasupra textului cardului */
-  .newsCard { flex-direction: column; }
-  .newsRailLine { display: none; }
-  .trustBanner { padding: 50px var(--section-px); }
-  .trustTitle { font-size: 26px; }
-}
-@media (max-width: 540px) {
-  .imageHeroSub { font-size: 14px; }
-  .gridWrap { padding: 40px var(--section-px) 50px; }
-  .newsCard { flex-direction: column; }
+  .newsCard { flex-direction: column; padding: 20px 18px; gap: 14px; }
   .newsRailLine { display: none; }
   .trustBanner { padding: 50px var(--section-px); }
   .trustTitle { font-size: 26px; }
 
-  /* ADĂUGAT: pe telefon, toate chip-urile de certificat au aceeași
-     lățime (100% din rând), indiferent de lungimea numelui — nu se mai
-     "strâng" pe conținut. */
-  .newsFileRow {
-    flex-direction: column;
-  }
-  .newsFileChip {
-    width: 100%;
-  }
+  /* chip-uri compacte pe telefon: logo mai mic, text care se rupe pe rânduri,
+     bulina rămâne în dreapta fără să acopere textul */
+  .newsFileChip { padding: 8px 12px 8px 8px; gap: 10px; }
+  .newsFileChipIcon { width: 56px; height: 56px; padding: 3px; }
+  .newsFileChipName { font-size: 13px; }
+  .newsFileChipDownloadDot { width: 24px; height: 24px; }
 }
